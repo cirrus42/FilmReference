@@ -1,6 +1,5 @@
 ﻿@page
 @model FilmReference.FrontEnd.Pages.StudioPages.DetailsModel
-@using FilmReference.FrontEnd.Classes.Helpers
 
 @{
     ViewData["Title"] = "Details";
@@ -28,7 +27,7 @@
             @Html.DisplayNameFor(model => model.Studio.Picture)
         </dt>
         <dd class="col-sm-10">
-            <img src="@ImageHelper.ImageSource(Model.Studio.Picture)" class="StudioImage" />
+            <img src="@Model.ImageHelper.ImageSource(Model.Studio.Picture)" class="StudioImage" />
         </dd>
     </dl>
 </div>

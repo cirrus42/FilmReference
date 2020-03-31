@@ -1,19 +1,19 @@
 ﻿using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Classes;
-using FilmReference.FrontEnd.Classes.Helpers;
-using FilmReference.FrontEnd.Config;
+using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Threading.Tasks;
-using FilmReference.FrontEnd.Models;
+using FilmReference.FrontEnd.Helpers;
 
 namespace FilmReference.FrontEnd
 {
     public class CreateModel : FilmReferencePageModel
     {
-        public CreateModel(FilmReferenceContext context)
+        private IImageHelper _imageHelper;
+        public CreateModel(FilmReferenceContext context, IImageHelper imageHelper)
             : base (context)
         {
+            _imageHelper = imageHelper;
         }
 
         public IActionResult OnGet()
@@ -38,9 +38,9 @@ namespace FilmReference.FrontEnd
                 var file = files[0];
                 if (file.Length > 0)
                 {
-                    if (!ImageHelper.FileTypeOk(file, out var errorMessage))
+                    if (!_imageHelper.FileTypeOk(file, out var errorMessage))
                     {
-                        ModelState.AddModelError(ConfigValues.StringValues.PersonPicture, errorMessage);
+                        ModelState.AddModelError(PageValues.PersonPicture, errorMessage);
                         return Page();
                     }
 
@@ -66,8 +66,8 @@ namespace FilmReference.FrontEnd
                 _context.Add(newPerson);
                 await _context.SaveChangesAsync();
                 var nextPage = !newPerson.IsActor && newPerson.IsDirector
-                    ? ConfigValues.StringValues.DirectorIndexPage
-                    : ConfigValues.StringValues.PersonIndexPage;
+                    ? PageValues.DirectorIndexPage
+                    : PageValues.PersonIndexPage;
                 return RedirectToPage(nextPage);
             }
             return Page();

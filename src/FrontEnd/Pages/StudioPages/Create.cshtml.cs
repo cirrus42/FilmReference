@@ -1,11 +1,9 @@
 ﻿using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Classes;
-using FilmReference.FrontEnd.Classes.Helpers;
-using FilmReference.FrontEnd.Config;
+using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Threading.Tasks;
-using FilmReference.FrontEnd.Models;
+using FilmReference.FrontEnd.Helpers;
 
 namespace FilmReference.FrontEnd.Pages.StudioPages
 {
@@ -13,9 +11,11 @@ namespace FilmReference.FrontEnd.Pages.StudioPages
     {
         #region Constructor
 
-        public CreateModel(FilmReferenceContext context)
+        private IImageHelper _imageHelper;
+        public CreateModel(FilmReferenceContext context, IImageHelper imageHelper)
             : base (context)
         {
+            _imageHelper = imageHelper;
         }
 
         #endregion
@@ -52,9 +52,9 @@ namespace FilmReference.FrontEnd.Pages.StudioPages
                 var file = files[0];
                 if (file.Length > 0)
                 {
-                    if (!ImageHelper.FileTypeOk(file, out var errorMessage))
+                    if (!_imageHelper.FileTypeOk(file, out var errorMessage))
                     {
-                        ModelState.AddModelError(ConfigValues.StringValues.StudioPicture, errorMessage);
+                        ModelState.AddModelError(PageValues.StudioPicture, errorMessage);
                         return Page();
                     }
 
@@ -73,7 +73,7 @@ namespace FilmReference.FrontEnd.Pages.StudioPages
             {
                 _context.Add(newStudio);
                 await _context.SaveChangesAsync();
-                return RedirectToPage(ConfigValues.StringValues.StudioIndexPage);
+                return RedirectToPage(PageValues.StudioIndexPage);
             }
 
             return Page();

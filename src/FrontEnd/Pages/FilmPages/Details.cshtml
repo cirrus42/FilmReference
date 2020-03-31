@@ -1,6 +1,5 @@
 ﻿@page
 @model FilmReference.FrontEnd.Pages.FilmPages.DetailsModel
-@using FilmReference.FrontEnd.Classes.Helpers
 
 @{
     ViewData["Title"] = "Details";
@@ -28,7 +27,7 @@
             @Html.DisplayNameFor(model => model.Film.Picture)
         </dt>
         <dd class="col-sm-10">
-            <img src="@ImageHelper.ImageSource(Model.Film.Picture)" />
+            <img src="@Model.ImageHelper.ImageSource(Model.Film.Picture)" />
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Film.Genre)
@@ -62,7 +61,7 @@
                 {
                     <td>
                         <a asp-page="/PersonPages/Details" asp-route-id="@actor.PersonId">
-                            <img src="@ImageHelper.ImageSource(actor.Picture)" class="PersonImageSmall" />
+                            <img src="@Model.ImageHelper.ImageSource(actor.Picture)" class="PersonImageSmall" />
                             <br />
                             <label>@actor.FullName</label>
                         </a>

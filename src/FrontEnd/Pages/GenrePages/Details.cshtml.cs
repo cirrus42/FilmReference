@@ -1,9 +1,8 @@
 ﻿using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Classes;
+using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using FilmReference.FrontEnd.Models;
 
 namespace FilmReference.FrontEnd.Pages.GenrePages
 {

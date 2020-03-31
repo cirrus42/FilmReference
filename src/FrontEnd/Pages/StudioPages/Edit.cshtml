@@ -1,6 +1,5 @@
 ﻿@page
 @model FilmReference.FrontEnd.Pages.StudioPages.EditModel
-@using FilmReference.FrontEnd.Classes.Helpers
 
 @{
     ViewData["Title"] = "Edit";
@@ -36,7 +35,7 @@
             <div class="form-group">
                 <label class="control-label">Current picture</label>
                 <br />
-                <img src="@ImageHelper.ImageSource(Model.Studio.Picture)" class="CompanyLogoSmall" />
+                <img src="@Model.ImageHelper.ImageSource(Model.Studio.Picture)" class="CompanyLogoSmall" />
             </div>
         </form>
     </div>

@@ -1,6 +1,5 @@
 ﻿@page
 @model FilmReference.FrontEnd.IndexModel
-@using FilmReference.FrontEnd.Classes.Helpers
 @using FilmReference.FrontEnd.Extensions
 
 @{
@@ -38,7 +37,7 @@
                     <br />
                     @item.FilmPerson.Count film@(item.FilmPerson.Count.ShowCorrectRecordText())
                     <br />
-                    <img src="@ImageHelper.ImageSource(item.Picture)" class="PersonImageSmall" />
+                    <img src="@Model.ImageHelper.ImageSource(item.Picture)" class="PersonImageSmall" />
                     <br />
                     <br />
                     <a asp-page="./Details" asp-route-id="@item.PersonId">Details</a> |

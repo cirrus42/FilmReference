@@ -1,7 +1,5 @@
 ﻿using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Classes;
-using FilmReference.FrontEnd.Classes.Helpers;
-using FilmReference.FrontEnd.Config;
+using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using FilmReference.FrontEnd.Models;
+using FilmReference.FrontEnd.Helpers;
 
 namespace FilmReference.FrontEnd.Pages.FilmPages
 {
@@ -18,9 +16,11 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
     {
         #region Constructor
 
-        public CreateModel(FilmReferenceContext context)
+        private IImageHelper _imageHelper;
+        public CreateModel(FilmReferenceContext context, IImageHelper imageHelper)
             : base (context)
         {
+            _imageHelper = imageHelper;
         }
 
         #endregion
@@ -73,9 +73,9 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
                 var file = files[0];
                 if (file.Length > 0)
                 {
-                    if (!ImageHelper.FileTypeOk(file, out var errorMessage))
+                    if (!_imageHelper.FileTypeOk(file, out var errorMessage))
                     {
-                        ModelState.AddModelError(ConfigValues.StringValues.FilmPicture, errorMessage);
+                        ModelState.AddModelError(PageValues.FilmPicture, errorMessage);
                         await DoPopulationsAsync();
                         return Page();
                     }
@@ -110,7 +110,7 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
 
                 _context.Add(newFilm);
                 await _context.SaveChangesAsync();
-                return RedirectToPage(ConfigValues.StringValues.FilmIndexPage);
+                return RedirectToPage(PageValues.FilmIndexPage);
             }
 
             await DoPopulationsAsync();
@@ -148,8 +148,8 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
                 .ToListAsync();
             directors.Insert(0, new Person(_context)
             {
-                PersonId = ConfigValues.PleaseSelect.Int,
-                FullName = ConfigValues.PleaseSelect.Text
+                PersonId =  PageValues.MinusOne,
+                FullName =  PageValues.PleaseSelect
             });
             SlDirector = new SelectList(
                     directors,
@@ -164,8 +164,8 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
                                     .ToListAsync();
             genres.Insert(0, new Genre(_context)
             {
-                GenreId = ConfigValues.PleaseSelect.Int,
-                Name = ConfigValues.PleaseSelect.Text
+                GenreId = PageValues.MinusOne,
+                Name = PageValues.PleaseSelect
             });
             SlGenre = new SelectList(
                     genres,
@@ -180,8 +180,8 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
                                     .ToListAsync();
             studios.Insert(0, new Studio(_context)
             {
-                StudioId = ConfigValues.PleaseSelect.Int,
-                Name = ConfigValues.PleaseSelect.Text
+                StudioId = PageValues.MinusOne,
+                Name = PageValues.PleaseSelect
             });
             SlStudio = new SelectList(
                 studios,

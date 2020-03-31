@@ -1,5 +1,5 @@
 ﻿using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Classes.Helpers;
+using FilmReference.FrontEnd.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FilmReference.FrontEnd.Controllers
@@ -9,10 +9,11 @@ namespace FilmReference.FrontEnd.Controllers
     public class StudioController : Controller
     {
         private readonly FilmReferenceContext _context;
-
-        public StudioController(FilmReferenceContext context)
+        private IImageHelper _imageHelper;
+        public StudioController(FilmReferenceContext context, IImageHelper imageHelper)
         {
             _context = context;
+            _imageHelper = imageHelper;
         }
 
         // GET: api/Studios/5
@@ -21,7 +22,7 @@ namespace FilmReference.FrontEnd.Controllers
         {
             var imageData = _context.Studio.Find(id).Picture;
             return imageData != null
-                ? ImageHelper.ImageSource(imageData)
+                ? _imageHelper.ImageSource(imageData)
                 : "";
         }
     }

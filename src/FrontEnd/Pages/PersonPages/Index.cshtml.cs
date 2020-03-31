@@ -1,18 +1,20 @@
 ﻿using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Classes;
+using FilmReference.FrontEnd.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FilmReference.FrontEnd.Models;
+using FilmReference.FrontEnd.Helpers;
 
 namespace FilmReference.FrontEnd
 {
     public class IndexModel : FilmReferencePageModel
     {
-        public IndexModel(FilmReferenceContext context)
+        public IImageHelper ImageHelper;
+        public IndexModel(FilmReferenceContext context, IImageHelper imageHelper)
             : base (context)
         {
+            ImageHelper = imageHelper;
         }
 
         public List<Person> Person { get;set; }

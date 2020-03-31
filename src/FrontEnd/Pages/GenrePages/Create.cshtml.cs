@@ -1,9 +1,7 @@
 ﻿using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Classes;
-using FilmReference.FrontEnd.Config;
+using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using FilmReference.FrontEnd.Models;
 
 namespace FilmReference.FrontEnd.Pages.GenrePages
 {
@@ -51,7 +49,7 @@ namespace FilmReference.FrontEnd.Pages.GenrePages
             {
                 _context.Add(newGenre);
                 await _context.SaveChangesAsync();
-                return RedirectToPage(ConfigValues.StringValues.GenreIndexPage);
+                return RedirectToPage(PageValues.GenreIndexPage);
             }
 
             return Page();

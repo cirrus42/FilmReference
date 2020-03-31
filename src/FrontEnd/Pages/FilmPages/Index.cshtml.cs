@@ -1,13 +1,11 @@
 ﻿using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Classes;
-using FilmReference.FrontEnd.Config;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using FilmReference.FrontEnd.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FilmReference.FrontEnd.Models;
+using FilmReference.FrontEnd.Helpers;
 
 namespace FilmReference.FrontEnd.Pages.FilmPages
 {
@@ -15,9 +13,11 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
     {
         #region Constructor
 
-        public IndexModel(FilmReferenceContext context)
+        public IImageHelper ImageHelper;
+        public IndexModel(FilmReferenceContext context, IImageHelper imageHelper)
             : base (context)
         {
+            ImageHelper = imageHelper;
         }
 
         #endregion
@@ -64,8 +64,8 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
                 .ToListAsync();
             Genre.Insert(0, new Genre(_context)
             {
-                GenreId = ConfigValues.All.Int,
-                Name = ConfigValues.All.Text
+                GenreId = PageValues.Zero,
+                Name = PageValues.All
             });
 
             try

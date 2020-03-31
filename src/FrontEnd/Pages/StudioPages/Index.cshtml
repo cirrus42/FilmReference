@@ -1,6 +1,5 @@
 ﻿@page
 @model FilmReference.FrontEnd.Pages.StudioPages.IndexModel
-@using FilmReference.FrontEnd.Classes.Helpers
 @using FilmReference.FrontEnd.Extensions
 
 @{
@@ -36,7 +35,7 @@
                     @{ if (item.Picture != null)
                         {
                             <label class="PicLabel" onmouseover="showPicture(event, @item.StudioId)" onmouseout="hidePicture()">(Hover for pic)</label>
-                            @*<label class="PicLabel" onmouseover="showPicture2(event, '@ImageHelper.ImageSource(item.Picture)')" onmouseout="hidePicture()">(Hover for pic)</label>*@
+                            <label class="PicLabel" onmouseover="showPicture2(event, '@Model.ImageHelper.ImageSource(item.Picture)')" onmouseout="hidePicture()">(Hover for pic)</label>
                         }
                     }
                 </td>

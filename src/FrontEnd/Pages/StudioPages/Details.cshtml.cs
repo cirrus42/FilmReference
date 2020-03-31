@@ -1,10 +1,9 @@
 ﻿using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Classes;
+using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using FilmReference.FrontEnd.Models;
+using FilmReference.FrontEnd.Helpers;
 
 namespace FilmReference.FrontEnd.Pages.StudioPages
 {
@@ -12,9 +11,11 @@ namespace FilmReference.FrontEnd.Pages.StudioPages
     {
         #region Constructor
 
-        public DetailsModel(FilmReferenceContext context)
+        public IImageHelper ImageHelper;
+        public DetailsModel(FilmReferenceContext context, IImageHelper imageHelper)
             : base (context)
         {
+            ImageHelper = imageHelper;
         }
 
         #endregion

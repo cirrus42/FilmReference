@@ -1,19 +1,21 @@
 ﻿using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Classes;
+using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FilmReference.FrontEnd.Models;
+using FilmReference.FrontEnd.Helpers;
 
 namespace FilmReference.FrontEnd
 {
     public class DetailsModel : FilmReferencePageModel
     {
-        public DetailsModel(FilmReferenceContext context)
+        public IImageHelper ImageHelper;
+        public DetailsModel(FilmReferenceContext context, IImageHelper imageHelper)
             : base (context)
         {
+            ImageHelper = imageHelper;
         }
 
         public Person Person { get; set; }

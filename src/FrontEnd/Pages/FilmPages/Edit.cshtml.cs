@@ -1,7 +1,5 @@
 ﻿using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Classes;
-using FilmReference.FrontEnd.Classes.Helpers;
-using FilmReference.FrontEnd.Config;
+using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using FilmReference.FrontEnd.Models;
+using FilmReference.FrontEnd.Helpers;
 
 namespace FilmReference.FrontEnd.Pages.FilmPages
 {
@@ -18,9 +16,11 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
     {
         #region Constructor
 
-        public EditModel(FilmReferenceContext context)
+        public IImageHelper ImageHelper;
+        public EditModel(FilmReferenceContext context, IImageHelper imageHelper)
             : base (context)
         {
+            ImageHelper = imageHelper;
         }
 
         #endregion
@@ -103,7 +103,7 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
                 {
                     if (!ImageHelper.FileTypeOk(file, out var errorMessage))
                     {
-                        ModelState.AddModelError(ConfigValues.StringValues.FilmPicture, errorMessage);
+                        ModelState.AddModelError(PageValues.FilmPicture, errorMessage);
                         await DoPopulationsAsync();
                         return Page();
                     }
@@ -141,7 +141,7 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
                 }               
 
                 await _context.SaveChangesAsync();
-                return RedirectToPage(ConfigValues.StringValues.FilmIndexPage);
+                return RedirectToPage(PageValues.FilmIndexPage);
             }
 
             await DoPopulationsAsync();

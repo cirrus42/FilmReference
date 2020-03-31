@@ -1,6 +1,5 @@
 ﻿@page
 @model FilmReference.FrontEnd.Pages.FilmPages.IndexModel
-@using FilmReference.FrontEnd.Classes.Helpers
 @using FilmReference.DataAccess
 @using FilmReference.FrontEnd.Extensions
 
@@ -42,7 +41,7 @@
                     <br />
                     @if (item.Picture != null)
                     {
-                        <img src="@ImageHelper.ImageSource(item.Picture)" class="FilmImageSmall" />
+                        <img src="@Model.ImageHelper.ImageSource(item.Picture)" class="FilmImageSmall" />
                     }
                     else
                     {

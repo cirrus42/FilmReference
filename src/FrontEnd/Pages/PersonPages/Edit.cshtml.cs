@@ -1,13 +1,10 @@
 ﻿using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Classes;
-using FilmReference.FrontEnd.Classes.Helpers;
-using FilmReference.FrontEnd.Config;
+using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
-using FilmReference.FrontEnd.Models;
+using FilmReference.FrontEnd.Helpers;
 
 namespace FilmReference.FrontEnd
 {
@@ -15,9 +12,11 @@ namespace FilmReference.FrontEnd
     {
         #region Constructor
 
-        public EditModel(FilmReferenceContext context)
+        public IImageHelper ImageHelper;
+        public EditModel(FilmReferenceContext context, IImageHelper imageHelper)
             : base (context)
         {
+            ImageHelper = imageHelper;
         }
 
         #endregion
@@ -77,7 +76,7 @@ namespace FilmReference.FrontEnd
                 {
                     if (!ImageHelper.FileTypeOk(file, out var errorMessage))
                     {
-                        ModelState.AddModelError(ConfigValues.StringValues.PersonPicture, errorMessage);
+                        ModelState.AddModelError(PageValues.PersonPicture, errorMessage);
                         return Page();
                     }
                 }
@@ -96,8 +95,8 @@ namespace FilmReference.FrontEnd
             {
                 await _context.SaveChangesAsync();
                 var nextPage = !Person.IsActor && Person.IsDirector
-                    ? ConfigValues.StringValues.DirectorIndexPage
-                    : ConfigValues.StringValues.PersonIndexPage;
+                    ? PageValues.DirectorIndexPage
+                    : PageValues.PersonIndexPage;
                 return RedirectToPage(nextPage);
             }
 
