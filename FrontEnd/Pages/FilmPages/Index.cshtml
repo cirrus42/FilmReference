@@ -1,0 +1,74 @@
+﻿@page
+@model FilmReference.FrontEnd.Pages.FilmPages.IndexModel
+@using FilmReference.FrontEnd.Classes.Helpers
+@using FilmReference.DataAccess
+
+@{
+    ViewData["Title"] = "Index";
+    var formName = "GenreFilter";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<form asp-page="Index" id="@formName" method="post">
+    @foreach (var genre in Model.Genre)
+    {
+        @Html.RadioButton(nameof(Genre.GenreId),
+            genre.GenreId,
+            isChecked: genre.GenreId == Model.GenreId,
+            new { Id = ReplacementHelper.ReplaceForRadioButton(genre.Name), @onclick = $"submitForm('{formName}')"})
+        @Html.Label(genre.Name, genre.Name, new {  @class = "RadioButtonLabel", @onclick = $"submitForm('{formName}')"})
+    }
+</form>
+<p>
+    @Model.Film.Count record@(ReplacementHelper.ShowCorrectRecordText(@Model.Film.Count)) found
+</p>
+<table class="table">
+    <tbody>
+        @{
+            var counter = 1;
+        }
+        <tr style="vertical-align: top">
+            @foreach (var item in Model.Film)
+            {
+                var stringValues = StringHelper.DisplayValues(item.Description, 50);
+                <td title="@stringValues.ToolTip" style="padding: 5px; width: 25%; border: 1px solid lightgrey">
+                    <strong>@Html.DisplayFor(modelItem => item.Name)</strong>
+                    <br />
+                    <br />
+                    @if (item.Picture != null)
+                    {
+                        <img src="@ImageHelper.ImageSource(item.Picture)" class="FilmImageSmall" />
+                    }
+                    else
+                    {
+                        <img src="~/NoCurrentPicture.jpg" />
+                    }
+                    <br />
+                    <div style="width: 200px">
+                        @Html.DisplayFor(modelItem => stringValues.DisplayValue)
+                    </div>
+                    <br />
+                    <a asp-page="./Details" asp-route-id="@item.FilmId">Details</a> |
+                    <a asp-page="./Edit" asp-route-id="@item.FilmId">Edit</a>
+                </td>
+                if (counter % 4 == 0)
+                {
+                    @Html.Raw("</tr><tr style=\"vertical-align: top\">");
+                }
+                counter++;
+            }
+        </tr>
+    </tbody>
+</table>
+
+<script type="text/javascript">
+        
+    function submitForm(formName) {
+        document.getElementById(formName).submit();
+    }
+
+</script>

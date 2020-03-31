@@ -1,0 +1,49 @@
+﻿@page
+@model FilmReference.FrontEnd.Pages.GenrePages.IndexModel
+@using FilmReference.FrontEnd.Classes.Helpers
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<p>
+    @Model.Genre.Count record@(ReplacementHelper.ShowCorrectRecordText(@Model.Genre.Count)) found
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Genre[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genre[0].Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Genre)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                @{
+                    var stringValues = StringHelper.DisplayValues(item.Description, 50);
+                }
+                <td title="@stringValues.ToolTip">
+                    @Html.DisplayFor(modelItem => stringValues.DisplayValue)
+                </td>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@item.GenreId">Details</a> |
+                    <a asp-page="./Edit" asp-route-id="@item.GenreId">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

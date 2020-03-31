@@ -1,0 +1,54 @@
+﻿@page
+@model FilmReference.FrontEnd.IndexModel
+@using FilmReference.FrontEnd.Classes.Helpers
+
+@{
+    ViewData["Title"] = "Actors";
+}
+
+<h1>Actors</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<p>
+    @{
+        foreach(var letter in Model.AtoZ)
+        {
+            <a asp-page="./Index" asp-route-id="@letter" class="AlphabetList">@letter</a>
+        }
+
+    }
+</p>
+<p>
+    @Model.Person.Count record@(ReplacementHelper.ShowCorrectRecordText(@Model.Person.Count)) found
+</p>
+<table>
+    <tbody>
+        @{
+            var counter = 1;
+        }
+        <tr style="vertical-align: top">
+            @foreach (var item in Model.Person)
+            {
+                <td style="padding: 5px; width: 25%; border: 1px solid lightgrey">
+                    <strong>@Html.DisplayFor(modelItem => item.FullName)</strong>
+                    <br />
+                    @item.FilmPerson.Count film@(ReplacementHelper.ShowCorrectRecordText(item.FilmPerson.Count))
+                    <br />
+                    <img src="@ImageHelper.ImageSource(item.Picture)" class="PersonImageSmall" />
+                    <br />
+                    <br />
+                    <a asp-page="./Details" asp-route-id="@item.PersonId">Details</a> |
+                    <a asp-page="./Edit" asp-route-id="@item.PersonId">Edit</a>
+               </td>
+                if (counter % 4 == 0)
+                {
+                    @Html.Raw("</tr><tr style=\"vertical-align: top\">");
+                }
+                counter++;
+            }
+        </tr>
+    </tbody>
+</table>
