@@ -3,19 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{41E4E60C-1A23-450B-9DC4-044926DA31F9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{11F93DE1-0636-47E7-99EB-FFA9950D51AE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrontEnd", "FrontEnd\FrontEnd.csproj", "{B8F9A5EE-C471-4873-997D-6A31FEE95E72}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2EE4E9AB-A567-42E1-95EB-6A77CAD6EE2F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DbScript", "DbScript", "{E4112D71-F832-4560-83B4-26C58EA53773}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{F1846C5B-35BD-4F3A-895C-462043354050}"
 	ProjectSection(SolutionItems) = preProject
-		DbScript\FilmReferenceFullScript.sql = DbScript\FilmReferenceFullScript.sql
+		src\Database\FilmReferenceFullScript.sql = src\Database\FilmReferenceFullScript.sql
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReadMe", "ReadMe", "{333759CF-4398-4C79-B210-338AA0D09695}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReadMe", "ReadMe", "{BE84E67A-60CD-446F-8960-D5CB4C385BED}"
 	ProjectSection(SolutionItems) = preProject
-		ReadMe\ReadMe.txt = ReadMe\ReadMe.txt
+		src\ReadMe\ReadMe.txt = src\ReadMe\ReadMe.txt
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrontEnd", "src\FrontEnd\FrontEnd.csproj", "{9D94715A-5E3D-425E-AB82-E74A0E291ACA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "src\DataAccess\DataAccess.csproj", "{9D03AE1D-962C-411D-BB64-341826712EF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,17 +27,23 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{41E4E60C-1A23-450B-9DC4-044926DA31F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{41E4E60C-1A23-450B-9DC4-044926DA31F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{41E4E60C-1A23-450B-9DC4-044926DA31F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{41E4E60C-1A23-450B-9DC4-044926DA31F9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B8F9A5EE-C471-4873-997D-6A31FEE95E72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B8F9A5EE-C471-4873-997D-6A31FEE95E72}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B8F9A5EE-C471-4873-997D-6A31FEE95E72}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B8F9A5EE-C471-4873-997D-6A31FEE95E72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D94715A-5E3D-425E-AB82-E74A0E291ACA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D94715A-5E3D-425E-AB82-E74A0E291ACA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D94715A-5E3D-425E-AB82-E74A0E291ACA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D94715A-5E3D-425E-AB82-E74A0E291ACA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D03AE1D-962C-411D-BB64-341826712EF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D03AE1D-962C-411D-BB64-341826712EF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D03AE1D-962C-411D-BB64-341826712EF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D03AE1D-962C-411D-BB64-341826712EF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F1846C5B-35BD-4F3A-895C-462043354050} = {11F93DE1-0636-47E7-99EB-FFA9950D51AE}
+		{BE84E67A-60CD-446F-8960-D5CB4C385BED} = {11F93DE1-0636-47E7-99EB-FFA9950D51AE}
+		{9D94715A-5E3D-425E-AB82-E74A0E291ACA} = {11F93DE1-0636-47E7-99EB-FFA9950D51AE}
+		{9D03AE1D-962C-411D-BB64-341826712EF7} = {11F93DE1-0636-47E7-99EB-FFA9950D51AE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9CE84E0F-F4D1-4E1A-95E2-59B65C561AF1}
