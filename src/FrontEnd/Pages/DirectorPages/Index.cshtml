@@ -1,6 +1,7 @@
 ﻿@page
 @model FilmReference.FrontEnd.Pages.DirectorPages.IndexModel
 @using FilmReference.FrontEnd.Classes.Helpers
+@using FilmReference.FrontEnd.Extensions
 
 @{
     ViewData["Title"] = "Index";
@@ -12,7 +13,7 @@
     <a asp-page="/PersonPages/Create">Create New</a>
 </p>
 <p>
-    @Model.Person.Count record@(ReplacementHelper.ShowCorrectRecordText(@Model.Person.Count)) found
+    @Model.Person.Count record@(@Model.Person.Count.ShowCorrectRecordText()) found
 </p>
 <table class="table">
     <thead>

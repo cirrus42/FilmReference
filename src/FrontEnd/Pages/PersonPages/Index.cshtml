@@ -1,6 +1,7 @@
 ﻿@page
 @model FilmReference.FrontEnd.IndexModel
 @using FilmReference.FrontEnd.Classes.Helpers
+@using FilmReference.FrontEnd.Extensions
 
 @{
     ViewData["Title"] = "Actors";
@@ -22,7 +23,7 @@
     }
 </p>
 <p>
-    @Model.Person.Count record@(ReplacementHelper.ShowCorrectRecordText(@Model.Person.Count)) found
+    @Model.Person.Count record@(@Model.Person.Count.ShowCorrectRecordText()) found
 </p>
 <table>
     <tbody>
@@ -35,7 +36,7 @@
                 <td style="padding: 5px; width: 25%; border: 1px solid lightgrey">
                     <strong>@Html.DisplayFor(modelItem => item.FullName)</strong>
                     <br />
-                    @item.FilmPerson.Count film@(ReplacementHelper.ShowCorrectRecordText(item.FilmPerson.Count))
+                    @item.FilmPerson.Count film@(item.FilmPerson.Count.ShowCorrectRecordText())
                     <br />
                     <img src="@ImageHelper.ImageSource(item.Picture)" class="PersonImageSmall" />
                     <br />

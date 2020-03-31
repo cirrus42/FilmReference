@@ -2,6 +2,7 @@
 @model FilmReference.FrontEnd.Pages.FilmPages.IndexModel
 @using FilmReference.FrontEnd.Classes.Helpers
 @using FilmReference.DataAccess
+@using FilmReference.FrontEnd.Extensions
 
 @{
     ViewData["Title"] = "Index";
@@ -19,12 +20,12 @@
         @Html.RadioButton(nameof(Genre.GenreId),
             genre.GenreId,
             isChecked: genre.GenreId == Model.GenreId,
-            new { Id = ReplacementHelper.ReplaceForRadioButton(genre.Name), @onclick = $"submitForm('{formName}')"})
+            new { Id = genre.Name.ReplaceForRadioButton(), @onclick = $"submitForm('{formName}')"})
         @Html.Label(genre.Name, genre.Name, new {  @class = "RadioButtonLabel", @onclick = $"submitForm('{formName}')"})
     }
 </form>
 <p>
-    @Model.Film.Count record@(ReplacementHelper.ShowCorrectRecordText(@Model.Film.Count)) found
+    @Model.Film.Count record@(@Model.Film.Count.ShowCorrectRecordText()) found
 </p>
 <table class="table">
     <tbody>
@@ -34,7 +35,7 @@
         <tr style="vertical-align: top">
             @foreach (var item in Model.Film)
             {
-                var stringValues = StringHelper.DisplayValues(item.Description, 50);
+                var stringValues = item.Description.ConvertToDisplayValue(50);
                 <td title="@stringValues.ToolTip" style="padding: 5px; width: 25%; border: 1px solid lightgrey">
                     <strong>@Html.DisplayFor(modelItem => item.Name)</strong>
                     <br />

@@ -1,6 +1,7 @@
 ﻿@page
 @model FilmReference.FrontEnd.Pages.GenrePages.IndexModel
 @using FilmReference.FrontEnd.Classes.Helpers
+@using FilmReference.FrontEnd.Extensions
 
 @{
     ViewData["Title"] = "Index";
@@ -12,7 +13,7 @@
     <a asp-page="Create">Create New</a>
 </p>
 <p>
-    @Model.Genre.Count record@(ReplacementHelper.ShowCorrectRecordText(@Model.Genre.Count)) found
+    @Model.Genre.Count record@(@Model.Genre.Count.ShowCorrectRecordText()) found
 </p>
 <table class="table">
     <thead>
@@ -34,7 +35,7 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 @{
-                    var stringValues = StringHelper.DisplayValues(item.Description, 50);
+                    var stringValues = item.Description.ConvertToDisplayValue(50);
                 }
                 <td title="@stringValues.ToolTip">
                     @Html.DisplayFor(modelItem => stringValues.DisplayValue)
