@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
 using System.Threading.Tasks;
+using FilmReference.FrontEnd.Models;
 
 namespace FilmReference.FrontEnd.Pages.StudioPages
 {

@@ -5,6 +5,7 @@ using FilmReference.FrontEnd.Config;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Threading.Tasks;
+using FilmReference.FrontEnd.Models;
 
 namespace FilmReference.FrontEnd
 {

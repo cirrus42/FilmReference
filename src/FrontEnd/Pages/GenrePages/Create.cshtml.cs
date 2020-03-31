@@ -3,6 +3,7 @@ using FilmReference.FrontEnd.Classes;
 using FilmReference.FrontEnd.Config;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using FilmReference.FrontEnd.Models;
 
 namespace FilmReference.FrontEnd.Pages.GenrePages
 {

@@ -2,7 +2,7 @@
 using FilmReference.FrontEnd.Classes.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FilmReference.FrontEnd.Classes.Controllers
+namespace FilmReference.FrontEnd.Controllers
 {
     [ApiController]
     [Route("[controller]")]
