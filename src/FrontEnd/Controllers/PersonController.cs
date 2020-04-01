@@ -9,7 +9,7 @@ namespace FilmReference.FrontEnd.Controllers
     public class PersonController : Controller
     {
         private readonly FilmReferenceContext _context;
-        private IImageHelper _imageHelper;
+        private readonly IImageHelper _imageHelper;
 
         public PersonController(FilmReferenceContext context, IImageHelper imageHelper)
         {
