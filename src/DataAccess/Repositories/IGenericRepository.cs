@@ -11,6 +11,7 @@ namespace FilmReference.DataAccess.Repositories
         IEnumerable GetAll(Expression<Func<T, bool>> expression);
         T GetById(int id);
         void Add(T model);
+        void Update(T model);
         void Delete(T model);
         void Save();
     }

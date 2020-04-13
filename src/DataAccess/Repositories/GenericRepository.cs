@@ -24,6 +24,9 @@ namespace FilmReference.DataAccess.Repositories
         public void Add(T model) =>
             _dbContext.Add(model);
 
+        public void Update(T model) =>
+            _dbContext.Update(model);
+
         public void Delete(T model) =>
             _dbContext.Remove(model);
 

@@ -136,5 +136,22 @@ namespace FilmReference.Tests
 
             dbFilm.Name.Should().Be(film2.Name);
         }
+
+        //[Fact]
+        //public void Update()
+        //{
+        //    var film = new Film(_filmReferenceContext) { FilmId = 1, Name = "Film1" };
+
+        //    _filmReferenceContext.Film.Add(film);
+        //    _filmReferenceContext.SaveChanges();
+        //    const string name = "New Name";
+        //    film.Name = name;
+
+        //    _genericFilmRepository.Add(film);
+        //    _genericFilmRepository.Save();
+
+        //    var dbFilm = _filmReferenceContext.Find<Film>(1);
+        //    dbFilm.Name.Should().Be(name);
+        //}
     }
 }
