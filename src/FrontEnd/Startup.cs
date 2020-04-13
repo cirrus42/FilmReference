@@ -29,6 +29,7 @@ namespace FilmReference.FrontEnd
                     ));
 
             services.AddDependencies();
+            services.AddRepositories();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

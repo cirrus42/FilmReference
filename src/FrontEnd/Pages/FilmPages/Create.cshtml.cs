@@ -14,18 +14,12 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
 {
     public class CreateModel : FilmReferencePageModel
     {
-        #region Constructor
-
         private IImageHelper _imageHelper;
         public CreateModel(FilmReferenceContext context, IImageHelper imageHelper)
             : base (context)
         {
             _imageHelper = imageHelper;
         }
-
-        #endregion
-
-        #region Properties
 
         public Film Film { get; set; }
 
@@ -39,9 +33,6 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
 
         public SelectList SlStudio { get; set; }
 
-        #endregion
-
-        #region Get
 
         public async Task<IActionResult> OnGet()
         {
@@ -49,9 +40,8 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
             return Page();
         }
 
-        #endregion
 
-        #region Post
+    
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -117,9 +107,8 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
             return Page();
         }
 
-        #endregion
+     
 
-        #region Private Methods
 
         private async Task DoPopulationsAsync()
         {
@@ -190,6 +179,6 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
 
         }
 
-        #endregion
+ 
     }
 }

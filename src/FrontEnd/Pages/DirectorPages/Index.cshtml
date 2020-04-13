@@ -12,22 +12,22 @@
     <a asp-page="/PersonPages/Create">Create New</a>
 </p>
 <p>
-    @Model.Person.Count record@(@Model.Person.Count.ShowCorrectRecordText()) found
+    @Model.PersonList.Count record@(@Model.PersonList.Count.ShowCorrectRecordText()) found
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Person[0].FirstName)
+                @Html.DisplayNameFor(model => model.PersonList.ElementAt(0).FirstName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Person[0].LastName)
+                @Html.DisplayNameFor(model => model.PersonList.ElementAt(0).LastName)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Person)
+        @foreach (var item in Model.PersonList)
         {
             <tr>
                 <td>
