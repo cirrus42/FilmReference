@@ -29,8 +29,8 @@ namespace FilmReference.DataAccess.Repositories
         public T GetById(int id) =>
             _dbContext.Set<T>().Find(id);
 
-        public void Add(T model) =>
-            _dbContext.Add(model);
+        public async Task Add(T model) =>
+            await _dbContext.AddAsync(model);
 
         public void Update(T model) =>
             _dbContext.Update(model);
@@ -38,7 +38,7 @@ namespace FilmReference.DataAccess.Repositories
         public void Delete(T model) =>
             _dbContext.Remove(model);
 
-        public void Save() =>
-            _dbContext.SaveChanges();
+        public Task Save() =>
+            _dbContext.SaveChangesAsync();
     }
 }

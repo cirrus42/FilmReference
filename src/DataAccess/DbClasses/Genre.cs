@@ -7,6 +7,8 @@ namespace FilmReference.DataAccess
     [Table("Genre")]
     public partial class Genre
     {
+        public Genre() {}
+
         [Key]
         public int GenreId { get; set; }
 

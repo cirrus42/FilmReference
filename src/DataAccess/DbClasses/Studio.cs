@@ -7,6 +7,8 @@ namespace FilmReference.DataAccess
     [Table("Studio")]
     public partial class Studio
     {
+        public Studio() {}
+
         [Key]
         public int StudioId { get; set; }
 

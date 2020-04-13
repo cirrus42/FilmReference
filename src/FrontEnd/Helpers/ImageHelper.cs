@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using FilmReference.DataAccess;
 
 namespace FilmReference.FrontEnd.Helpers
 {
@@ -30,6 +32,13 @@ namespace FilmReference.FrontEnd.Helpers
 
             errorMessage = "Must be of type .jpg, .gif or .png";
             return false;
+        }
+
+        public void AddImageToFilm(Film film, IFormFile formFile)
+        {
+            using var memoryStream = new MemoryStream();
+            formFile.CopyTo(memoryStream);
+            film.Picture = memoryStream.ToArray();
         }
     }
 }

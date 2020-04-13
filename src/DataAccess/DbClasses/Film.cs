@@ -1,12 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using FilmReference.DataAccess.Repositories;
 
 namespace FilmReference.DataAccess
 {
     [Table("Film")]
     public partial class Film
     {
+        public Film()
+        {
+        }
+
         [Key]
         public int FilmId { get; set; }
 

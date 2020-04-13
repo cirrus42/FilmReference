@@ -2,6 +2,7 @@
 using FilmReference.DataAccess.Repositories;
 using FilmReference.FrontEnd.Handlers;
 using FilmReference.FrontEnd.Helpers;
+using FilmReference.FrontEnd.Managers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FilmReference.FrontEnd.Extensions
@@ -12,11 +13,18 @@ namespace FilmReference.FrontEnd.Extensions
         {
             services.AddSingleton<IImageHelper, ImageHelper>();
             services.AddTransient<IPersonHandler, PersonHandler>();
+            services.AddTransient<IGenreHandler, GenreHandler>();
+            services.AddTransient<IStudioHandler, StudioHandler>();
+            services.AddTransient<IFilmHandler, FilmHandler>();
+            services.AddTransient<IFilmPagesManager, FilmPagesManager>();
         }
 
         public static void AddRepositories(this IServiceCollection services)
         {
             services.AddTransient<IGenericRepository<Person>, GenericRepository<Person>>();
+            services.AddTransient<IGenericRepository<Genre>, GenericRepository<Genre>>();
+            services.AddTransient<IGenericRepository<Studio>, GenericRepository<Studio>>();
+            services.AddTransient<IGenericRepository<Film>, GenericRepository<Film>>();
         }
     }
 }

@@ -10,9 +10,9 @@ namespace FilmReference.DataAccess.Repositories
         Task<IEnumerable<T>> GetAll();
         Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> predicate);
         T GetById(int id);
-        void Add(T model);
+        Task Add(T model);
         void Update(T model);
         void Delete(T model);
-        void Save();
+        Task Save();
     }
 }
