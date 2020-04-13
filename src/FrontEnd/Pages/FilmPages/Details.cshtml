@@ -12,40 +12,40 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Film.Name)
+            @Html.DisplayNameFor(model => model.FilmDetails.Film.Name)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Film.Name)
+            @Html.DisplayFor(model => model.FilmDetails.Film.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Film.Description)
+            @Html.DisplayNameFor(model => model.FilmDetails.Film.Description)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Film.Description)
+            @Html.DisplayFor(model => model.FilmDetails.Film.Description)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Film.Picture)
+            @Html.DisplayNameFor(model => model.FilmDetails.Film.Picture)
         </dt>
         <dd class="col-sm-10">
-            <img src="@Model.ImageHelper.ImageSource(Model.Film.Picture)" />
+            <img src="@Model.ImageHelper.ImageSource(Model.FilmDetails.Film.Picture)" />
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Film.Genre)
+            @Html.DisplayNameFor(model => model.FilmDetails.Film.Genre)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Film.Genre.Name)
+            @Html.DisplayFor(model => model.FilmDetails.Film.Genre.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Film.Director)
+            @Html.DisplayNameFor(model => model.FilmDetails.Film.Director)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Film.Director.FullName)
+            @Html.DisplayFor(model => model.FilmDetails.Film.Director.FullName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Film.Studio)
+            @Html.DisplayNameFor(model => model.FilmDetails.Film.Studio)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Film.Studio.Name)
+            @Html.DisplayFor(model => model.FilmDetails.Film.Studio.Name)
         </dd>
     </dl>
 </div>
@@ -57,7 +57,7 @@
                 var counter = 1;
             }
             <tr style="vertical-align: top">
-                @foreach (var actor in Model.Actors)
+                @foreach (var actor in Model.FilmDetails.Actors)
                 {
                     <td>
                         <a asp-page="/PersonPages/Details" asp-route-id="@actor.PersonId">
@@ -77,6 +77,6 @@
     </table>    
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Film.FilmId">Edit</a> |
+    <a asp-page="./Edit" asp-route-id="@Model.FilmDetails.Film.FilmId">Edit</a> |
     <a asp-page="./Index">Back to List</a>
 </div>

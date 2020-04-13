@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace FilmReference.DataAccess.Repositories
 {
@@ -15,19 +14,17 @@ namespace FilmReference.DataAccess.Repositories
         public GenericRepository(FilmReferenceContext dbContext) => 
             _dbContext = dbContext;
 
-        //public async Task<IEnumerable>> GetAll() =>
-        //    await _dbContext.Set<T>().ToListAsync();
-
-        //public IEnumerable GetAll(Expression<Func<T, bool>> expression) =>
-        //   _dbContext.Set<T>().Where(expression);
         public async Task<IEnumerable<T>> GetAll() => 
             await _dbContext.Set<T>().ToListAsync();
 
         public async Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> predicate) => 
             await _dbContext.Set<T>().Where(predicate).ToListAsync();
-        
-        public T GetById(int id) =>
-            _dbContext.Set<T>().Find(id);
+
+        public IQueryable<T> GetAllQueryable() => 
+            _dbContext.Set<T>();
+       
+        public async Task<T> GetById(int id) => 
+            await _dbContext.Set<T>().FindAsync(id);
 
         public async Task Add(T model) =>
             await _dbContext.AddAsync(model);

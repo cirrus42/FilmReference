@@ -1,5 +1,6 @@
 ﻿using FilmReference.DataAccess;
 using System.Threading.Tasks;
+using FilmReference.FrontEnd.Models;
 
 namespace FilmReference.FrontEnd.Handlers
 {
@@ -7,5 +8,6 @@ namespace FilmReference.FrontEnd.Handlers
     {
         Task SaveFilm(Film film); 
         Task<bool> IsDuplicate(int filmId, string filmName);
+        Task<Results<FilmDetails>> GetFilmById(int id);
     }
 }
