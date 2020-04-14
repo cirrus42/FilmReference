@@ -40,7 +40,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Actors</label>
-                @Html.ListBoxFor(f => f.FilmPagesValues.SelectedActorIds, Model.FilmPagesValues.ActorSelectList(), new { @class = "form-control", size = 10, id = "ActorList" })
+                @Html.ListBoxFor(f => f.SelectedActorIds, Model.FilmPagesValues.ActorSelectList(), new { @class = "form-control", size = 10, id = "ActorList" })
                 <br />
                 <label class="control-label">Selected</label>
                 <br />
