@@ -21,6 +21,9 @@ namespace FilmReference.FrontEnd.Managers
             _filmHandler = filmHandler;
         }
 
+        public async Task<Results<FilmDetails>> GetFilmById(int id) =>
+            await _filmHandler.GetFilmById(id);
+        
         public async Task<FilmPagesValues> GetFilmPageDropDownValues()
         {
             var filmPages = new FilmPagesValues();
