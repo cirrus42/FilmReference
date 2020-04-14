@@ -51,43 +51,15 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
         public async Task<IActionResult> OnPostAsync(int? id)
         {
             if (!ModelState.IsValid)
-            {
                 return Page();
-            }
 
-            var film = _context.Film
-                .Include(f => f.FilmPerson)
-                .FirstOrDefault(f => f.FilmId == id);
-            
-            if (film == null)
-            {
-                return NotFound();
-            }
+            var result = await _filmPagesManager.GetFilmWithFilmPerson(id.Value);
 
-            var selectedActorIds = Request.Form[nameof(SelectedActorIds)];
-            var files = Request.Form.Files;
+            if(result.HttpStatusCode == HttpStatusCode.NotFound) return NotFound();
 
-            if (files.Count > 0)
-            {
-                var file = files[0];
-                if (file.Length > 0)
-                {
-                    if (!ImageHelper.FileTypeOk(file, out var errorMessage))
-                    {
-                        ModelState.AddModelError(PageValues.FilmPicture, errorMessage);
-                        FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
-                        return Page();
-                    }
+            var film = result.Entity.Film;
 
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        file.CopyTo(memoryStream);
-                        film.Picture = memoryStream.ToArray();
-                    }
-                }
-            }
-
-            if (await TryUpdateModelAsync(
+            var updated = await TryUpdateModelAsync(
                 film,
                 nameof(film),
                 f => f.FilmId,
@@ -96,33 +68,82 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
                 f => f.Picture,
                 f => f.GenreId,
                 f => f.DirectorId,
-                f => f.StudioId))
-            {
-                foreach (var filmPerson in film.FilmPerson)
-                {
-                    _context.FilmPerson.Remove(filmPerson);
-                }
-                foreach (var actorId in selectedActorIds)
-                {
-                    film.FilmPerson.Add(new FilmPerson
-                    {
-                        FilmId = film.FilmId,
-                        PersonId = Convert.ToInt32(actorId)
-                    });
-                }               
+                f => f.StudioId);
 
-                await _context.SaveChangesAsync();
-                return RedirectToPage(PageValues.FilmIndexPage);
+            if (!updated)
+            {
+                FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
+                return Page();
             }
 
-            FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
-            return Page();
+            ////var film = _context.Film
+            ////    .Include(f => f.FilmPerson)
+            ////    .FirstOrDefault(f => f.FilmId == id);
+
+            //if (film == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //var selectedActorIds = Request.Form[nameof(SelectedActorIds)];
+            //var files = Request.Form.Files;
+
+            //if (files.Count > 0)
+            //{
+            //    var file = files[0];
+            //    if (file.Length > 0)
+            //    {
+            //        if (!ImageHelper.FileTypeOk(file, out var errorMessage))
+            //        {
+            //            ModelState.AddModelError(PageValues.FilmPicture, errorMessage);
+            //            FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
+            //            return Page();
+            //        }
+
+            //        using (var memoryStream = new MemoryStream())
+            //        {
+            //            file.CopyTo(memoryStream);
+            //            film.Picture = memoryStream.ToArray();
+            //        }
+            //    }
+            //}
+
+            //if (await TryUpdateModelAsync(
+            //    film,
+            //    nameof(film),
+            //    f => f.FilmId,
+            //    f => f.Name,
+            //    f => f.Description,
+            //    f => f.Picture,
+            //    f => f.GenreId,
+            //    f => f.DirectorId,
+            //    f => f.StudioId))
+            //{
+            //    foreach (var filmPerson in film.FilmPerson)
+            //    {
+            //        _context.FilmPerson.Remove(filmPerson);
+            //    }
+            //    foreach (var actorId in selectedActorIds)
+            //    {
+            //        film.FilmPerson.Add(new FilmPerson
+            //        {
+            //            FilmId = film.FilmId,
+            //            PersonId = Convert.ToInt32(actorId)
+            //        });
+            //    }               
+
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToPage(PageValues.FilmIndexPage);
+            //}
+
+            //FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
+            //return Page();
 
         }
 
- 
 
-  
+
+
 
         //private async Task DoPopulationsAsync()
         //{
@@ -171,6 +192,6 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
         //        nameof(Studio.StudioId),
         //        nameof(Studio.Name));
 
-   
+
     }
 }

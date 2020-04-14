@@ -35,25 +35,43 @@ namespace FilmReference.FrontEnd.Handlers
 
         public async Task<Results<FilmDetails>> GetFilmById(int id)
         {
-            var film =  await _filmRepository.GetAllQueryable()
-                .Include(f => f.Director)
-                .Include(f => f.Genre)
-                .Include(f => f.Studio)
-                .Include(f => f.FilmPerson)
-                .ThenInclude(fp => fp.Person)
-                .FirstOrDefaultAsync(m => m.FilmId == id);
+            var retrievedFilm =  await _filmRepository.GetAllQueryable()
+                .Include(film => film.Director)
+                .Include(film => film.Genre)
+                .Include(film => film.Studio)
+                .Include(film => film.FilmPerson)
+                .ThenInclude(filmPerson => filmPerson.Person)
+                .FirstOrDefaultAsync(film => film.FilmId == id);
 
-            if (film == null) return new Results<FilmDetails> {HttpStatusCode = HttpStatusCode.NotFound}; 
+            if (retrievedFilm == null) return new Results<FilmDetails> {HttpStatusCode = HttpStatusCode.NotFound}; 
             
             return  new Results<FilmDetails>
                 {
                     Entity = new FilmDetails
                     {
-                        Film = film,
-                        Actors = film.FilmPerson.Select(filmPerson => filmPerson.Person).OrderBy(person => person.FullName).ToList()
+                        Film = retrievedFilm,
+                        Actors = retrievedFilm.FilmPerson.Select(filmPerson => filmPerson.Person).OrderBy(person => person.FullName).ToList()
                     },
                     HttpStatusCode = HttpStatusCode.OK
                 };
+        }
+
+        public async Task<Results<FilmDetails>> GetFilmWithFilmPerson(int id)
+        {
+            var retrievedFilm = await _filmRepository.GetAllQueryable()
+                .Include(film => film.FilmPerson)
+                .FirstOrDefaultAsync(film => film.FilmId == id);
+
+            if (retrievedFilm == null) return new Results<FilmDetails> { HttpStatusCode = HttpStatusCode.NotFound };
+
+            return new Results<FilmDetails>
+            {
+                Entity = new FilmDetails
+                {
+                    Film = retrievedFilm
+                },
+                HttpStatusCode = HttpStatusCode.OK
+            };
         }
     }
 }

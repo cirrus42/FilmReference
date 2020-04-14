@@ -9,5 +9,6 @@ namespace FilmReference.FrontEnd.Managers
         Task<FilmPagesValues> GetFilmPageDropDownValues();
         Task<bool> SaveFilm(Film film);
         Task<Results<FilmDetails>> GetFilmById(int id);
+        Task<Results<FilmDetails>> GetFilmWithFilmPerson(int id);
     }
 }

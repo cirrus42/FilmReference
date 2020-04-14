@@ -9,5 +9,6 @@ namespace FilmReference.FrontEnd.Handlers
         Task SaveFilm(Film film); 
         Task<bool> IsDuplicate(int filmId, string filmName);
         Task<Results<FilmDetails>> GetFilmById(int id);
+        Task<Results<FilmDetails>> GetFilmWithFilmPerson(int id);
     }
 }
