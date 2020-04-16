@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using FilmReference.DataAccess;
 
-namespace FilmReference.FrontEnd.Handlers
+namespace FilmReference.FrontEnd.Handlers.Interfaces
 {
     public interface IStudioHandler
     {

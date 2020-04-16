@@ -13,8 +13,8 @@ namespace FilmReference.DataAccess.Repositories
         IQueryable<T> GetAllQueryable();
         Task<T> GetById(int id);
         Task Add(T model);
-        void Update(T model);
-        void Delete(T model);
+        Task Update(T model);
+        Task Delete(T model);
         Task Save();
     }
 }

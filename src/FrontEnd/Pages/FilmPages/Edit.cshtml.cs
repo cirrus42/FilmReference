@@ -3,19 +3,18 @@ using FilmReference.FrontEnd.Helpers;
 using FilmReference.FrontEnd.Managers;
 using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using FilmReference.FrontEnd.Extensions;
 
 namespace FilmReference.FrontEnd.Pages.FilmPages
 {
     public class EditModel : FilmReferencePageModel
     {
-        private IFilmPagesManager _filmPagesManager;
+        private readonly IFilmPagesManager _filmPagesManager;
         public IImageHelper ImageHelper;
         public EditModel(FilmReferenceContext context, IImageHelper imageHelper, IFilmPagesManager filmPagesManager)
             : base (context)
@@ -44,24 +43,18 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
             return Page();
         }
 
-
-
-   
-
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || id == null)
                 return Page();
 
             var result = await _filmPagesManager.GetFilmWithFilmPerson(id.Value);
 
-            if(result.HttpStatusCode == HttpStatusCode.NotFound) return NotFound();
-
-            var film = result.Entity.Film;
+            if (result.HttpStatusCode == HttpStatusCode.NotFound) return NotFound();
 
             var updated = await TryUpdateModelAsync(
-                film,
-                nameof(film),
+                result.Entity.Film,
+                nameof(result.Entity.Film),
                 f => f.FilmId,
                 f => f.Name,
                 f => f.Description,
@@ -76,6 +69,41 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
                 return Page();
             }
 
+            var files = Request.Form.Files;
+
+            if (files.Any())
+            {
+                var file = files.ElementAt(0);
+                if (file.Length > 0)
+                {
+                    if (!ImageHelper.FileTypeOk(file, out var errorMessage))
+                    {
+                        ModelState.AddModelError(PageValues.FilmPicture, errorMessage);
+                        FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
+                        return Page();
+                    }
+
+                    await using var memoryStream = new MemoryStream();
+                    file.CopyTo(memoryStream);
+                    result.Entity.Film.Picture = memoryStream.ToArray();
+                }
+            }
+
+            var selectedActorIds = Request.Form[nameof(SelectedActorIds)];
+
+            await _filmPagesManager.RemoveActorsFromFilm(result.Entity.Film.FilmPerson.RemoveItems(selectedActorIds.StingValuesToList()));
+
+            foreach (var personId in selectedActorIds.StingValuesToList())
+                result.Entity.Film.FilmPerson.Add(new FilmPerson{FilmId = result.Entity.Film.FilmId, PersonId = personId});
+
+            if (await _filmPagesManager.UpdateFilm(result.Entity.Film)) 
+                return RedirectToPage(PageValues.FilmIndexPage);
+
+            ModelState.AddModelError(PageValues.FilmName, PageValues.DuplicateFilm);
+            FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
+            return Page();
+
+
             ////var film = _context.Film
             ////    .Include(f => f.FilmPerson)
             ////    .FirstOrDefault(f => f.FilmId == id);
@@ -86,6 +114,8 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
             //}
 
             //var selectedActorIds = Request.Form[nameof(SelectedActorIds)];
+
+
             //var files = Request.Form.Files;
 
             //if (files.Count > 0)

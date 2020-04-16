@@ -1,8 +1,8 @@
-﻿using FilmReference.DataAccess;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using FilmReference.DataAccess;
 
-namespace FilmReference.FrontEnd.Handlers
+namespace FilmReference.FrontEnd.Handlers.Interfaces
 {
     public interface IGenreHandler
     {

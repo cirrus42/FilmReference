@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net;
 using System.Threading.Tasks;
+using FilmReference.FrontEnd.Handlers.Interfaces;
 
 namespace FilmReference.FrontEnd.Pages.FilmPages
 {

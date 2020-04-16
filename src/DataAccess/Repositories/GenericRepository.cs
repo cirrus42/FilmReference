@@ -29,12 +29,18 @@ namespace FilmReference.DataAccess.Repositories
         public async Task Add(T model) =>
             await _dbContext.AddAsync(model);
 
-        public void Update(T model) =>
-            _dbContext.Update(model);
+        public Task Update(T model)
+        {
+            _dbContext.Entry(model).State = EntityState.Modified;
+            return _dbContext.SaveChangesAsync();
+        }
 
-        public void Delete(T model) =>
-            _dbContext.Remove(model);
-
+        public Task Delete(T model)
+        {
+            _dbContext.Set<T>().Remove(model);
+            return _dbContext.SaveChangesAsync();
+        }
+        
         public Task Save() =>
             _dbContext.SaveChangesAsync();
     }

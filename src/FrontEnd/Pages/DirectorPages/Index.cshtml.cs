@@ -1,5 +1,5 @@
 ﻿using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Handlers;
+using FilmReference.FrontEnd.Handlers.Interfaces;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Linq;

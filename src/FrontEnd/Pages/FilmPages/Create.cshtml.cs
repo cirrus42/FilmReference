@@ -58,16 +58,6 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
                 return Page();
             }
 
-            var selectedActorIds = Request.Form[nameof(SelectedActorIds)];
-
-            foreach (var actorId in selectedActorIds)
-                newFilm.FilmPerson.Add(
-                    new FilmPerson
-                    {
-                        FilmId = newFilm.FilmId,
-                        PersonId = Convert.ToInt32(actorId)
-                    });
-
             var files = Request.Form.Files;
 
             if (files.Any())
@@ -85,6 +75,16 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
                     _imageHelper.AddImageToFilm(newFilm, file);
                 }
             }
+
+            var selectedActorIds = Request.Form[nameof(SelectedActorIds)];
+
+            foreach (var actorId in selectedActorIds)
+                newFilm.FilmPerson.Add(
+                    new FilmPerson
+                    {
+                        FilmId = newFilm.FilmId,
+                        PersonId = Convert.ToInt32(actorId)
+                    });
 
             if (await _filmPagesManager.SaveFilm(newFilm))
                 return RedirectToPage(PageValues.FilmIndexPage);

@@ -1,6 +1,7 @@
 ﻿using FilmReference.DataAccess;
 using FilmReference.DataAccess.Repositories;
 using FilmReference.FrontEnd.Handlers;
+using FilmReference.FrontEnd.Handlers.Interfaces;
 using FilmReference.FrontEnd.Helpers;
 using FilmReference.FrontEnd.Managers;
 using Microsoft.Extensions.DependencyInjection;
