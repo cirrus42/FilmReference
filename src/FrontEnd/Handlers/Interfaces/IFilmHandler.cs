@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using FilmReference.DataAccess;
 using FilmReference.FrontEnd.Models;
 
@@ -11,5 +12,6 @@ namespace FilmReference.FrontEnd.Handlers.Interfaces
         Task<Results<FilmDetails>> GetFilmById(int id);
         Task<Results<FilmDetails>> GetFilmWithFilmPerson(int id);
         Task UpdateFilm(Film film);
+        Task<IEnumerable<Film>> GetFilms();
     }
 }

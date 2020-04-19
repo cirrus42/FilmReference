@@ -17,6 +17,7 @@ namespace FilmReference.FrontEnd.Extensions
             services.AddTransient<IGenreHandler, GenreHandler>();
             services.AddTransient<IStudioHandler, StudioHandler>();
             services.AddTransient<IFilmHandler, FilmHandler>();
+            services.AddTransient<IFilmPersonHandler, FilmPersonHandler>();
             services.AddTransient<IFilmPagesManager, FilmPagesManager>();
         }
 
@@ -26,6 +27,7 @@ namespace FilmReference.FrontEnd.Extensions
             services.AddTransient<IGenericRepository<Genre>, GenericRepository<Genre>>();
             services.AddTransient<IGenericRepository<Studio>, GenericRepository<Studio>>();
             services.AddTransient<IGenericRepository<Film>, GenericRepository<Film>>();
+            services.AddTransient<IGenericRepository<FilmPerson>, GenericRepository<FilmPerson>>();
         }
     }
 }

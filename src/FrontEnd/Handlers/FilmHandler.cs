@@ -4,6 +4,7 @@ using FilmReference.DataAccess.Repositories;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using FilmReference.FrontEnd.Extensions;
 using FilmReference.FrontEnd.Handlers.Interfaces;
 using FilmReference.FrontEnd.Models;
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +28,7 @@ namespace FilmReference.FrontEnd.Handlers
         {
             var duplicates =
                 (await _filmRepository.GetWhere(f =>
-                    f.Name.ToLower().Replace(" ", "") == filmName.ToLower().Replace(" ", ""))).ToList();
+                    f.Name.Sanitize() == filmName.Sanitize())).ToList();
 
             if (!duplicates.Any()) return false;
 
@@ -77,5 +78,8 @@ namespace FilmReference.FrontEnd.Handlers
 
         public async Task UpdateFilm(Film film) =>
             await _filmRepository.Update(film);
+
+        public async Task<IEnumerable<Film>> GetFilms() =>
+            await _filmRepository.GetAll();
     }
 }

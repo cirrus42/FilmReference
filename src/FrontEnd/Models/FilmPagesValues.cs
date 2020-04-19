@@ -7,8 +7,10 @@ namespace FilmReference.FrontEnd.Models
 {
     public class FilmPagesValues
     {
-        //public Film Film { get; set; }
-        public List<int> SelectedActorIds { get; set; }
+        public FilmPagesValues(Genre genre) =>
+            Genres = new List<Genre> {genre};
+        
+        public List<Film> Films { get; set; }
 
         public List<Person> Directors { get; set; } = new List<Person>
         {
@@ -21,14 +23,7 @@ namespace FilmReference.FrontEnd.Models
 
         public List<Person> Actors { get; set; } 
 
-        public List<Genre> Genres { get; set; } = new List<Genre>
-        {
-            new Genre
-            {
-                GenreId = PageValues.MinusOne,
-                Name = PageValues.PleaseSelect
-            }
-        };
+        public List<Genre> Genres { get; set; }
 
         public List<Studio> Studios { get; set; } = new List<Studio>
         {

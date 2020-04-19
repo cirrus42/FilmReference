@@ -29,7 +29,11 @@ namespace FilmReference.FrontEnd.Managers
         
         public async Task<FilmPagesValues> GetFilmPageDropDownValues()
         {
-            var filmPages = new FilmPagesValues();
+            var filmPages = new FilmPagesValues(new Genre
+            {
+                GenreId = PageValues.MinusOne,
+                Name = PageValues.PleaseSelect
+            });
 
             filmPages.Directors.AddRange((await _personHandler.GetDirectors()).ToList());
             filmPages.Actors = ((await _personHandler.GetActors()).ToList());
@@ -63,6 +67,18 @@ namespace FilmReference.FrontEnd.Managers
                 return false;
             await _filmHandler.UpdateFilm(film);
             return true;
+        }
+
+        public async Task<FilmPagesValues> GetFilmsAndGenres()
+        {
+            var filmPages =
+                new FilmPagesValues(new Genre {GenreId = PageValues.Zero, Name = PageValues.All})
+                {
+                    Films = (await _filmHandler.GetFilms()).ToList()
+                };
+
+            filmPages.Genres.AddRange((await _genreHandler.GetGenres()).ToList());
+            return filmPages;
         }
     }
 }       

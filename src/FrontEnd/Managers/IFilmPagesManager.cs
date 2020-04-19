@@ -13,5 +13,6 @@ namespace FilmReference.FrontEnd.Managers
         Task<Results<FilmDetails>> GetFilmWithFilmPerson(int id);
         Task RemoveActorsFromFilm(IEnumerable<FilmPerson> filmPersonList);
         Task<bool> UpdateFilm(Film film);
+        Task<FilmPagesValues> GetFilmsAndGenres();
     }
 }

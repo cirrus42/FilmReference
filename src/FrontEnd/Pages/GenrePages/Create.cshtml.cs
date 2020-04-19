@@ -7,39 +7,23 @@ namespace FilmReference.FrontEnd.Pages.GenrePages
 {
     public class CreateModel : FilmReferencePageModel
     {
-        #region Constructor
 
         public CreateModel(FilmReferenceContext context)
             : base (context)
         {
         }
 
-        #endregion
-
-        #region Properties
-
         public Genre Genre { get; set; }
 
-        #endregion
-
-        #region Get
-
-        public IActionResult OnGet()
-        {
-            return Page();
-        }
-
-        #endregion
-
-        #region Post
+        public IActionResult OnGet() => 
+            Page();
+        
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
-            {
                 return Page();
-            }
-
+            
             var newGenre = new Genre(_context);
 
             if (await TryUpdateModelAsync(
@@ -55,6 +39,5 @@ namespace FilmReference.FrontEnd.Pages.GenrePages
             return Page();
         }
 
-        #endregion
     }
 }

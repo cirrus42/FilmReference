@@ -22,5 +22,7 @@ namespace FilmReference.FrontEnd.Extensions
         public static string ReplaceForRadioButton(this string name) =>
             name.Replace(" ", "_").Replace(".", "z");
 
+        public static string Sanitize(this string stringToSanitise) => 
+            stringToSanitise.ToLower().Replace(" ", "");
     }
 }

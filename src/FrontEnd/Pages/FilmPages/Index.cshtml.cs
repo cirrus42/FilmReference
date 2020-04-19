@@ -1,90 +1,34 @@
-﻿using FilmReference.DataAccess;
+﻿using FilmReference.FrontEnd.Helpers;
+using FilmReference.FrontEnd.Managers;
 using FilmReference.FrontEnd.Models;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FilmReference.FrontEnd.Helpers;
 
 namespace FilmReference.FrontEnd.Pages.FilmPages
 {
-    public class IndexModel : FilmReferencePageModel
+    public class IndexModel : PageModel
     {
-        #region Constructor
-
+        private readonly IFilmPagesManager _filmPagesManager;
         public IImageHelper ImageHelper;
-        public IndexModel(FilmReferenceContext context, IImageHelper imageHelper)
-            : base (context)
+        public int GenreId { get; set; }
+        public FilmPagesValues FilmPagesValues;
+
+        public IndexModel( IImageHelper imageHelper, IFilmPagesManager filmPagesManager)
         {
             ImageHelper = imageHelper;
-        }
-
-        #endregion
-
-        #region Properties
-
-        public IList<Film> Film { get;set; }
-
-        public IList<Genre> Genre { get; set; }
-
-        public int GenreId { get; set; }
-
-        #endregion
-
-        #region Get
-
-        public async Task OnGetAsync()
-        {
+            _filmPagesManager = filmPagesManager;
             GenreId = 0;
-            await DoPopulations();
         }
-
-        #endregion
-
-        #region Post
-
+        public async Task OnGetAsync() => FilmPagesValues = 
+            await _filmPagesManager.GetFilmsAndGenres();
+        
         public async Task OnPostAsync()
         {
-            await DoPopulations();
+            FilmPagesValues = await _filmPagesManager.GetFilmsAndGenres();
+            if (Request.HasFormContentType) GenreId = Convert.ToInt32(Request.Form["GenreId"]);
+            if (GenreId > 0) FilmPagesValues.Films = FilmPagesValues.Films.Where(film => film.GenreId == GenreId).ToList();
         }
-
-        #endregion
-
-        #region Private Methods
-
-        private async Task DoPopulations()
-        {
-            Film = await _context.Film
-                .OrderBy(f => f.Name)
-                .ToListAsync();
-
-            Genre = await _context.Genre
-                .OrderBy(g => g.Name)
-                .ToListAsync();
-            Genre.Insert(0, new Genre(_context)
-            {
-                GenreId = PageValues.Zero,
-                Name = PageValues.All
-            });
-
-            try
-            {
-                var genreId = 0;
-                if (Request.HasFormContentType)
-                {
-                    genreId = Convert.ToInt32(Request.Form["GenreId"]);
-                }
-                if (genreId > 0)
-                {
-                    Film = Film.Where(f => f.GenreId == genreId).ToList();
-                }
-                GenreId = genreId;
-            }
-            catch { }
-
-        }
-
-        #endregion
     }
 }
