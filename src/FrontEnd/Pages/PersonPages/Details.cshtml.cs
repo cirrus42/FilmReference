@@ -1,11 +1,11 @@
 ﻿using FilmReference.DataAccess;
+using FilmReference.FrontEnd.Helpers;
 using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FilmReference.FrontEnd.Helpers;
 
 namespace FilmReference.FrontEnd
 {
@@ -25,9 +25,7 @@ namespace FilmReference.FrontEnd
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             Person = await _context.Person
                 .Include(p => p.FilmPerson)

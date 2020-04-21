@@ -1,10 +1,11 @@
 ﻿using FilmReference.DataAccess;
 using FilmReference.DataAccess.Repositories;
+using FilmReference.FrontEnd.Handlers.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
-using FilmReference.FrontEnd.Extensions;
-using FilmReference.FrontEnd.Handlers.Interfaces;
+using FilmReference.FrontEnd.Models;
 
 namespace FilmReference.FrontEnd.Handlers
 {
@@ -21,32 +22,29 @@ namespace FilmReference.FrontEnd.Handlers
         public async Task<bool> IsDuplicate(Genre genre)
         {
             var duplicates = (await _genreRepository
-                .GetWhere(g => g.Name.Sanitize() == genre.Name.Sanitize())).ToList();
-           
-            
-            throw new System.NotImplementedException();
+                .GetWhere(g => g.Name.ToLower().Replace(" ", "") == genre.Name.ToLower().Replace(" ", ""))).ToList();
 
+            if (!duplicates.Any()) return false;
 
-            //var results = new List<ValidationResult>();
+            return genre.GenreId <= 0 || duplicates.Any(g => g.GenreId != genre.GenreId);
+        }
 
-            //var duplicates = _context.Genre
-            //    .Where(
-            //        g =>
-            //            g.Name.ToLower().Replace(" ", "") == Name.ToLower().Replace(" ", ""));
-            //if (GenreId > 0) // It's an edit
-            //{
-            //    duplicates = duplicates.Where(g => g.GenreId != GenreId);
-            //}
-            //if (duplicates.Any())
-            //{
-            //    results.Add(new ValidationResult(
-            //        "A Genre with this name already exists in the database",
-            //        new List<string>
-            //        {
-            //            nameof(Name)
-            //        }));
-            //}
-            //return results;
+        public async Task<Results<Genre>> GetGenreById(int id)
+        {
+            var genre = await _genreRepository.GetById(id);
+
+            return genre == null ?
+                new Results<Genre> {HttpStatusCode = HttpStatusCode.NotFound} : 
+                new Results<Genre> { Entity = genre, HttpStatusCode = HttpStatusCode.OK};
+        }
+
+        public async Task UpdateGenre(Genre genre) =>
+            await _genreRepository.Update(genre);
+
+        public async Task SaveGenre(Genre genre)
+        {
+            await _genreRepository.Add(genre);
+            await _genreRepository.Save();
         }
     }
 }

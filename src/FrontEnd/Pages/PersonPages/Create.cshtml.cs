@@ -1,41 +1,54 @@
 ﻿using FilmReference.DataAccess;
+using FilmReference.FrontEnd.Handlers.Interfaces;
+using FilmReference.FrontEnd.Helpers;
 using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Linq;
 using System.Threading.Tasks;
-using FilmReference.FrontEnd.Helpers;
+using FilmReference.FrontEnd.Managers;
 
-namespace FilmReference.FrontEnd
+namespace FilmReference.FrontEnd.Pages.PersonPages
 {
-    public class CreateModel : FilmReferencePageModel
+    public class CreateModel : PageModel
     {
-        private IImageHelper _imageHelper;
-        public CreateModel(FilmReferenceContext context, IImageHelper imageHelper)
-            : base (context)
+        private readonly IImageHelper _imageHelper;
+        private readonly IPersonPagesManager _personPagesManager;
+
+        public CreateModel(IImageHelper imageHelper, IPersonPagesManager personPagesManager)
         {
             _imageHelper = imageHelper;
+            _personPagesManager = personPagesManager;
         }
 
-        public IActionResult OnGet()
-        {
-            return Page();
-        }
-        
+        public IActionResult OnGet() =>
+            Page();
+
         public Person Person { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
-            {
                 return Page();
-            }
 
-            var newPerson = new Person(_context);
+            var newPerson = new Person();
+            var updated = await TryUpdateModelAsync(
+                newPerson,
+                nameof(Person),
+                p => p.PersonId,
+                p => p.FirstName,
+                p => p.LastName,
+                p => p.Description,
+                p => p.IsActor,
+                p => p.IsDirector,
+                p => p.Picture);
+
+            if (!updated) return Page();
 
             var files = Request.Form.Files;
-            if (files.Count > 0)
+            if (files.Any())
             {
-                var file = files[0];
+                var file = files.ElementAt(0);
                 if (file.Length > 0)
                 {
                     if (!_imageHelper.FileTypeOk(file, out var errorMessage))
@@ -44,32 +57,19 @@ namespace FilmReference.FrontEnd
                         return Page();
                     }
 
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        file.CopyTo(memoryStream);
-                        newPerson.Picture = memoryStream.ToArray();
-                    }
+                    _imageHelper.AddImageToEntity(newPerson, file);
                 }
             }
 
-            if (await TryUpdateModelAsync(
-                newPerson,
-                nameof(Person),
-                    p => p.PersonId,
-                    p => p.FirstName,
-                    p => p.LastName,
-                    p => p.Description,
-                    p => p.IsActor,
-                    p => p.IsDirector,
-                    p => p.Picture))
+            if (await _personPagesManager.SavePerson(newPerson))
             {
-                _context.Add(newPerson);
-                await _context.SaveChangesAsync();
                 var nextPage = !newPerson.IsActor && newPerson.IsDirector
                     ? PageValues.DirectorIndexPage
                     : PageValues.PersonIndexPage;
                 return RedirectToPage(nextPage);
             }
+
+            ModelState.AddModelError(PageValues.PersonName, PageValues.DuplicatePerson);
             return Page();
         }
     }

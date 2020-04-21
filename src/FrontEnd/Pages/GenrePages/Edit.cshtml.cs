@@ -1,81 +1,61 @@
 ﻿using FilmReference.DataAccess;
+using FilmReference.FrontEnd.Managers;
 using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace FilmReference.FrontEnd.Pages.GenrePages
 {
-    public class EditModel : FilmReferencePageModel
+    public class EditModel : PageModel
     {
-        #region Constructor
-
-        public EditModel(FilmReferenceContext context)
-            : base (context)
-        {
-        }
-
-        #endregion
-
-        #region Properties
-
+        private readonly IGenrePagesManager _genrePagesManager;
         public Genre Genre { get; set; }
-
-        #endregion
-
-        #region Get
-
+        public EditModel(IGenrePagesManager genrePagesManager) => 
+            _genrePagesManager = genrePagesManager;
+        
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
-            Genre = await _context.Genre.FirstOrDefaultAsync(m => m.GenreId == id);
+            var results  = await _genrePagesManager.GetGenreById(id.Value);
 
-            if (Genre == null)
-            {
-                return NotFound();
-            }
+            if (results.HttpStatusCode == HttpStatusCode.NotFound) return NotFound();
+
+            Genre = results.Entity;
+
             return Page();
         }
-
-        #endregion
-
-        #region Post
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             if (!ModelState.IsValid)
-            {
                 return Page();
-            }
 
-            Genre = await _context.Genre.FirstOrDefaultAsync(g => g.GenreId == id);
+            var results = await _genrePagesManager.GetGenreById(id.Value);
 
-            if (Genre == null)
-            {
-                return NotFound();
-            }
+            if (results.HttpStatusCode == HttpStatusCode.NotFound) return NotFound();
 
-            if (await TryUpdateModelAsync(
+            Genre = results.Entity;
+
+            var updated = await TryUpdateModelAsync(
                 Genre,
                 nameof(Genre),
-                g => g.GenreId, g => g.Name, g => g.Description))
-            {
-                await _context.SaveChangesAsync();
-                return RedirectToPage(PageValues.GenreIndexPage);
-            }
+                g => g.GenreId, g => g.Name, g => g.Description);
 
+            if (!updated)
+                return Page();
+
+            if (await _genrePagesManager.UpdateGenre(Genre))
+                return RedirectToPage(PageValues.GenreIndexPage);
+
+            ModelState.AddModelError(PageValues.GenreName, PageValues.DuplicateGenre);
             return Page();
         }
-
-        #endregion
     }
 }

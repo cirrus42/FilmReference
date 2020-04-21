@@ -99,7 +99,7 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
             if (await _filmPagesManager.UpdateFilm(result.Entity.Film)) 
                 return RedirectToPage(PageValues.FilmIndexPage);
 
-            ModelState.AddModelError(PageValues.FilmName, PageValues.DuplicateFilm);
+            ModelState.AddModelError(PageValues.FilmName, PageValues.DuplicatePerson);
             FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
             return Page();
         }

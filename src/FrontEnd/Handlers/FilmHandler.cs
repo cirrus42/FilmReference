@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using FilmReference.DataAccess;
+﻿using FilmReference.DataAccess;
 using FilmReference.DataAccess.Repositories;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using FilmReference.FrontEnd.Extensions;
 using FilmReference.FrontEnd.Handlers.Interfaces;
 using FilmReference.FrontEnd.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace FilmReference.FrontEnd.Handlers
 {
@@ -28,7 +27,7 @@ namespace FilmReference.FrontEnd.Handlers
         {
             var duplicates =
                 (await _filmRepository.GetWhere(f =>
-                    f.Name.Sanitize() == filmName.Sanitize())).ToList();
+                    f.Name.ToLower().Replace(" ", "") == filmName.ToLower().Replace(" ", ""))).ToList();
 
             if (!duplicates.Any()) return false;
 

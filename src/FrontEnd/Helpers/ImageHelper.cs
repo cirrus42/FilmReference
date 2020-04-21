@@ -34,7 +34,7 @@ namespace FilmReference.FrontEnd.Helpers
             return false;
         }
 
-        public void AddImageToFilm(Film film, IFormFile formFile)
+        public void AddImageToEntity(IPicture film, IFormFile formFile)
         {
             using var memoryStream = new MemoryStream();
             formFile.CopyTo(memoryStream);

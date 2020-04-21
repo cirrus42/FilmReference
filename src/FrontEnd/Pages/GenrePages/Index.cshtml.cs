@@ -1,24 +1,21 @@
 ﻿using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Models;
-using Microsoft.EntityFrameworkCore;
+using FilmReference.FrontEnd.Handlers.Interfaces;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace FilmReference.FrontEnd.Pages.GenrePages
 {
-    public class IndexModel : FilmReferencePageModel
+    public class IndexModel : PageModel
     {
-        public IndexModel(FilmReferenceContext context)
-            : base (context)
-        {
-        }
+        private readonly IGenreHandler _genreHandler;
+        public IList<Genre> Genre { get; set; }
 
-        public IList<Genre> Genre { get;set; }
+        public IndexModel(IGenreHandler genreHandler) =>
+            _genreHandler = genreHandler;
 
-        public async Task OnGetAsync()
-            => Genre = await _context.Genre
-                .OrderBy(g => g.Name)
-                .ToListAsync();
+        public async Task OnGetAsync() =>
+            Genre = (await _genreHandler.GetGenres()).ToList();
     }
 }

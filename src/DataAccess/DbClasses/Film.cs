@@ -6,7 +6,7 @@ using FilmReference.DataAccess.Repositories;
 namespace FilmReference.DataAccess
 {
     [Table("Film")]
-    public partial class Film
+    public partial class Film : IPicture
     {
         public Film()
         {
@@ -33,6 +33,7 @@ namespace FilmReference.DataAccess
 
         public Studio Studio { get; set; }
 
-        public ICollection<FilmPerson> FilmPerson { get; set; } 
+        public ICollection<FilmPerson> FilmPerson { get; set; }
+   
     }
 }

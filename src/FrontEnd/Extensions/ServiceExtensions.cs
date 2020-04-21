@@ -19,6 +19,7 @@ namespace FilmReference.FrontEnd.Extensions
             services.AddTransient<IFilmHandler, FilmHandler>();
             services.AddTransient<IFilmPersonHandler, FilmPersonHandler>();
             services.AddTransient<IFilmPagesManager, FilmPagesManager>();
+            services.AddTransient<IGenrePagesManager, GenrePagesManager>();
         }
 
         public static void AddRepositories(this IServiceCollection services)

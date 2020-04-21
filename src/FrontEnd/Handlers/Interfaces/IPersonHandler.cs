@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using FilmReference.DataAccess;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using FilmReference.DataAccess;
 
 namespace FilmReference.FrontEnd.Handlers.Interfaces
 {
@@ -8,5 +8,7 @@ namespace FilmReference.FrontEnd.Handlers.Interfaces
     {
         Task<IEnumerable<Person>> GetDirectors();
         Task<IEnumerable<Person>> GetActors();
+        Task SavePerson(Person person);
+        Task<bool> IsDuplicate(Person person);
     }
 }

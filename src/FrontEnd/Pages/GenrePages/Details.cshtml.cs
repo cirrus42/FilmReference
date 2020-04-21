@@ -1,33 +1,29 @@
 ﻿using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Models;
+using FilmReference.FrontEnd.Handlers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace FilmReference.FrontEnd.Pages.GenrePages
 {
-    public class DetailsModel : FilmReferencePageModel
+    public class DetailsModel : PageModel
     {
-        public DetailsModel(FilmReferenceContext context)
-            : base (context)
-        {
-        }
-
+        private readonly IGenreHandler _genreHandler;
         public Genre Genre { get; set; }
 
+        public DetailsModel(IGenreHandler genreHandler) =>
+            _genreHandler = genreHandler;
+        
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
-            Genre = await _context.Genre.FirstOrDefaultAsync(m => m.GenreId == id);
+            var result = await _genreHandler.GetGenreById(id.Value);
 
-            if (Genre == null)
-            {
-                return NotFound();
-            }
+            if (result.HttpStatusCode == HttpStatusCode.NotFound) return NotFound();
+           
             return Page();
         }
     }

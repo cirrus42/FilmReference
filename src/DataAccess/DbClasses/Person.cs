@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace FilmReference.DataAccess
 {
     [Table("Person")]
-    public partial class Person
+    public partial class Person : IPicture
     {
         public Person() {}
 
