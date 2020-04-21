@@ -36,11 +36,16 @@ namespace FilmReference.FrontEnd.Handlers
             return person.PersonId <= 0 || duplicates.Any(p => p.PersonId != person.PersonId);
         }
 
-        public async Task<Person> GetPerson(int id) => 
+        public async Task<Person> GetPersonWithDetails(int id) => 
             await _personRepository.GetAllQueryable()
                 .Include(p => p.FilmPerson)
                 .ThenInclude(fp => fp.Film)
                 .FirstOrDefaultAsync(m => m.PersonId == id);
 
+        public async Task<Person> GetPersonById(int id) =>
+            await _personRepository.GetById(id);
+
+        public Task UpdatePerson(Person person) =>
+            _personRepository.Update(person);
     }
 }

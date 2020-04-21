@@ -26,7 +26,7 @@ namespace FilmReference.FrontEnd.Managers
 
         public async Task<Results<PersonPagesValues>> GetPersonDetails(int id)
         {
-            var person = await _personHandler.GetPerson(id);
+            var person = await _personHandler.GetPersonWithDetails(id);
 
             if (person == null) return new Results<PersonPagesValues> {HttpStatusCode = HttpStatusCode.NotFound};
 
@@ -41,7 +41,22 @@ namespace FilmReference.FrontEnd.Managers
                     Films = filmPersonList.Select(filmPerson => filmPerson.Film).ToList()
                 }
             };
+        }
 
+        public async Task<Results<Person>> GetPersonById(int id)
+        {
+            var person = await _personHandler.GetPersonWithDetails(id);
+            return person == null ? 
+                new Results<Person> {HttpStatusCode = HttpStatusCode.NotFound} : 
+                new Results<Person> {HttpStatusCode = HttpStatusCode.OK, Entity = person};
+        }
+
+        public async Task<bool> UpdatePerson(Person person)
+        {
+            if (await _personHandler.IsDuplicate(person))
+                return false;
+            await _personHandler.UpdatePerson(person);
+            return true;
         }
     }
 }
