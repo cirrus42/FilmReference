@@ -1,6 +1,7 @@
 ﻿using FilmReference.DataAccess;
 using FilmReference.FrontEnd.Handlers.Interfaces;
 using System.Threading.Tasks;
+using FilmReference.FrontEnd.Managers.Interfaces;
 using FilmReference.FrontEnd.Models;
 
 namespace FilmReference.FrontEnd.Managers

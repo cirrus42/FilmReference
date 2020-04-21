@@ -10,5 +10,6 @@ namespace FilmReference.FrontEnd.Handlers.Interfaces
         Task<IEnumerable<Person>> GetActors();
         Task SavePerson(Person person);
         Task<bool> IsDuplicate(Person person);
+        Task<Person> GetPerson(int id);
     }
 }

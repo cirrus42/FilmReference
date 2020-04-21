@@ -2,7 +2,7 @@
 using FilmReference.DataAccess;
 using FilmReference.FrontEnd.Models;
 
-namespace FilmReference.FrontEnd.Managers
+namespace FilmReference.FrontEnd.Managers.Interfaces
 {
     public interface IGenrePagesManager
     {

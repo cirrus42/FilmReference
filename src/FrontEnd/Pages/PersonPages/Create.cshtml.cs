@@ -1,12 +1,12 @@
 ﻿using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Handlers.Interfaces;
 using FilmReference.FrontEnd.Helpers;
+using FilmReference.FrontEnd.Managers;
 using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Linq;
 using System.Threading.Tasks;
-using FilmReference.FrontEnd.Managers;
+using FilmReference.FrontEnd.Managers.Interfaces;
 
 namespace FilmReference.FrontEnd.Pages.PersonPages
 {
@@ -14,6 +14,7 @@ namespace FilmReference.FrontEnd.Pages.PersonPages
     {
         private readonly IImageHelper _imageHelper;
         private readonly IPersonPagesManager _personPagesManager;
+        public Person Person { get; set; }
 
         public CreateModel(IImageHelper imageHelper, IPersonPagesManager personPagesManager)
         {
@@ -23,8 +24,6 @@ namespace FilmReference.FrontEnd.Pages.PersonPages
 
         public IActionResult OnGet() =>
             Page();
-
-        public Person Person { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {

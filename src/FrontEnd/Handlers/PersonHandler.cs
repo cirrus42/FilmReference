@@ -4,6 +4,7 @@ using FilmReference.FrontEnd.Handlers.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace FilmReference.FrontEnd.Handlers
 {
@@ -34,5 +35,12 @@ namespace FilmReference.FrontEnd.Handlers
 
             return person.PersonId <= 0 || duplicates.Any(p => p.PersonId != person.PersonId);
         }
+
+        public async Task<Person> GetPerson(int id) => 
+            await _personRepository.GetAllQueryable()
+                .Include(p => p.FilmPerson)
+                .ThenInclude(fp => fp.Film)
+                .FirstOrDefaultAsync(m => m.PersonId == id);
+
     }
 }

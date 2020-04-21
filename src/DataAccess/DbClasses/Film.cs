@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using FilmReference.DataAccess.Repositories;
@@ -34,6 +35,10 @@ namespace FilmReference.DataAccess
         public Studio Studio { get; set; }
 
         public ICollection<FilmPerson> FilmPerson { get; set; }
-   
+
+        public static explicit operator Film(FilmPerson v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

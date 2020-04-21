@@ -1,9 +1,9 @@
-﻿using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using FilmReference.DataAccess;
+using FilmReference.FrontEnd.Models;
 
-namespace FilmReference.FrontEnd.Managers
+namespace FilmReference.FrontEnd.Managers.Interfaces
 {
     public interface IFilmPagesManager
     {

@@ -1,48 +1,34 @@
-﻿using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Helpers;
+﻿using FilmReference.FrontEnd.Helpers;
+using FilmReference.FrontEnd.Managers.Interfaces;
 using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Net;
 using System.Threading.Tasks;
 
-namespace FilmReference.FrontEnd
+namespace FilmReference.FrontEnd.Pages.PersonPages
 {
-    public class DetailsModel : FilmReferencePageModel
+    public class DetailsModel : PageModel
     {
         public IImageHelper ImageHelper;
-        public DetailsModel(FilmReferenceContext context, IImageHelper imageHelper)
-            : base (context)
+        private readonly IPersonPagesManager _personPagesManager;
+        public PersonPagesValues PersonPagesValues { get; set; }
+        public DetailsModel(IImageHelper imageHelper, IPersonPagesManager personPagesManager)
         {
             ImageHelper = imageHelper;
+            _personPagesManager = personPagesManager;
         }
-
-        public Person Person { get; set; }
-
-        public List<Film> Films { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
                 return NotFound();
 
-            Person = await _context.Person
-                .Include(p => p.FilmPerson)
-                    .ThenInclude(fp => fp.Film)
-                .FirstOrDefaultAsync(m => m.PersonId == id);
+            var result = await _personPagesManager.GetPersonDetails(id.Value);
 
-            if (Person == null)
-            {
-                return NotFound();
-            }
+            if (result.HttpStatusCode == HttpStatusCode.NotFound) return NotFound();
 
-            var films = Person.FilmPerson.OrderBy(fp => fp.Film.Name);
-            Films = new List<Film>();
-            foreach (var film in films)
-            {
-                Films.Add(film.Film);
-            }
+            PersonPagesValues = result.Entity;
 
             return Page();
         }

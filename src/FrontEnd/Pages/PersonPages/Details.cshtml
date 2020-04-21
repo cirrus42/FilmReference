@@ -1,6 +1,5 @@
 ﻿@page
-@model FilmReference.FrontEnd.DetailsModel
-
+@model FilmReference.FrontEnd.Pages.PersonPages.DetailsModel
 @{
     ViewData["Title"] = "Details";
 }
@@ -15,31 +14,31 @@
             Name
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Person.FirstName) @Html.DisplayFor(model => model.Person.LastName)
+            @Html.DisplayFor(model => model.PersonPagesValues.Person.FirstName) @Html.DisplayFor(model => model.PersonPagesValues.Person.LastName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Person.Description)
+            @Html.DisplayNameFor(model => model.PersonPagesValues.Person.Description)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Person.Description)
+            @Html.DisplayFor(model => model.PersonPagesValues.Person.Description)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Person.IsActor)
+            @Html.DisplayNameFor(model => model.PersonPagesValues.Person.IsActor)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Person.IsActor)
+            @Html.DisplayFor(model => model.PersonPagesValues.Person.IsActor)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Person.IsDirector)
+            @Html.DisplayNameFor(model => model.PersonPagesValues.Person.IsDirector)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Person.IsDirector)
+            @Html.DisplayFor(model => model.PersonPagesValues.Person.IsDirector)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Person.Picture)
+            @Html.DisplayNameFor(model => model.PersonPagesValues.Person.Picture)
         </dt>
         <dd class="col-sm-10">
-            <img src="@Model.ImageHelper.ImageSource(Model.Person.Picture)" class="PersonImage" />
+            <img src="@Model.ImageHelper.ImageSource(Model.PersonPagesValues.Person.Picture)" class="PersonImage" />
         </dd>
     </dl>
 </div>
@@ -52,7 +51,7 @@
                 var counter = 1;
             }
             <tr style="vertical-align: top">
-                @foreach (var film in Model.Films)
+                @foreach (var film in Model.PersonPagesValues.Films)
                 {
                     <td>
                         <a asp-page="/FilmPages/Details" asp-route-id="@film.FilmId">
@@ -71,7 +70,7 @@
         </tbody>
     </table>
 </div>
-    <div>
-        <a asp-page="./Edit" asp-route-id="@Model.Person.PersonId">Edit</a> |
-        <a asp-page="./Index">Back to List</a>
-    </div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.PersonPagesValues.Person.PersonId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
