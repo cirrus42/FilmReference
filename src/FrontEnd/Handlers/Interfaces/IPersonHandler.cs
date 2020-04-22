@@ -13,5 +13,6 @@ namespace FilmReference.FrontEnd.Handlers.Interfaces
         Task<Person> GetPersonWithDetails(int id);
         Task<Person> GetPersonById(int id);
         Task UpdatePerson(Person person);
+        Task<IEnumerable<Person>> GetActors(string startCharacter);
     }
 }

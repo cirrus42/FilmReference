@@ -47,5 +47,12 @@ namespace FilmReference.FrontEnd.Handlers
 
         public Task UpdatePerson(Person person) =>
             _personRepository.Update(person);
+
+        public async Task<IEnumerable<Person>> GetActors(string startCharacter) =>
+            await _personRepository.GetAllQueryable()
+                .Include(p => p.FilmPerson)
+                .Where(p => p.IsActor && p.FullName.StartsWith(startCharacter))
+                .OrderBy(p => p.FullName)
+                .ToListAsync();
     }
 }

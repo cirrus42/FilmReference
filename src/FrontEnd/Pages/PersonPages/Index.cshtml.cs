@@ -1,46 +1,42 @@
-﻿using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Models;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Threading.Tasks;
+using FilmReference.DataAccess;
+using FilmReference.FrontEnd.Handlers.Interfaces;
 using FilmReference.FrontEnd.Helpers;
+using FilmReference.FrontEnd.Models;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
-namespace FilmReference.FrontEnd
+namespace FilmReference.FrontEnd.Pages.PersonPages
 {
-    public class IndexModel : FilmReferencePageModel
+    public class IndexModel : PageModel
     {
         public IImageHelper ImageHelper;
-        public IndexModel(FilmReferenceContext context, IImageHelper imageHelper)
-            : base (context)
+        private readonly IPersonHandler _personHandler;
+
+        public IndexModel(IImageHelper imageHelper, IPersonHandler personHandler)
         {
             ImageHelper = imageHelper;
+            _personHandler = personHandler;
         }
 
-        public List<Person> Person { get;set; }
+        public List<Person> ActorList { get;set; }
 
         public List<string> AtoZ { get; set; }
 
         public async Task OnGetAsync(string id)
         {
             if (string.IsNullOrEmpty(id))
-            {
                 id = "A";
-            }
-            Person = await _context.Person
-                .Include(p => p.FilmPerson)
-                .Where(p =>
-                    p.IsActor &&
-                    p.FullName.StartsWith(id))
-                .OrderBy(p => p.FullName)
-                .ToListAsync();
+
+            ActorList = (await _personHandler.GetActors(id)).ToList();
 
             AtoZ = new List<string>();
 
             for (var i = 65; i <= 90; i ++)
-            {
                 AtoZ.Add(((char)i).ToString());
-            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using FilmReference.DataAccess;
+﻿using System.Collections.Generic;
+using FilmReference.DataAccess;
 using FilmReference.FrontEnd.Handlers.Interfaces;
 using FilmReference.FrontEnd.Managers.Interfaces;
 using FilmReference.FrontEnd.Models;
@@ -58,5 +59,6 @@ namespace FilmReference.FrontEnd.Managers
             await _personHandler.UpdatePerson(person);
             return true;
         }
+
     }
 }
