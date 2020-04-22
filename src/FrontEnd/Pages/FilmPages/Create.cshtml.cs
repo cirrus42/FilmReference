@@ -90,7 +90,7 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
             if (await _filmPagesManager.SaveFilm(newFilm))
                 return RedirectToPage(PageValues.FilmIndexPage);
 
-            ModelState.AddModelError(PageValues.FilmName, PageValues.DuplicatePerson);
+            ModelState.AddModelError(PageValues.FilmName, PageValues.DuplicateFilm);
             FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
             return Page();
         }

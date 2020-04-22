@@ -17,7 +17,6 @@ namespace FilmReference.FrontEnd.Pages.PersonPages
         public Person Person { get; set; }
 
         public EditModel(IImageHelper imageHelper, IPersonPagesManager personPagesManager)
-
         {
             ImageHelper = imageHelper;
             _personPagesManager = personPagesManager;
@@ -49,6 +48,8 @@ namespace FilmReference.FrontEnd.Pages.PersonPages
 
             if (result.HttpStatusCode == HttpStatusCode.NotFound) return NotFound();
 
+            Person = result.Entity;
+
             var updated = await TryUpdateModelAsync(
                 Person,
                 nameof(Person),
@@ -74,7 +75,7 @@ namespace FilmReference.FrontEnd.Pages.PersonPages
                         return Page();
                     }
 
-                    ImageHelper.AddImageToEntity(Person, file);
+                    ImageHelper.AddImageToEntity(result.Entity, file);
                 }
             }
 
@@ -86,7 +87,8 @@ namespace FilmReference.FrontEnd.Pages.PersonPages
                 return RedirectToPage(nextPage);
             }
 
-            ModelState.AddModelError(PageValues.PersonName, PageValues.DuplicatePerson);
+            ModelState.AddModelError(PageValues.PersonFirstName, PageValues.DuplicatePerson);
+            ModelState.AddModelError(PageValues.PersonLastName, PageValues.DuplicatePerson);
             return Page();
         }
     }

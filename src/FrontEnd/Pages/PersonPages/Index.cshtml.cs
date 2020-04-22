@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Security;
-using System.Threading.Tasks;
-using FilmReference.DataAccess;
+﻿using FilmReference.DataAccess;
 using FilmReference.FrontEnd.Handlers.Interfaces;
 using FilmReference.FrontEnd.Helpers;
-using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FilmReference.FrontEnd.Pages.PersonPages
 {

@@ -1,5 +1,5 @@
 ﻿@page
-@model FilmReference.FrontEnd.IndexModel
+@model FilmReference.FrontEnd.Pages.PersonPages.IndexModel
 @using FilmReference.FrontEnd.Extensions
 
 @{
@@ -22,7 +22,7 @@
     }
 </p>
 <p>
-    @Model.Person.Count record@(@Model.Person.Count.ShowCorrectRecordText()) found
+    @Model.ActorList.Count record@(@Model.ActorList.Count.ShowCorrectRecordText()) found
 </p>
 <table>
     <tbody>
@@ -30,7 +30,7 @@
             var counter = 1;
         }
         <tr style="vertical-align: top">
-            @foreach (var item in Model.Person)
+            @foreach (var item in Model.ActorList)
             {
                 <td style="padding: 5px; width: 25%; border: 1px solid lightgrey">
                     <strong>@Html.DisplayFor(modelItem => item.FullName)</strong>

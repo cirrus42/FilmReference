@@ -67,7 +67,8 @@ namespace FilmReference.FrontEnd.Pages.PersonPages
                 return RedirectToPage(nextPage);
             }
 
-            ModelState.AddModelError(PageValues.PersonName, PageValues.DuplicatePerson);
+            ModelState.AddModelError(PageValues.PersonFirstName, PageValues.DuplicatePerson);
+            ModelState.AddModelError(PageValues.PersonLastName, PageValues.DuplicatePerson);
             return Page();
         }
     }

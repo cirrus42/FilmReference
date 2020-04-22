@@ -13,21 +13,23 @@ namespace FilmReference.FrontEnd.Pages.StudioPages
         private readonly IImageHelper _imageHelper;
         private readonly IStudioPagesManager _studioPagesManager;
         public Studio Studio { get; set; }
-        public CreateModel(FilmReferenceContext context, IImageHelper imageHelper, IStudioPagesManager studioPagesManager)
-            : base (context)
+
+        public CreateModel(FilmReferenceContext context, IImageHelper imageHelper,
+            IStudioPagesManager studioPagesManager)
+            : base(context)
         {
             _imageHelper = imageHelper;
             _studioPagesManager = studioPagesManager;
         }
 
-        public IActionResult OnGet() => 
+        public IActionResult OnGet() =>
             Page();
-        
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
                 return Page();
-            
+
             var newStudio = new Studio();
 
             var updated = await TryUpdateModelAsync(
@@ -52,14 +54,13 @@ namespace FilmReference.FrontEnd.Pages.StudioPages
 
                     _imageHelper.AddImageToEntity(newStudio, file);
                 }
-
-                if (await _studioPagesManager.SaveStudio(newStudio))
-                    return RedirectToPage(PageValues.StudioIndexPage);
-
-                ModelState.AddModelError(PageValues.StudioName, PageValues.DuplicateStudio);
-                return Page();
-
             }
+
+            if (await _studioPagesManager.SaveStudio(newStudio))
+                return RedirectToPage(PageValues.StudioIndexPage);
+
+            ModelState.AddModelError(PageValues.StudioName, PageValues.DuplicateStudio);
+            return Page();
         }
     }
 }

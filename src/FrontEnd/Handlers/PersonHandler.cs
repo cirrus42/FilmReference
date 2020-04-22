@@ -20,9 +20,12 @@ namespace FilmReference.FrontEnd.Handlers
         public async Task<IEnumerable<Person>> GetActors() =>
             (await _personRepository.GetWhere(person => person.IsActor)).OrderBy(person => person.FullName);
 
-        public Task SavePerson(Person person) =>
-            _personRepository.Add(person);
-
+        public async Task SavePerson(Person person)
+        {
+            await _personRepository.Add(person);
+            await _personRepository.Save();
+        }
+        
         public async Task<bool> IsDuplicate(Person person)
         {
             var duplicates =
