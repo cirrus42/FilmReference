@@ -2,8 +2,10 @@
 using FilmReference.DataAccess.Repositories;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using FilmReference.FrontEnd.Handlers.Interfaces;
+using FilmReference.FrontEnd.Models;
 
 namespace FilmReference.FrontEnd.Handlers
 {
@@ -30,5 +32,17 @@ namespace FilmReference.FrontEnd.Handlers
             await _studioRepository.Add(studio);
             await _studioRepository.Save();
         }
+
+        public async Task<Results<Studio>> GetStudioById(int id)
+        {
+            var studio = await _studioRepository.GetById(id);
+
+            return studio == null ?
+                new Results<Studio> { HttpStatusCode = HttpStatusCode.NotFound } :
+                new Results<Studio> { Entity = studio, HttpStatusCode = HttpStatusCode.OK };
+        }
+
+        public async Task UpdateStudio(Studio studio) =>
+                await _studioRepository.Update(studio);
     }
 }

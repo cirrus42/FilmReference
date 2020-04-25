@@ -1,49 +1,38 @@
 ﻿using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 using FilmReference.FrontEnd.Helpers;
+using FilmReference.FrontEnd.Managers.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace FilmReference.FrontEnd.Pages.StudioPages
 {
-    public class DetailsModel : FilmReferencePageModel
+    public class DetailsModel : PageModel
     {
-        #region Constructor
 
         public IImageHelper ImageHelper;
-        public DetailsModel(FilmReferenceContext context, IImageHelper imageHelper)
-            : base (context)
-        {
-            ImageHelper = imageHelper;
-        }
-
-        #endregion
-
-        #region Properties
-
+        private readonly IStudioPagesManager _studioPagesManager;
         public Studio Studio { get; set; }
 
-        #endregion
-
-        #region Get
+        public DetailsModel(IImageHelper imageHelper, IStudioPagesManager studioPagesManager)
+        {
+            ImageHelper = imageHelper;
+            _studioPagesManager = studioPagesManager;
+        }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
-            Studio = await _context.Studio.FirstOrDefaultAsync(m => m.StudioId == id);
+            var results = await _studioPagesManager.GetStudioById(id.Value);
 
-            if (Studio == null)
-            {
-                return NotFound();
-            }
+            if (results.HttpStatusCode == HttpStatusCode.NotFound) return NotFound();
+
+            Studio = results.Entity;
+     
             return Page();
         }
-
-        #endregion
     }
 }

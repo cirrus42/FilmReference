@@ -1,77 +1,66 @@
 ﻿using FilmReference.DataAccess;
+using FilmReference.FrontEnd.Helpers;
+using FilmReference.FrontEnd.Managers.Interfaces;
 using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.IO;
+using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
-using FilmReference.FrontEnd.Helpers;
 
 namespace FilmReference.FrontEnd.Pages.StudioPages
 {
-    public class EditModel : FilmReferencePageModel
+    public class EditModel : PageModel
     {
-        #region Constructor
-
         public readonly IImageHelper ImageHelper;
-        public EditModel(FilmReferenceContext context, IImageHelper imageHelper)
-            : base (context)
-        {
-            ImageHelper = imageHelper;
-        }
-
-        #endregion
-
-        #region Properties
-
+        private IStudioPagesManager _studioPagesManager;
         public Studio Studio { get; set; }
 
-        #endregion
-
-        #region Get
+        public EditModel( IImageHelper imageHelper, IStudioPagesManager studioPagesManager)
+        {
+            ImageHelper = imageHelper;
+            _studioPagesManager = studioPagesManager;
+        }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
-            Studio = await _context.Studio.FirstOrDefaultAsync(m => m.StudioId == id);
+            var results = await _studioPagesManager.GetStudioById(id.Value);
 
-            if (Studio == null)
-            {
-                return NotFound();
-            }
+            if (results.HttpStatusCode == HttpStatusCode.NotFound) return NotFound();
+
+            Studio = results.Entity;
+
             return Page();
         }
-
-        #endregion
-
-        #region Post
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
-
+            
             if (!ModelState.IsValid)
-            {
                 return Page();
-            }
 
-            Studio = await _context.Studio.FirstOrDefaultAsync(s => s.StudioId == id);
+            var result = await _studioPagesManager.GetStudioById(id.Value);
 
-            if (Studio == null)
-            {
-                return NotFound();
-            }
+            if (result.HttpStatusCode == HttpStatusCode.NotFound) return NotFound();
+
+            var updated = await TryUpdateModelAsync(
+                Studio,
+                nameof(Studio),
+                s => s.StudioId, s => s.Name, s => s.Description, s => s.Picture);
+
+            if(!updated)  return Page();
 
             var files = Request.Form.Files;
-            if (files.Count > 0)
+
+            if (files.Any())
             {
-                var file = files[0];
+                var file = files.ElementAt(0);
                 if (file.Length > 0)
                 {
                     if (!ImageHelper.FileTypeOk(file, out var errorMessage))
@@ -80,26 +69,17 @@ namespace FilmReference.FrontEnd.Pages.StudioPages
                         return Page();
                     }
 
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        file.CopyTo(memoryStream);
-                        Studio.Picture = memoryStream.ToArray();
-                    }
+                    await using var memoryStream = new MemoryStream();
+                    file.CopyTo(memoryStream);
+                    result.Entity.Picture = memoryStream.ToArray();
                 }
             }
 
-            if (await TryUpdateModelAsync(
-                Studio,
-                nameof(Studio),
-                s => s.StudioId, s => s.Name, s => s.Description, s => s.Picture))
-            {
-                await _context.SaveChangesAsync();
+            if (await _studioPagesManager.UpdateStudio(Studio))
                 return RedirectToPage(PageValues.StudioIndexPage);
-            }
 
+            ModelState.AddModelError(PageValues.StudioName, PageValues.DuplicateStudio);
             return Page();
         }
-
-        #endregion
     }
 }
