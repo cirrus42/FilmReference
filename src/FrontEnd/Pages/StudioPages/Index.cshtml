@@ -1,5 +1,6 @@
 ﻿@page
 @model FilmReference.FrontEnd.Pages.StudioPages.IndexModel
+@using System.Linq
 @using FilmReference.FrontEnd.Extensions
 
 @{
@@ -12,22 +13,22 @@
     <a asp-page="Create">Create New</a>
 </p>
 <p>
-    @Model.Studio.Count record@(@Model.Studio.Count.ShowCorrectRecordText()) found
+    @Model.StudioList.Count record@(@Model.StudioList.Count.ShowCorrectRecordText()) found
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Studio[0].Name)
+                @Html.DisplayNameFor(model => model.StudioList.ElementAt(0).Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Studio[0].Description)
+                @Html.DisplayNameFor(model => model.StudioList.ElementAt(0).Description)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Studio)
+        @foreach (var item in Model.StudioList)
         {
             <tr>
                 <td>

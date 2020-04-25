@@ -1,27 +1,25 @@
 ﻿using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Models;
-using Microsoft.EntityFrameworkCore;
+using FilmReference.FrontEnd.Handlers.Interfaces;
+using FilmReference.FrontEnd.Helpers;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FilmReference.FrontEnd.Helpers;
 
 namespace FilmReference.FrontEnd.Pages.StudioPages
 {
-    public class IndexModel : FilmReferencePageModel
+    public class IndexModel : PageModel
     {
         public IImageHelper ImageHelper;
-        public IndexModel(FilmReferenceContext context, IImageHelper imageHelper)
-            : base (context)
+        private readonly IStudioHandler _studioHandler;
+        public IList<Studio> StudioList { get; set; }
+        public IndexModel(IImageHelper imageHelper, IStudioHandler studioHandler)
         {
             ImageHelper = imageHelper;
+            _studioHandler = studioHandler;
         }
 
-        public IList<Studio> Studio { get;set; }
-
         public async Task OnGetAsync()
-            => Studio = await _context.Studio
-                .OrderBy(s => s.Name)
-                .ToListAsync();
+            => StudioList = (await _studioHandler.GetStudios()).ToList();
     }
 }
