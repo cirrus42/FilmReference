@@ -4,6 +4,7 @@ using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
+using FilmReference.DataAccess.DbClasses;
 using FilmReference.FrontEnd.Managers.Interfaces;
 
 namespace FilmReference.FrontEnd.Pages.GenrePages
@@ -14,7 +15,7 @@ namespace FilmReference.FrontEnd.Pages.GenrePages
         public CreateModel(IGenrePagesManager genrePagesManager) =>
             _genrePagesManager = genrePagesManager;
         
-        public Genre Genre { get; set; }
+        public GenreEntity Genre { get; set; }
 
         public IActionResult OnGet() => 
             Page();
@@ -24,7 +25,7 @@ namespace FilmReference.FrontEnd.Pages.GenrePages
             if (!ModelState.IsValid)
                 return Page();
 
-            var newGenre = new Genre();
+            var newGenre = new GenreEntity();
 
             var updated = await TryUpdateModelAsync(
                 newGenre,

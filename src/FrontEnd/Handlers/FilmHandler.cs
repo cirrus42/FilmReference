@@ -7,17 +7,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using FilmReference.DataAccess.DbClasses;
 
 namespace FilmReference.FrontEnd.Handlers
 {
     public class FilmHandler : IFilmHandler
     {
-        private readonly IGenericRepository<Film> _filmRepository;
+        private readonly IGenericRepository<FilmEntity> _filmRepository;
 
-        public FilmHandler(IGenericRepository<Film> filmRepository) =>
+        public FilmHandler(IGenericRepository<FilmEntity> filmRepository) =>
             _filmRepository = filmRepository;
 
-        public async Task SaveFilm(Film film)
+        public async Task SaveFilm(FilmEntity film)
         {
             await _filmRepository.Add(film); 
             await _filmRepository.Save();
@@ -75,10 +76,10 @@ namespace FilmReference.FrontEnd.Handlers
             };
         }
 
-        public async Task UpdateFilm(Film film) =>
+        public async Task UpdateFilm(FilmEntity film) =>
             await _filmRepository.Update(film);
 
-        public async Task<IEnumerable<Film>> GetFilms() =>
+        public async Task<IEnumerable<FilmEntity>> GetFilms() =>
             await _filmRepository.GetAll();
     }
 }

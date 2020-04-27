@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FilmReference.DataAccess.DbClasses;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FilmReference.DataAccess
 {
-    public class GenreConfiguration : IEntityTypeConfiguration<Genre>
+    public class GenreConfiguration : IEntityTypeConfiguration<GenreEntity>
     {
-        public void Configure(EntityTypeBuilder<Genre> builder)
+        public void Configure(EntityTypeBuilder<GenreEntity> builder)
         {
             builder.Property(e => e.Name)
                 .IsUnicode(false);

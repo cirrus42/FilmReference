@@ -1,14 +1,15 @@
 ﻿using FilmReference.DataAccess;
 using System.Collections.Generic;
 using System.Linq;
+using FilmReference.DataAccess.DbClasses;
 using Microsoft.Extensions.Primitives;
 
 namespace FilmReference.FrontEnd.Extensions
 {
     public static class FilmPagesExtensions
     {
-        public static IEnumerable<FilmPerson> RemoveItems(
-            this ICollection<FilmPerson> filmPersonCollection,
+        public static IEnumerable<FilmPersonEntity> RemoveItems(
+            this ICollection<FilmPersonEntity> filmPersonCollection,
             IEnumerable<int> updateList)
         { 
             var filmPersonList = filmPersonCollection.ToList();
@@ -20,7 +21,7 @@ namespace FilmReference.FrontEnd.Extensions
 
         public static IEnumerable<int> RemoveItems(
             this IEnumerable<int> updateList,
-            ICollection<FilmPerson> filmPersonCollection)
+            ICollection<FilmPersonEntity> filmPersonCollection)
         {
             var updated = updateList.ToList();
             var filmPersonList = filmPersonCollection.ToList();

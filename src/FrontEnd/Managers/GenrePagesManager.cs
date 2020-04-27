@@ -1,6 +1,7 @@
 ﻿using FilmReference.DataAccess;
 using FilmReference.FrontEnd.Handlers.Interfaces;
 using System.Threading.Tasks;
+using FilmReference.DataAccess.DbClasses;
 using FilmReference.FrontEnd.Managers.Interfaces;
 using FilmReference.FrontEnd.Models;
 
@@ -13,7 +14,7 @@ namespace FilmReference.FrontEnd.Managers
         public GenrePagesManager(IGenreHandler genreHandler) => 
             _genreHandler = genreHandler;
 
-        public async Task<bool> SaveGenre(Genre genre)
+        public async Task<bool> SaveGenre(GenreEntity genre)
         {
             if (await _genreHandler.IsDuplicate(genre))
                 return false;
@@ -22,7 +23,7 @@ namespace FilmReference.FrontEnd.Managers
             return true;
         }
 
-        public async Task<bool> UpdateGenre(Genre genre)
+        public async Task<bool> UpdateGenre(GenreEntity genre)
         {
             if (await _genreHandler.IsDuplicate(genre))
                 return false;
@@ -30,7 +31,7 @@ namespace FilmReference.FrontEnd.Managers
             return true;
         }
 
-        public Task<Results<Genre>> GetGenreById(int id) =>
+        public Task<Results<GenreEntity>> GetGenreById(int id) =>
             _genreHandler.GetGenreById(id);
     }
 }

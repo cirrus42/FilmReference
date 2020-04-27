@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FilmReference.DataAccess.DbClasses;
 using FilmReference.FrontEnd.Managers.Interfaces;
 
 namespace FilmReference.FrontEnd.Pages.FilmPages
@@ -16,7 +17,7 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
     {
         private readonly IImageHelper _imageHelper;
         private readonly IFilmPagesManager _filmPagesManager;
-        public Film Film { get; set; }
+        public FilmEntity Film { get; set; }
         public List<int> SelectedActorIds { get; set; }
         public FilmPagesValues FilmPagesValues { get; set; }
 
@@ -37,9 +38,9 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
             if (!ModelState.IsValid)
                 await OnGet();
 
-            var newFilm = new Film()
+            var newFilm = new FilmEntity()
             {
-                FilmPerson = new List<FilmPerson>()
+                FilmPerson = new List<FilmPersonEntity>()
             };
 
             var updated = await TryUpdateModelAsync(
@@ -81,7 +82,7 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
 
             foreach (var actorId in selectedActorIds)
                 newFilm.FilmPerson.Add(
-                    new FilmPerson
+                    new FilmPersonEntity
                     {
                         FilmId = newFilm.FilmId,
                         PersonId = Convert.ToInt32(actorId)

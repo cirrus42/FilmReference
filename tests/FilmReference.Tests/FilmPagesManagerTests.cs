@@ -7,7 +7,9 @@ using Moq;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using FilmReference.DataAccess.DbClasses;
 using Xunit;
+using PersonEntity = FilmReference.DataAccess.DbClasses.PersonEntity;
 
 namespace FilmReference.Tests
 {
@@ -34,9 +36,9 @@ namespace FilmReference.Tests
         [Fact]
         public async Task GetFilmByIdReturnsFilm()
         {
-            var film = new Film {Name = "Film"};
-            var person = new Person {FirstName = "Test", LastName = "Surname"};
-            var actors = new List<Person> {person};
+            var film = new FilmEntity {Name = "Film"};
+            var person = new PersonEntity {FirstName = "Test", LastName = "Surname"};
+            var actors = new List<PersonEntity> {person};
             var filmDetails = new FilmDetails {Film = film, Actors = actors};
 
             var result = new Results<FilmDetails> {HttpStatusCode = HttpStatusCode.OK, Entity = filmDetails};
@@ -58,17 +60,17 @@ namespace FilmReference.Tests
         [Fact]
         public async Task GetFilmPageDropDownValuesReturnsFilmPagesValues()
         {
-            var director = new Person {FirstName = "Steven", LastName = "Speelberger"};
-            var directors = new List<Person>{director};
+            var director = new PersonEntity {FirstName = "Steven", LastName = "Speelberger"};
+            var directors = new List<PersonEntity>{director};
 
-            var actor = new Person { FirstName = "Ed", LastName = "Wood" };
-            var actors = new List<Person> { actor };
+            var actor = new PersonEntity { FirstName = "Ed", LastName = "Wood" };
+            var actors = new List<PersonEntity> { actor };
 
-            var genre = new Genre {Name = "A New Genre"};
-            var genres = new List<Genre>{genre};
+            var genre = new GenreEntity {Name = "A New Genre"};
+            var genres = new List<GenreEntity>{genre};
 
-            var studio = new Studio {Name = "Studio"};
-            var studios = new List<Studio>{studio};
+            var studio = new StudioEntity {Name = "Studio"};
+            var studios = new List<StudioEntity>{studio};
 
             _personHandler.Setup(method => method.GetDirectors()).ReturnsAsync(directors);
             _personHandler.Setup(method => method.GetActors()).ReturnsAsync(actors);
@@ -92,19 +94,19 @@ namespace FilmReference.Tests
             output.Genres.Should().Contain(genre);
             output.Studios.Should().Contain(studio);
 
-            output.Directors.Should().ContainEquivalentOf(new Person
+            output.Directors.Should().ContainEquivalentOf(new PersonEntity
             {
                 PersonId = PageValues.MinusOne,
                 FullName = PageValues.PleaseSelect
             });
 
-            output.Genres.Should().ContainEquivalentOf(new Genre
+            output.Genres.Should().ContainEquivalentOf(new GenreEntity
             {
                 GenreId = PageValues.MinusOne,
                 Name = PageValues.PleaseSelect
             });
 
-            output.Studios.Should().ContainEquivalentOf(new Studio
+            output.Studios.Should().ContainEquivalentOf(new StudioEntity
             {
                 StudioId = PageValues.MinusOne,
                 Name = PageValues.PleaseSelect
@@ -114,9 +116,9 @@ namespace FilmReference.Tests
         [Fact]
         public async Task GetFilmWithFilmPersonReturnsFilmValues()
         {
-            var film = new Film { Name = "Film" };
-            var person = new Person { FirstName = "Test", LastName = "Surname" };
-            var actors = new List<Person> { person };
+            var film = new FilmEntity { Name = "Film" };
+            var person = new PersonEntity { FirstName = "Test", LastName = "Surname" };
+            var actors = new List<PersonEntity> { person };
             var filmDetails = new FilmDetails { Film = film, Actors = actors };
 
             var result = new Results<FilmDetails> { HttpStatusCode = HttpStatusCode.OK, Entity = filmDetails };
@@ -140,19 +142,19 @@ namespace FilmReference.Tests
         [InlineData(false)]
         public async Task SaveFilmCallsMethodsAsRequiredAndReturnsBool(bool isDuplicate)
         {
-            var film = new Film{FilmId = 1, Name = "Test"};
+            var film = new FilmEntity{FilmId = 1, Name = "Test"};
             _filmHandler.Setup(method => method.IsDuplicate(It.IsAny<int>(), It.IsAny<string>())).ReturnsAsync(isDuplicate);
 
-            _filmHandler.Setup(method => method.SaveFilm(It.IsAny<Film>()));
+            _filmHandler.Setup(method => method.SaveFilm(It.IsAny<FilmEntity>()));
 
             var output = await _filmPagesManager.SaveFilm(film);
 
             _filmHandler.Verify(method => method.IsDuplicate(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
 
             if (isDuplicate)
-                _filmHandler.Verify(method => method.SaveFilm(It.IsAny<Film>()),Times.Never);
+                _filmHandler.Verify(method => method.SaveFilm(It.IsAny<FilmEntity>()),Times.Never);
             else
-                _filmHandler.Verify(method => method.SaveFilm(It.IsAny<Film>()), Times.Once);
+                _filmHandler.Verify(method => method.SaveFilm(It.IsAny<FilmEntity>()), Times.Once);
 
             output.Should().Be(!isDuplicate);
         }
@@ -160,14 +162,14 @@ namespace FilmReference.Tests
         [Fact]
         public async Task RemoveActorsFromFilmCallsRemoveFilmPersonForEachFilmPerson()
         {
-            var filmPerson1 = new FilmPerson();
-            var filmPerson2 = new FilmPerson();
+            var filmPerson1 = new FilmPersonEntity();
+            var filmPerson2 = new FilmPersonEntity();
 
-            var filmPersonList = new List<FilmPerson>{filmPerson1, filmPerson2};
+            var filmPersonList = new List<FilmPersonEntity>{filmPerson1, filmPerson2};
 
             await _filmPagesManager.RemoveActorsFromFilm(filmPersonList);
 
-            _filmPersonHandler.Verify(method => method.RemoveFilmPerson(It.IsAny<FilmPerson>()),
+            _filmPersonHandler.Verify(method => method.RemoveFilmPerson(It.IsAny<FilmPersonEntity>()),
                 Times.Exactly(filmPersonList.Count));
         }
 
@@ -176,19 +178,19 @@ namespace FilmReference.Tests
         [InlineData(false)]
         public async Task UpdateFilmCallsMethodsAsRequiredAndReturnsBool(bool isDuplicate)
         {
-            var film = new Film { FilmId = 1, Name = "Test" };
+            var film = new FilmEntity { FilmId = 1, Name = "Test" };
             _filmHandler.Setup(method => method.IsDuplicate(It.IsAny<int>(), It.IsAny<string>())).ReturnsAsync(isDuplicate);
 
-            _filmHandler.Setup(method => method.UpdateFilm(It.IsAny<Film>()));
+            _filmHandler.Setup(method => method.UpdateFilm(It.IsAny<FilmEntity>()));
 
             var output = await _filmPagesManager.UpdateFilm(film);
 
             _filmHandler.Verify(method => method.IsDuplicate(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
 
             if (isDuplicate)
-                _filmHandler.Verify(method => method.UpdateFilm(It.IsAny<Film>()), Times.Never);
+                _filmHandler.Verify(method => method.UpdateFilm(It.IsAny<FilmEntity>()), Times.Never);
             else
-                _filmHandler.Verify(method => method.UpdateFilm(It.IsAny<Film>()), Times.Once);
+                _filmHandler.Verify(method => method.UpdateFilm(It.IsAny<FilmEntity>()), Times.Once);
 
             output.Should().Be(!isDuplicate);
         }
@@ -196,12 +198,12 @@ namespace FilmReference.Tests
         [Fact]
         public async Task GetFilmsAndGenresReturnsFilmPagesValues()
         {
-            var film1 = new Film { Name = "Film1" };
-            var film2 = new Film { Name = "Film2" };
-            var films = new List<Film>{film1, film2};
+            var film1 = new FilmEntity { Name = "Film1" };
+            var film2 = new FilmEntity { Name = "Film2" };
+            var films = new List<FilmEntity>{film1, film2};
 
-            var genre = new Genre { Name = "A New Genre" };
-            var genres = new List<Genre> { genre };
+            var genre = new GenreEntity { Name = "A New Genre" };
+            var genres = new List<GenreEntity> { genre };
 
             _filmHandler.Setup(method => method.GetFilms()).ReturnsAsync(films);
             _genreHandler.Setup(method => method.GetGenres()).ReturnsAsync(genres);
@@ -214,7 +216,7 @@ namespace FilmReference.Tests
             output.Films.Should().Contain(film1);
             output.Films.Should().Contain(film2);
             output.Genres.Should().Contain(genre);
-            output.Genres.Should().ContainEquivalentOf(new Genre
+            output.Genres.Should().ContainEquivalentOf(new GenreEntity
             {
                 GenreId = PageValues.Zero,
                 Name = PageValues.All

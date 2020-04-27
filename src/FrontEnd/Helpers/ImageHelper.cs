@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using FilmReference.DataAccess;
+using FilmReference.DataAccess.DbClasses;
 
 namespace FilmReference.FrontEnd.Helpers
 {

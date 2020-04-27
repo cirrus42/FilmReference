@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using FilmReference.DataAccess.DbClasses;
 
 namespace FilmReference.FrontEnd.Pages.StudioPages
 {
@@ -15,7 +16,7 @@ namespace FilmReference.FrontEnd.Pages.StudioPages
     {
         public readonly IImageHelper ImageHelper;
         private IStudioPagesManager _studioPagesManager;
-        public Studio Studio { get; set; }
+        public StudioEntity Studio { get; set; }
 
         public EditModel( IImageHelper imageHelper, IStudioPagesManager studioPagesManager)
         {

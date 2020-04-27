@@ -1,4 +1,5 @@
 ﻿using FilmReference.DataAccess;
+using FilmReference.DataAccess.DbClasses;
 using FilmReference.DataAccess.Repositories;
 using FilmReference.FrontEnd.Handlers;
 using FilmReference.FrontEnd.Handlers.Interfaces;
@@ -6,6 +7,7 @@ using FilmReference.FrontEnd.Helpers;
 using FilmReference.FrontEnd.Managers;
 using FilmReference.FrontEnd.Managers.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using PersonEntity = FilmReference.DataAccess.DbClasses.PersonEntity;
 
 namespace FilmReference.FrontEnd.Extensions
 {
@@ -26,11 +28,11 @@ namespace FilmReference.FrontEnd.Extensions
 
         public static void AddRepositories(this IServiceCollection services)
         {
-            services.AddTransient<IGenericRepository<Person>, GenericRepository<Person>>();
-            services.AddTransient<IGenericRepository<Genre>, GenericRepository<Genre>>();
-            services.AddTransient<IGenericRepository<Studio>, GenericRepository<Studio>>();
-            services.AddTransient<IGenericRepository<Film>, GenericRepository<Film>>();
-            services.AddTransient<IGenericRepository<FilmPerson>, GenericRepository<FilmPerson>>();
+            services.AddTransient<IGenericRepository<PersonEntity>, GenericRepository<PersonEntity>>();
+            services.AddTransient<IGenericRepository<GenreEntity>, GenericRepository<GenreEntity>>();
+            services.AddTransient<IGenericRepository<StudioEntity>, GenericRepository<StudioEntity>>();
+            services.AddTransient<IGenericRepository<FilmEntity>, GenericRepository<FilmEntity>>();
+            services.AddTransient<IGenericRepository<FilmPersonEntity>, GenericRepository<FilmPersonEntity>>();
         }
     }
 }

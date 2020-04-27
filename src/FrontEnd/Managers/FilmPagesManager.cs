@@ -4,6 +4,7 @@ using FilmReference.FrontEnd.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FilmReference.DataAccess.DbClasses;
 using FilmReference.FrontEnd.Managers.Interfaces;
 
 namespace FilmReference.FrontEnd.Managers
@@ -30,7 +31,7 @@ namespace FilmReference.FrontEnd.Managers
         
         public async Task<FilmPagesValues> GetFilmPageDropDownValues()
         {
-            var filmPages = new FilmPagesValues(new Genre
+            var filmPages = new FilmPagesValues(new GenreEntity
             {
                 GenreId = PageValues.MinusOne,
                 Name = PageValues.PleaseSelect
@@ -47,7 +48,7 @@ namespace FilmReference.FrontEnd.Managers
         public async Task<Results<FilmDetails>> GetFilmWithFilmPerson(int id) => 
             await _filmHandler.GetFilmWithFilmPerson(id);
 
-        public async Task<bool> SaveFilm(Film film)  
+        public async Task<bool> SaveFilm(FilmEntity film)  
         {
             if(await _filmHandler.IsDuplicate(film.FilmId, film.Name)) 
                 return false;
@@ -56,13 +57,13 @@ namespace FilmReference.FrontEnd.Managers
             return true;
         }
 
-        public async Task RemoveActorsFromFilm(IEnumerable<FilmPerson> filmPersonList)
+        public async Task RemoveActorsFromFilm(IEnumerable<FilmPersonEntity> filmPersonList)
         {
             foreach (var filmPerson in filmPersonList)
                await _filmPersonHandler.RemoveFilmPerson(filmPerson);
         }
 
-        public async Task<bool> UpdateFilm(Film film)
+        public async Task<bool> UpdateFilm(FilmEntity film)
         {
             if (await _filmHandler.IsDuplicate(film.FilmId, film.Name))
                 return false;
@@ -73,7 +74,7 @@ namespace FilmReference.FrontEnd.Managers
         public async Task<FilmPagesValues> GetFilmsAndGenres()
         {
             var filmPages =
-                new FilmPagesValues(new Genre {GenreId = PageValues.Zero, Name = PageValues.All})
+                new FilmPagesValues(new GenreEntity {GenreId = PageValues.Zero, Name = PageValues.All})
                 {
                     Films = (await _filmHandler.GetFilms()).ToList()
                 };

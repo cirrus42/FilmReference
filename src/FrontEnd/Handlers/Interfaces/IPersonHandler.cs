@@ -1,18 +1,19 @@
 ﻿using FilmReference.DataAccess;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using PersonEntity = FilmReference.DataAccess.DbClasses.PersonEntity;
 
 namespace FilmReference.FrontEnd.Handlers.Interfaces
 {
     public interface IPersonHandler
     {
-        Task<IEnumerable<Person>> GetDirectors();
-        Task<IEnumerable<Person>> GetActors();
-        Task SavePerson(Person person);
-        Task<bool> IsDuplicate(Person person);
-        Task<Person> GetPersonWithDetails(int id);
-        Task<Person> GetPersonById(int id);
-        Task UpdatePerson(Person person);
-        Task<IEnumerable<Person>> GetActors(string startCharacter);
+        Task<IEnumerable<PersonEntity>> GetDirectors();
+        Task<IEnumerable<PersonEntity>> GetActors();
+        Task SavePerson(PersonEntity person);
+        Task<bool> IsDuplicate(PersonEntity person);
+        Task<PersonEntity> GetPersonWithDetails(int id);
+        Task<PersonEntity> GetPersonById(int id);
+        Task UpdatePerson(PersonEntity person);
+        Task<IEnumerable<PersonEntity>> GetActors(string startCharacter);
     }
 }

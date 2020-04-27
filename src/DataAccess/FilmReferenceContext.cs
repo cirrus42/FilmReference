@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FilmReference.DataAccess.DbClasses;
+using Microsoft.EntityFrameworkCore;
 
 namespace FilmReference.DataAccess
 {
@@ -11,11 +12,11 @@ namespace FilmReference.DataAccess
 
         #region DbSets
 
-        public DbSet<Film> Film { get; set;}
-        public DbSet<FilmPerson> FilmPerson { get; set; }
-        public DbSet<Genre> Genre { get; set; }
-        public DbSet<Person> Person { get; set; }
-        public DbSet<Studio> Studio { get; set; }
+        public DbSet<FilmEntity> Film { get; set;}
+        public DbSet<FilmPersonEntity> FilmPerson { get; set; }
+        public DbSet<GenreEntity> Genre { get; set; }
+        public DbSet<DbClasses.PersonEntity> Person { get; set; }
+        public DbSet<StudioEntity> Studio { get; set; }
 
         #endregion
 

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using PersonEntity = FilmReference.DataAccess.DbClasses.PersonEntity;
 
 namespace FilmReference.FrontEnd.Pages.PersonPages
 {
@@ -14,7 +15,7 @@ namespace FilmReference.FrontEnd.Pages.PersonPages
     {
         public IImageHelper ImageHelper;
         private readonly IPersonPagesManager _personPagesManager;
-        public Person Person { get; set; }
+        public PersonEntity Person { get; set; }
 
         public EditModel(IImageHelper imageHelper, IPersonPagesManager personPagesManager)
         {

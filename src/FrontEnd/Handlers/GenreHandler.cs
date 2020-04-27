@@ -5,21 +5,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using FilmReference.DataAccess.DbClasses;
 using FilmReference.FrontEnd.Models;
 
 namespace FilmReference.FrontEnd.Handlers
 {
     public class GenreHandler : IGenreHandler
     {
-        private readonly IGenericRepository<Genre> _genreRepository;
+        private readonly IGenericRepository<GenreEntity> _genreRepository;
 
-        public GenreHandler(IGenericRepository<Genre> personRepository) =>
+        public GenreHandler(IGenericRepository<GenreEntity> personRepository) =>
             _genreRepository = personRepository;
 
-        public async Task<IEnumerable<Genre>> GetGenres() =>
+        public async Task<IEnumerable<GenreEntity>> GetGenres() =>
             (await _genreRepository.GetAll()).OrderBy(genre => genre.Name);
 
-        public async Task<bool> IsDuplicate(Genre genre)
+        public async Task<bool> IsDuplicate(GenreEntity genre)
         {
             var duplicates = (await _genreRepository
                 .GetWhere(g => g.Name.ToLower().Replace(" ", "") == genre.Name.ToLower().Replace(" ", ""))).ToList();
@@ -29,19 +30,19 @@ namespace FilmReference.FrontEnd.Handlers
             return genre.GenreId <= 0 || duplicates.Any(g => g.GenreId != genre.GenreId);
         }
 
-        public async Task<Results<Genre>> GetGenreById(int id)
+        public async Task<Results<GenreEntity>> GetGenreById(int id)
         {
             var genre = await _genreRepository.GetById(id);
 
             return genre == null ?
-                new Results<Genre> {HttpStatusCode = HttpStatusCode.NotFound} : 
-                new Results<Genre> { Entity = genre, HttpStatusCode = HttpStatusCode.OK};
+                new Results<GenreEntity> {HttpStatusCode = HttpStatusCode.NotFound} : 
+                new Results<GenreEntity> { Entity = genre, HttpStatusCode = HttpStatusCode.OK};
         }
 
-        public async Task UpdateGenre(Genre genre) =>
+        public async Task UpdateGenre(GenreEntity genre) =>
             await _genreRepository.Update(genre);
 
-        public async Task SaveGenre(Genre genre)
+        public async Task SaveGenre(GenreEntity genre)
         {
             await _genreRepository.Add(genre);
             await _genreRepository.Save();

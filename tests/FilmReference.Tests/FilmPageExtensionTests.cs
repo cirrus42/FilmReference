@@ -4,6 +4,7 @@ using FluentAssertions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using FilmReference.DataAccess.DbClasses;
 using Xunit;
 
 namespace FilmReference.Tests
@@ -13,12 +14,12 @@ namespace FilmReference.Tests
         [Fact]
         public void RemoveItemsPersonCollectionReturnsListOfFilmPersonToRemove()
         {
-            var filmPerson1 = new FilmPerson { PersonId = 1 };
-            var filmPerson2 = new FilmPerson { PersonId = 2 };
-            var filmPerson3 = new FilmPerson { PersonId = 3 };
-            var filmPerson4 = new FilmPerson { PersonId = 4 };
+            var filmPerson1 = new FilmPersonEntity { PersonId = 1 };
+            var filmPerson2 = new FilmPersonEntity { PersonId = 2 };
+            var filmPerson3 = new FilmPersonEntity { PersonId = 3 };
+            var filmPerson4 = new FilmPersonEntity { PersonId = 4 };
 
-            var filmPersonCollection = new Collection<FilmPerson> { filmPerson1, filmPerson2, filmPerson3, filmPerson4 };
+            var filmPersonCollection = new Collection<FilmPersonEntity> { filmPerson1, filmPerson2, filmPerson3, filmPerson4 };
             var updateList = new List<int>{ filmPerson2.PersonId, filmPerson4.PersonId};
 
             var itemsToRemove = filmPersonCollection.RemoveItems(updateList);
@@ -33,12 +34,12 @@ namespace FilmReference.Tests
         [Fact]
         public void RemoveItemsIdListReturnsListOfIdToAdd()
         {
-            var filmPerson1 = new FilmPerson { PersonId = 1 };
-            var filmPerson2 = new FilmPerson { PersonId = 2 };
-            var filmPerson3 = new FilmPerson { PersonId = 3 };
-            var filmPerson4 = new FilmPerson { PersonId = 4 };
+            var filmPerson1 = new FilmPersonEntity { PersonId = 1 };
+            var filmPerson2 = new FilmPersonEntity { PersonId = 2 };
+            var filmPerson3 = new FilmPersonEntity { PersonId = 3 };
+            var filmPerson4 = new FilmPersonEntity { PersonId = 4 };
 
-            var filmPersonCollection = new Collection<FilmPerson> { filmPerson1, filmPerson3 };
+            var filmPersonCollection = new Collection<FilmPersonEntity> { filmPerson1, filmPerson3 };
             var updateList = new List<int> { filmPerson2.PersonId, filmPerson3.PersonId, filmPerson4.PersonId };
 
             var itemsToAdd = updateList.RemoveItems(filmPersonCollection);

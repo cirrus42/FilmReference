@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net;
 using System.Threading.Tasks;
+using FilmReference.DataAccess.DbClasses;
 using FilmReference.FrontEnd.Managers.Interfaces;
 
 namespace FilmReference.FrontEnd.Pages.GenrePages
@@ -12,7 +13,7 @@ namespace FilmReference.FrontEnd.Pages.GenrePages
     public class EditModel : PageModel
     {
         private readonly IGenrePagesManager _genrePagesManager;
-        public Genre Genre { get; set; }
+        public GenreEntity Genre { get; set; }
         public EditModel(IGenrePagesManager genrePagesManager) => 
             _genrePagesManager = genrePagesManager;
         

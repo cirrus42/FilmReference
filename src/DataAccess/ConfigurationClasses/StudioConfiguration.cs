@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FilmReference.DataAccess.DbClasses;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FilmReference.DataAccess
 {
-    public class StudioConfiguration : IEntityTypeConfiguration<Studio>
+    public class StudioConfiguration : IEntityTypeConfiguration<StudioEntity>
     {
-        public void Configure(EntityTypeBuilder<Studio> builder)
+        public void Configure(EntityTypeBuilder<StudioEntity> builder)
         {
             builder.Property(e => e.Name)
                 .IsUnicode(false);

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net;
 using System.Threading.Tasks;
+using FilmReference.DataAccess.DbClasses;
 
 namespace FilmReference.FrontEnd.Pages.StudioPages
 {
@@ -13,7 +14,7 @@ namespace FilmReference.FrontEnd.Pages.StudioPages
 
         public IImageHelper ImageHelper;
         private readonly IStudioPagesManager _studioPagesManager;
-        public Studio Studio { get; set; }
+        public StudioEntity Studio { get; set; }
 
         public DetailsModel(IImageHelper imageHelper, IStudioPagesManager studioPagesManager)
         {

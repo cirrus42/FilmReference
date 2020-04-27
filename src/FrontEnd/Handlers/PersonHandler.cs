@@ -5,28 +5,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using PersonEntity = FilmReference.DataAccess.DbClasses.PersonEntity;
 
 namespace FilmReference.FrontEnd.Handlers
 {
     public class PersonHandler : IPersonHandler
     {
-        private readonly IGenericRepository<Person> _personRepository;
+        private readonly IGenericRepository<PersonEntity> _personRepository;
 
-        public PersonHandler(IGenericRepository<Person> personRepository) =>
+        public PersonHandler(IGenericRepository<PersonEntity> personRepository) =>
             _personRepository = personRepository;
 
-        public async Task<IEnumerable<Person>> GetDirectors() =>
+        public async Task<IEnumerable<PersonEntity>> GetDirectors() =>
             (await _personRepository.GetWhere(person => person.IsDirector)).OrderBy(person => person.FullName);
-        public async Task<IEnumerable<Person>> GetActors() =>
+        public async Task<IEnumerable<PersonEntity>> GetActors() =>
             (await _personRepository.GetWhere(person => person.IsActor)).OrderBy(person => person.FullName);
 
-        public async Task SavePerson(Person person)
+        public async Task SavePerson(PersonEntity person)
         {
             await _personRepository.Add(person);
             await _personRepository.Save();
         }
         
-        public async Task<bool> IsDuplicate(Person person)
+        public async Task<bool> IsDuplicate(PersonEntity person)
         {
             var duplicates =
                 (await _personRepository.GetWhere(p =>
@@ -39,19 +40,19 @@ namespace FilmReference.FrontEnd.Handlers
             return person.PersonId <= 0 || duplicates.Any(p => p.PersonId != person.PersonId);
         }
 
-        public async Task<Person> GetPersonWithDetails(int id) => 
+        public async Task<PersonEntity> GetPersonWithDetails(int id) => 
             await _personRepository.GetAllQueryable()
                 .Include(p => p.FilmPerson)
                 .ThenInclude(fp => fp.Film)
                 .FirstOrDefaultAsync(m => m.PersonId == id);
 
-        public async Task<Person> GetPersonById(int id) =>
+        public async Task<PersonEntity> GetPersonById(int id) =>
             await _personRepository.GetById(id);
 
-        public Task UpdatePerson(Person person) =>
+        public Task UpdatePerson(PersonEntity person) =>
             _personRepository.Update(person);
 
-        public async Task<IEnumerable<Person>> GetActors(string startCharacter) =>
+        public async Task<IEnumerable<PersonEntity>> GetActors(string startCharacter) =>
             await _personRepository.GetAllQueryable()
                 .Include(p => p.FilmPerson)
                 .Where(p => p.IsActor && p.FullName.StartsWith(startCharacter))

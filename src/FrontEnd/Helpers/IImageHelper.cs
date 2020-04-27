@@ -1,4 +1,5 @@
 ﻿using FilmReference.DataAccess;
+using FilmReference.DataAccess.DbClasses;
 using Microsoft.AspNetCore.Http;
 
 namespace FilmReference.FrontEnd.Helpers

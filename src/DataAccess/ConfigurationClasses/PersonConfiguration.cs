@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FilmReference.DataAccess
 {
-    public class PersonConfiguration : IEntityTypeConfiguration<Person>
+    public class PersonConfiguration : IEntityTypeConfiguration<DbClasses.PersonEntity>
     {
-        public void Configure(EntityTypeBuilder<Person> builder)
+        public void Configure(EntityTypeBuilder<DbClasses.PersonEntity> builder)
         {
             builder.Property(e => e.FirstName)
                 .IsUnicode(false);

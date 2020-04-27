@@ -5,6 +5,7 @@ using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
+using FilmReference.DataAccess.DbClasses;
 
 namespace FilmReference.FrontEnd.Pages.StudioPages
 {
@@ -12,7 +13,7 @@ namespace FilmReference.FrontEnd.Pages.StudioPages
     {
         private readonly IImageHelper _imageHelper;
         private readonly IStudioPagesManager _studioPagesManager;
-        public Studio Studio { get; set; }
+        public StudioEntity Studio { get; set; }
 
         public CreateModel(FilmReferenceContext context, IImageHelper imageHelper,
             IStudioPagesManager studioPagesManager)
@@ -30,7 +31,7 @@ namespace FilmReference.FrontEnd.Pages.StudioPages
             if (!ModelState.IsValid)
                 return Page();
 
-            var newStudio = new Studio();
+            var newStudio = new StudioEntity();
 
             var updated = await TryUpdateModelAsync(
                 newStudio,

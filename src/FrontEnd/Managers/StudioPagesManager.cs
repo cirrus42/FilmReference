@@ -1,6 +1,7 @@
 ﻿using FilmReference.DataAccess;
 using FilmReference.FrontEnd.Handlers.Interfaces;
 using System.Threading.Tasks;
+using FilmReference.DataAccess.DbClasses;
 using FilmReference.FrontEnd.Managers.Interfaces;
 using FilmReference.FrontEnd.Models;
 
@@ -13,7 +14,7 @@ namespace FilmReference.FrontEnd.Managers
         public StudioPagesManager(IStudioHandler studioHandler) =>
             _studioHandler = studioHandler;
 
-        public async Task<bool> SaveStudio(Studio studio)
+        public async Task<bool> SaveStudio(StudioEntity studio)
         {
             if (await _studioHandler.IsDuplicate(studio))
                 return false;
@@ -22,10 +23,10 @@ namespace FilmReference.FrontEnd.Managers
             return true;
         }
 
-        public async Task<Results<Studio>> GetStudioById(int id) =>
+        public async Task<Results<StudioEntity>> GetStudioById(int id) =>
            await _studioHandler.GetStudioById(id);
 
-        public async Task<bool> UpdateStudio(Studio studio)
+        public async Task<bool> UpdateStudio(StudioEntity studio)
         {
             if (await _studioHandler.IsDuplicate(studio))
                 return false;

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Linq;
 using System.Threading.Tasks;
+using PersonEntity = FilmReference.DataAccess.DbClasses.PersonEntity;
 
 namespace FilmReference.FrontEnd.Pages.PersonPages
 {
@@ -13,7 +14,7 @@ namespace FilmReference.FrontEnd.Pages.PersonPages
     {
         private readonly IImageHelper _imageHelper;
         private readonly IPersonPagesManager _personPagesManager;
-        public Person Person { get; set; }
+        public PersonEntity Person { get; set; }
 
         public CreateModel(IImageHelper imageHelper, IPersonPagesManager personPagesManager)
         {
@@ -29,7 +30,7 @@ namespace FilmReference.FrontEnd.Pages.PersonPages
             if (!ModelState.IsValid)
                 return Page();
 
-            var newPerson = new Person();
+            var newPerson = new PersonEntity();
             var updated = await TryUpdateModelAsync(
                 newPerson,
                 nameof(Person),

@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FilmReference.DataAccess.DbClasses;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FilmReference.DataAccess
 {
-    public class FilmPersonConfiguration : IEntityTypeConfiguration<FilmPerson>
+    public class FilmPersonConfiguration : IEntityTypeConfiguration<FilmPersonEntity>
     {
-        public void Configure(EntityTypeBuilder<FilmPerson> builder)
+        public void Configure(EntityTypeBuilder<FilmPersonEntity> builder)
         {
             builder.HasOne(e => e.Film)
                 .WithMany(e => e.FilmPerson)

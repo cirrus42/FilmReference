@@ -1,4 +1,4 @@
-﻿namespace FilmReference.DataAccess.DbClasses
+﻿namespace FilmReference.DataAccess
 {
     public interface IPicture
     {

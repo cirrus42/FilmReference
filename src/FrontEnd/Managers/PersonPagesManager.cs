@@ -6,6 +6,7 @@ using FilmReference.FrontEnd.Models;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using PersonEntity = FilmReference.DataAccess.DbClasses.PersonEntity;
 
 namespace FilmReference.FrontEnd.Managers
 {
@@ -16,7 +17,7 @@ namespace FilmReference.FrontEnd.Managers
         public PersonPagesManager(IPersonHandler personHandler) =>
             _personHandler = personHandler;
         
-        public async Task<bool> SavePerson(Person person)
+        public async Task<bool> SavePerson(PersonEntity person)
         {
             if (await _personHandler.IsDuplicate(person))
                 return false;
@@ -44,15 +45,15 @@ namespace FilmReference.FrontEnd.Managers
             };
         }
 
-        public async Task<Results<Person>> GetPersonById(int id)
+        public async Task<Results<PersonEntity>> GetPersonById(int id)
         {
             var person = await _personHandler.GetPersonWithDetails(id);
             return person == null ? 
-                new Results<Person> {HttpStatusCode = HttpStatusCode.NotFound} : 
-                new Results<Person> {HttpStatusCode = HttpStatusCode.OK, Entity = person};
+                new Results<PersonEntity> {HttpStatusCode = HttpStatusCode.NotFound} : 
+                new Results<PersonEntity> {HttpStatusCode = HttpStatusCode.OK, Entity = person};
         }
 
-        public async Task<bool> UpdatePerson(Person person)
+        public async Task<bool> UpdatePerson(PersonEntity person)
         {
             if (await _personHandler.IsDuplicate(person))
                 return false;

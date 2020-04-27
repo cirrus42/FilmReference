@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PersonEntity = FilmReference.DataAccess.DbClasses.PersonEntity;
 
 namespace FilmReference.FrontEnd.Pages.PersonPages
 {
@@ -19,7 +20,7 @@ namespace FilmReference.FrontEnd.Pages.PersonPages
             _personHandler = personHandler;
         }
 
-        public List<Person> ActorList { get;set; }
+        public List<PersonEntity> ActorList { get;set; }
 
         public List<string> AtoZ { get; set; }
 

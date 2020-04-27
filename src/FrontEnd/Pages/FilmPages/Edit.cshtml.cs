@@ -1,7 +1,7 @@
 ﻿using FilmReference.DataAccess;
 using FilmReference.FrontEnd.Extensions;
 using FilmReference.FrontEnd.Helpers;
-using FilmReference.FrontEnd.Managers;
+using FilmReference.FrontEnd.Managers.Interfaces;
 using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,7 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using FilmReference.FrontEnd.Managers.Interfaces;
+using FilmReference.DataAccess.DbClasses;
 
 namespace FilmReference.FrontEnd.Pages.FilmPages
 {
@@ -24,7 +24,7 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
             _filmPagesManager = filmPagesManager;
         }
 
-        public Film Film { get; set; }
+        public FilmEntity Film { get; set; }
         public List<int> SelectedActorIds { get; set; }
         public FilmPagesValues FilmPagesValues { get; set; }
 
@@ -95,7 +95,7 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
             await _filmPagesManager.RemoveActorsFromFilm(result.Entity.Film.FilmPerson.RemoveItems(selectedActorIds.StingValuesToList()));
 
             foreach (var personId in selectedActorIds.StingValuesToList())
-                result.Entity.Film.FilmPerson.Add(new FilmPerson{FilmId = result.Entity.Film.FilmId, PersonId = personId});
+                result.Entity.Film.FilmPerson.Add(new FilmPersonEntity{FilmId = result.Entity.Film.FilmId, PersonId = personId});
 
             if (await _filmPagesManager.UpdateFilm(result.Entity.Film)) 
                 return RedirectToPage(PageValues.FilmIndexPage);
