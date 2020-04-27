@@ -1,35 +1,32 @@
-﻿using FilmReference.DataAccess;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
-using FilmReference.DataAccess.DbClasses;
-using PersonEntity = FilmReference.DataAccess.DbClasses.PersonEntity;
 
 namespace FilmReference.FrontEnd.Models
 {
     public class FilmPagesValues
     {
-        public FilmPagesValues(GenreEntity genre) =>
-            Genres = new List<GenreEntity> {genre};
+        public FilmPagesValues(Genre genre) =>
+            Genres = new List<Genre> {genre};
         
-        public List<FilmEntity> Films { get; set; }
+        public List<Film> Films { get; set; }
 
-        public List<PersonEntity> Directors { get; set; } = new List<PersonEntity>
+        public List<Person> Directors { get; set; } = new List<Person>
         {
-            new PersonEntity
+            new Person
             {
                 PersonId = PageValues.MinusOne,
                 FullName = PageValues.PleaseSelect
             }
         };
 
-        public List<PersonEntity> Actors { get; set; } 
+        public List<Person> Actors { get; set; } 
 
-        public List<GenreEntity> Genres { get; set; }
+        public List<Genre> Genres { get; set; }
 
-        public List<StudioEntity> Studios { get; set; } = new List<StudioEntity>
+        public List<Studio> Studios { get; set; } = new List<Studio>
         {
-            new StudioEntity
+            new Studio
             {
                 StudioId = PageValues.MinusOne,
                 Name = PageValues.PleaseSelect
@@ -38,21 +35,22 @@ namespace FilmReference.FrontEnd.Models
 
         public SelectList DirectorSelectList() =>
             new SelectList(Directors.ToList(), 
-                nameof(PersonEntity.PersonId),
-                nameof(PersonEntity.FullName));
+                nameof(Person.PersonId),
+                nameof(Person.FullName));
 
         public MultiSelectList ActorSelectList() =>
             new SelectList(Actors.ToList(),
-                nameof(PersonEntity.PersonId),
-                nameof(PersonEntity.FullName));
+                nameof(Person.PersonId),
+                nameof(Person.FullName));
 
         public SelectList GenreSelectList() =>
             new SelectList(Genres.ToList(),
-                nameof(GenreEntity.GenreId),
-                nameof(GenreEntity.Name));
+                nameof(Genre.GenreId),
+                nameof(Genre.Name));
+
         public SelectList StudioSelectList() =>
             new SelectList(Studios.ToList(),
-                nameof(StudioEntity.StudioId),
-                nameof(StudioEntity.Name));
+                nameof(Studio.StudioId),
+                nameof(Studio.Name));
     }
 }

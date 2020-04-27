@@ -28,21 +28,22 @@ namespace FilmReference.FrontEnd.Managers
 
         public async Task<Results<PersonPagesValues>> GetPersonDetails(int id)
         {
-            var person = await _personHandler.GetPersonWithDetails(id);
+            throw new System.NotImplementedException();
+            //var person = await _personHandler.GetPersonWithDetails(id);
 
-            if (person == null) return new Results<PersonPagesValues> {HttpStatusCode = HttpStatusCode.NotFound};
+            //if (person == null) return new Results<PersonPagesValues> {HttpStatusCode = HttpStatusCode.NotFound};
 
-            var filmPersonList = person.FilmPerson.OrderBy(fp => fp.Film.Name);
+            //var filmPersonList = person.FilmPerson.OrderBy(fp => fp.Film.Name);
 
-            return new Results<PersonPagesValues>
-            {
-                HttpStatusCode = HttpStatusCode.OK,
-                Entity = new PersonPagesValues
-                {
-                    Person = person, 
-                    Films = filmPersonList.Select(filmPerson => filmPerson.Film).ToList()
-                }
-            };
+            //return new Results<PersonPagesValues>
+            //{
+            //    HttpStatusCode = HttpStatusCode.OK,
+            //    Entity = new PersonPagesValues
+            //    {
+            //        Person = person, 
+            //        Films = filmPersonList.Select(filmPerson => filmPerson.Film).ToList()
+            //    }
+            //};
         }
 
         public async Task<Results<PersonEntity>> GetPersonById(int id)

@@ -30,18 +30,19 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null)
-                return NotFound();
+            throw new System.NotImplementedException();
+            //if (id == null)
+            //    return NotFound();
 
-            var result = await _filmPagesManager.GetFilmById(id.Value);
+            //var result = await _filmPagesManager.GetFilmById(id.Value);
 
-            if(result.HttpStatusCode == HttpStatusCode.NotFound) return NotFound();
+            //if(result.HttpStatusCode == HttpStatusCode.NotFound) return NotFound();
 
-            Film = result.Entity.Film; 
-            SelectedActorIds = result.Entity.Film.FilmPerson.Select(filmPerson => filmPerson.PersonId).ToList();
+            //Film = result.Entity.Film; 
+            //SelectedActorIds = result.Entity.Film.FilmPerson.Select(filmPerson => filmPerson.PersonId).ToList();
 
-            FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
-            return Page();
+            //FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
+            //return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
@@ -92,16 +93,16 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
 
             var selectedActorIds = Request.Form[nameof(SelectedActorIds)];
 
-            await _filmPagesManager.RemoveActorsFromFilm(result.Entity.Film.FilmPerson.RemoveItems(selectedActorIds.StingValuesToList()));
+            //await _filmPagesManager.RemoveActorsFromFilm(result.Entity.Film.FilmPerson.RemoveItems(selectedActorIds.StingValuesToList()));
 
-            foreach (var personId in selectedActorIds.StingValuesToList())
-                result.Entity.Film.FilmPerson.Add(new FilmPersonEntity{FilmId = result.Entity.Film.FilmId, PersonId = personId});
+            //foreach (var personId in selectedActorIds.StingValuesToList())
+            //    result.Entity.Film.FilmPerson.Add(new FilmPersonEntity{FilmId = result.Entity.Film.FilmId, PersonId = personId});
 
-            if (await _filmPagesManager.UpdateFilm(result.Entity.Film)) 
-                return RedirectToPage(PageValues.FilmIndexPage);
+            //if (await _filmPagesManager.UpdateFilm(result.Entity.Film)) 
+            //    return RedirectToPage(PageValues.FilmIndexPage);
 
-            ModelState.AddModelError(PageValues.FilmName, PageValues.DuplicatePerson);
-            FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
+            //ModelState.AddModelError(PageValues.FilmName, PageValues.DuplicatePerson);
+            //FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
             return Page();
         }
     }

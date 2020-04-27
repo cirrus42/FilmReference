@@ -74,7 +74,7 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
                         return Page();
                     }
 
-                    _imageHelper.AddImageToEntity(newFilm, file);
+                   // _imageHelper.AddImageToEntity(newFilm, file);
                 }
             }
 

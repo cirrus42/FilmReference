@@ -1,5 +1,7 @@
+using AutoMapper;
 using FilmReference.DataAccess;
 using FilmReference.FrontEnd.Extensions;
+using FilmReference.FrontEnd.Mappers;
 using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +30,9 @@ namespace FilmReference.FrontEnd
                         Configuration.GetConnectionString(PageValues.FilmReferenceContext)
                     ));
 
+            services.AddSingleton(
+                new MapperConfiguration(e => { e.AddProfile(new MappingProfile()); }).CreateMapper());
+
             services.AddDependencies();
             services.AddRepositories();
         }
@@ -35,9 +40,8 @@ namespace FilmReference.FrontEnd
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
+
             else
             {
                 app.UseExceptionHandler("/Error");

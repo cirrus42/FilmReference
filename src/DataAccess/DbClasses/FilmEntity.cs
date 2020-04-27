@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace FilmReference.DataAccess.DbClasses
 {
     [Table("Film")]
-    public partial class FilmEntity : IPicture
+    public partial class FilmEntity 
     {
         [Key]
         public int FilmId { get; set; }

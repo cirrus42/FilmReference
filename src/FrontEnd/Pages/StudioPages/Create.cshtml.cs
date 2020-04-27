@@ -53,7 +53,7 @@ namespace FilmReference.FrontEnd.Pages.StudioPages
                         return Page();
                     }
 
-                    _imageHelper.AddImageToEntity(newStudio, file);
+                    //_imageHelper.AddImageToEntity(newStudio, file);
                 }
             }
 

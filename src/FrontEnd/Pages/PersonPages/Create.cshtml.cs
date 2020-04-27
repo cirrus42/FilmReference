@@ -56,7 +56,7 @@ namespace FilmReference.FrontEnd.Pages.PersonPages
                         return Page();
                     }
 
-                    _imageHelper.AddImageToEntity(newPerson, file);
+                   // _imageHelper.AddImageToEntity(newPerson, file);
                 }
             }
 

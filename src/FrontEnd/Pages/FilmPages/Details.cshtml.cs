@@ -28,9 +28,9 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
 
             var result = await _filmHandler.GetFilmById(id.Value);
 
-            if(result.HttpStatusCode == HttpStatusCode.NotFound) return NotFound();
+            //if(result.HttpStatusCode == HttpStatusCode.NotFound) return NotFound();
 
-            FilmDetails = result.Entity;
+            //FilmDetails = result.Entity;
 
             return Page();
         }
