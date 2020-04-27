@@ -44,8 +44,8 @@ namespace FilmReference.FrontEnd.Managers
             return filmPages;
         }
 
-        public Task<Results<FilmDetails>> GetFilmWithFilmPerson(int id) => 
-            _filmHandler.GetFilmWithFilmPerson(id);
+        public async Task<Results<FilmDetails>> GetFilmWithFilmPerson(int id) => 
+            await _filmHandler.GetFilmWithFilmPerson(id);
 
         public async Task<bool> SaveFilm(Film film)  
         {
