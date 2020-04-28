@@ -8,9 +8,10 @@ namespace FilmReference.FrontEnd.Managers.Interfaces
     {
         Task<Results<FilmDetails>> GetFilmById(int id);
         Task<Results<FilmDetails>> GetFilmWithFilmPerson(int id);
-        Task<bool> SaveFilm(Film film);
-        Task RemoveActorsFromFilm(IEnumerable<FilmPerson> filmPersonList);
-        Task<bool> UpdateFilm(Film film);
         Task<FilmPagesValues> GetFilmsAndGenres();
+        Task<bool> SaveFilm(Film film);
+        Task<bool> UpdateFilm(Film film);
+        Task RemoveActorsFromFilm(IEnumerable<FilmPerson> filmPersonList);
+        Task<FilmPagesValues> GetFilmPageDropDownValues();
     }
 }

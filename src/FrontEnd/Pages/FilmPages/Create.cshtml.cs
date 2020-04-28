@@ -1,6 +1,5 @@
-﻿using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Helpers;
-using FilmReference.FrontEnd.Managers;
+﻿using FilmReference.FrontEnd.Helpers;
+using FilmReference.FrontEnd.Managers.Interfaces;
 using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,8 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FilmReference.DataAccess.DbClasses;
-using FilmReference.FrontEnd.Managers.Interfaces;
 
 namespace FilmReference.FrontEnd.Pages.FilmPages
 {
@@ -17,7 +14,7 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
     {
         private readonly IImageHelper _imageHelper;
         private readonly IFilmPagesManager _filmPagesManager;
-        public FilmEntity Film { get; set; }
+        public Film Film { get; set; }
         public List<int> SelectedActorIds { get; set; }
         public FilmPagesValues FilmPagesValues { get; set; }
 
@@ -29,7 +26,7 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
 
         public async Task<IActionResult> OnGet()
         {
-         //   FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
+            FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
             return Page();
         }
 
@@ -38,15 +35,15 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
             if (!ModelState.IsValid)
                 await OnGet();
 
-            var newFilm = new FilmEntity()
+            var newFilm = new Film()
             {
-                FilmPerson = new List<FilmPersonEntity>()
+                FilmPerson = new List<FilmPerson>()
             };
 
             var updated = await TryUpdateModelAsync(
                 newFilm,
                 nameof(Film),
-                f => f.FilmId,
+                f => f.Id,
                 f => f.Name,
                 f => f.Description,
                 f => f.Picture,
@@ -56,7 +53,7 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
 
             if (!updated)
             {
-       //         FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
+                FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
                 return Page();
             }
 
@@ -70,11 +67,11 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
                     if (!_imageHelper.FileTypeOk(file, out var errorMessage))
                     {
                         ModelState.AddModelError(PageValues.FilmPicture, errorMessage);
-              //          FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
+                        FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
                         return Page();
                     }
 
-                   // _imageHelper.AddImageToEntity(newFilm, file);
+                    _imageHelper.AddImageToEntity(newFilm, file);
                 }
             }
 
@@ -82,17 +79,17 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
 
             foreach (var actorId in selectedActorIds)
                 newFilm.FilmPerson.Add(
-                    new FilmPersonEntity
+                    new FilmPerson
                     {
-                        FilmId = newFilm.FilmId,
+                        FilmId = newFilm.Id,
                         PersonId = Convert.ToInt32(actorId)
                     });
 
-  //          if (await _filmPagesManager.SaveFilm(newFilm))
+            if (await _filmPagesManager.SaveFilm(newFilm))
                 return RedirectToPage(PageValues.FilmIndexPage);
 
             ModelState.AddModelError(PageValues.FilmName, PageValues.DuplicateFilm);
-        //    FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
+            FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
             return Page();
         }
     }

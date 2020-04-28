@@ -1,5 +1,5 @@
-﻿using FilmReference.FrontEnd.Handlers.Interfaces;
-using FilmReference.FrontEnd.Helpers;
+﻿using FilmReference.FrontEnd.Helpers;
+using FilmReference.FrontEnd.Managers.Interfaces;
 using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,26 +11,25 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
     public class DetailsModel : PageModel
     {
         public IImageHelper ImageHelper;
-        private readonly IFilmHandler _filmHandler;
+        private readonly IFilmPagesManager _filmPagesManager;
+        public FilmDetails FilmDetails { get; set; }
 
-        public DetailsModel(IImageHelper imageHelper, IFilmHandler filmHandler)
+        public DetailsModel(IImageHelper imageHelper, IFilmPagesManager filmPagesManager)
         {
             ImageHelper = imageHelper;
-            _filmHandler = filmHandler;
+            _filmPagesManager = filmPagesManager;
         }
-
-        public FilmDetails FilmDetails { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
                 return NotFound();
 
-            var result = await _filmHandler.GetFilmById(id.Value);
+            var result = await _filmPagesManager.GetFilmById(id.Value);
 
-            //if(result.HttpStatusCode == HttpStatusCode.NotFound) return NotFound();
+            if(result.HttpStatusCode == HttpStatusCode.NotFound) return NotFound();
 
-            //FilmDetails = result.Entity;
+            FilmDetails = result.Entity;
 
             return Page();
         }

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace FilmReference.FrontEnd.Models
 {
     public  class Film : IPicture
     {
-        public int FilmId { get; set; }
+        public int Id { get; set; }
         [Required(ErrorMessage = "{0} is required")]
         [StringLength(50, ErrorMessage = "{0} cannot be more than {1} characters")]
         public string Name { get; set; }

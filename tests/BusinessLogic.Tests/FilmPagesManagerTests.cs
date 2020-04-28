@@ -190,7 +190,7 @@ namespace BusinessLogic.Tests
         [InlineData(false)]
         public async Task SaveFilmCallsMethodsAsRequiredAndReturnsBool(bool isDuplicate)
         {
-            var film = new Film { FilmId = 1, Name = "Test" };
+            var film = new Film { Id = 1, Name = "Test" };
             var filmEntity = new FilmEntity { FilmId = 1, Name = "Test" };
 
             _filmHandler.Setup(method => method.IsDuplicate(It.IsAny<int>(), It.IsAny<string>())).ReturnsAsync(isDuplicate);
@@ -240,7 +240,7 @@ namespace BusinessLogic.Tests
         [InlineData(false)]
         public async Task UpdateFilmCallsMethodsAsRequiredAndReturnsBool(bool isDuplicate)
         {
-            var film = new Film { FilmId = 1, Name = "Test" };
+            var film = new Film { Id = 1, Name = "Test" };
             var filmEntity = new FilmEntity { FilmId = 1, Name = "Test" };
 
             _filmHandler.Setup(method => method.IsDuplicate(It.IsAny<int>(), It.IsAny<string>())).ReturnsAsync(isDuplicate);

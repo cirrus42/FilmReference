@@ -54,7 +54,7 @@
                 @foreach (var film in Model.PersonPagesValues.Films)
                 {
                     <td>
-                        <a asp-page="/FilmPages/Details" asp-route-id="@film.FilmId">
+                        <a asp-page="/FilmPages/Details" asp-route-id="@film.Id">
                             <img src="@Model.ImageHelper.ImageSource(film.Picture)" class="FilmImageSmall" />
                             <br />
                             <label>@film.Name</label>
