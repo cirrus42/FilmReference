@@ -44,25 +44,10 @@ namespace FilmReference.FrontEnd.Handlers
                 .ThenInclude(filmPerson => filmPerson.Person)
                 .FirstOrDefaultAsync(film => film.FilmId == id);
 
-        public async Task<Results<FilmDetails>> GetFilmWithFilmPerson(int id)
-        {
-            //var retrievedFilm = await _filmRepository.GetAllQueryable()
-            //    .Include(film => film.FilmPerson)
-            //    .FirstOrDefaultAsync(film => film.FilmId == id);
-
-            //if (retrievedFilm == null) return new Results<FilmDetails> { HttpStatusCode = HttpStatusCode.NotFound };
-
-            //return new Results<FilmDetails>
-            //{
-            //    Entity = new FilmDetails
-            //    {
-            //        Film = retrievedFilm
-            //    },
-            //    HttpStatusCode = HttpStatusCode.OK
-            //};
-
-            return new Results<FilmDetails>();
-        }
+        public async Task<FilmEntity> GetFilmWithFilmPerson(int id) => 
+            await _filmRepository.GetAllQueryable()
+                .Include(film => film.FilmPerson)
+                .FirstOrDefaultAsync(film => film.FilmId == id);
 
         public async Task UpdateFilm(FilmEntity film) =>
             await _filmRepository.Update(film);

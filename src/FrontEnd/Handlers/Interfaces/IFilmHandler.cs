@@ -11,7 +11,8 @@ namespace FilmReference.FrontEnd.Handlers.Interfaces
         Task SaveFilm(FilmEntity film); 
         Task<bool> IsDuplicate(int filmId, string filmName);
         Task<FilmEntity> GetFilmById(int id);
-        Task<Results<FilmDetails>> GetFilmWithFilmPerson(int id);
+        // Task<Results<FilmDetails>> GetFilmWithFilmPerson(int id);
+        Task<FilmEntity> GetFilmWithFilmPerson(int id);
         Task UpdateFilm(FilmEntity film);
         Task<IEnumerable<FilmEntity>> GetFilms();
     }

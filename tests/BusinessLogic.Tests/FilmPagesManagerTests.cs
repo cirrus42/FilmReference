@@ -152,114 +152,155 @@ namespace BusinessLogic.Tests
             });
         }
 
-        //[Fact]
-        //public async Task GetFilmWithFilmPersonReturnsFilmValues()
-        //{
-        //    var film = new FilmEntity { Name = "Film" };
-        //    var person = new PersonEntity { FirstName = "Test", LastName = "Surname" };
-        //    var actors = new List<PersonEntity> { person };
-        //    var filmDetails = new FilmDetails { Film = film, Actors = actors };
+        [Fact]
+        public async Task GetFilmWithFilmPersonReturnsFilmValues()
+        {
+            var filmEntity = new FilmEntity { Name = "Film" };
+            var film = new Film { Name = "Film" };
 
-        //    var result = new Results<FilmDetails> { HttpStatusCode = HttpStatusCode.OK, Entity = filmDetails };
+            _filmHandler.Setup(method => method.GetFilmWithFilmPerson(It.IsAny<int>())).ReturnsAsync(filmEntity);
+            _mapper.Setup(method => method.Map<Film>(It.IsAny<FilmEntity>())).Returns(film);
 
-        //    _filmHandler.Setup(method => method.GetFilmWithFilmPerson(It.IsAny<int>())).ReturnsAsync(result);
+            var output = await _filmPagesManager.GetFilmWithFilmPerson(2);
 
-        //    var output = await _filmPagesManager.GetFilmWithFilmPerson(2);
+            _filmHandler.Verify(method => method.GetFilmWithFilmPerson(It.IsAny<int>()), Times.Once);
+            _mapper.Verify(method => method.Map<Film>(It.IsAny<FilmEntity>()), Times.Once);
 
-        //    _filmHandler.Verify(method => method.GetFilmWithFilmPerson(It.IsAny<int>()), Times.Once);
+            output.HttpStatusCode.Should().Be(HttpStatusCode.OK);
+            var entity = output.Entity;
 
-        //    output.HttpStatusCode.Should().Be(HttpStatusCode.OK);
-        //    var entity = output.Entity;
+            entity.Film.Name.Should().Be(film.Name);
+        }
 
-        //    entity.Film.Name.Should().Be(film.Name);
-        //    entity.Actors.Count.Should().Be(1);
-        //    entity.Actors.Should().Contain(person);
-        //}
+        [Fact]
+        public async Task GetFilmWithFilmPersonReturnsNotFound()
+        {
+            _filmHandler.Setup(method => method.GetFilmWithFilmPerson(It.IsAny<int>())).ReturnsAsync((FilmEntity) null);
 
-        //[Theory]
-        //[InlineData(true)]
-        //[InlineData(false)]
-        //public async Task SaveFilmCallsMethodsAsRequiredAndReturnsBool(bool isDuplicate)
-        //{
-        //    var film = new FilmEntity{FilmId = 1, Name = "Test"};
-        //    _filmHandler.Setup(method => method.IsDuplicate(It.IsAny<int>(), It.IsAny<string>())).ReturnsAsync(isDuplicate);
+            var output = await _filmPagesManager.GetFilmWithFilmPerson(2);
 
-        //    _filmHandler.Setup(method => method.SaveFilm(It.IsAny<FilmEntity>()));
+            _filmHandler.Verify(method => method.GetFilmWithFilmPerson(It.IsAny<int>()), Times.Once);
+            _mapper.Verify(method => method.Map<Film>(It.IsAny<FilmEntity>()), Times.Never);
 
-        //    var output = await _filmPagesManager.SaveFilm(film);
+            output.HttpStatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
 
-        //    _filmHandler.Verify(method => method.IsDuplicate(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public async Task SaveFilmCallsMethodsAsRequiredAndReturnsBool(bool isDuplicate)
+        {
+            var film = new Film { FilmId = 1, Name = "Test" };
+            var filmEntity = new FilmEntity { FilmId = 1, Name = "Test" };
 
-        //    if (isDuplicate)
-        //        _filmHandler.Verify(method => method.SaveFilm(It.IsAny<FilmEntity>()),Times.Never);
-        //    else
-        //        _filmHandler.Verify(method => method.SaveFilm(It.IsAny<FilmEntity>()), Times.Once);
+            _filmHandler.Setup(method => method.IsDuplicate(It.IsAny<int>(), It.IsAny<string>())).ReturnsAsync(isDuplicate);
+            _mapper.Setup(method => method.Map<FilmEntity>(It.IsAny<Film>())).Returns(filmEntity);
+            _filmHandler.Setup(method => method.SaveFilm(It.IsAny<FilmEntity>()));
 
-        //    output.Should().Be(!isDuplicate);
-        //}
+            var output = await _filmPagesManager.SaveFilm(film);
 
-        //[Fact]
-        //public async Task RemoveActorsFromFilmCallsRemoveFilmPersonForEachFilmPerson()
-        //{
-        //    var filmPerson1 = new FilmPersonEntity();
-        //    var filmPerson2 = new FilmPersonEntity();
+            _filmHandler.Verify(method => method.IsDuplicate(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
 
-        //    var filmPersonList = new List<FilmPersonEntity>{filmPerson1, filmPerson2};
+            if (isDuplicate)
+            {
+                _mapper.Verify(method => method.Map<FilmEntity>(It.IsAny<Film>()),Times.Never);
+                _filmHandler.Verify(method => method.SaveFilm(It.IsAny<FilmEntity>()), Times.Never);
+            }
+            else
+            {
+                _mapper.Verify(method => method.Map<FilmEntity>(It.IsAny<Film>()), Times.Once);
+                _filmHandler.Verify(method => method.SaveFilm(It.IsAny<FilmEntity>()), Times.Once);
+            }
 
-        //    await _filmPagesManager.RemoveActorsFromFilm(filmPersonList);
+            output.Should().Be(!isDuplicate);
+        }
 
-        //    _filmPersonHandler.Verify(method => method.RemoveFilmPerson(It.IsAny<FilmPersonEntity>()),
-        //        Times.Exactly(filmPersonList.Count));
-        //}
+        [Fact]
+        public async Task RemoveActorsFromFilmCallsRemoveFilmPersonForEachFilmPerson()
+        {
+            var filmPerson1 = new FilmPerson();
+            var filmPerson2 = new FilmPerson();
 
-        //[Theory]
-        //[InlineData(true)]
-        //[InlineData(false)]
-        //public async Task UpdateFilmCallsMethodsAsRequiredAndReturnsBool(bool isDuplicate)
-        //{
-        //    var film = new FilmEntity { FilmId = 1, Name = "Test" };
-        //    _filmHandler.Setup(method => method.IsDuplicate(It.IsAny<int>(), It.IsAny<string>())).ReturnsAsync(isDuplicate);
+            var filmPersonList = new List<FilmPerson> { filmPerson1, filmPerson2 };
 
-        //    _filmHandler.Setup(method => method.UpdateFilm(It.IsAny<FilmEntity>()));
+            var filmPersonEntity1 = new FilmPersonEntity();
+            var filmPersonEntity2 = new FilmPersonEntity();
 
-        //    var output = await _filmPagesManager.UpdateFilm(film);
+            _mapper.SetupSequence(method => method.Map<FilmPersonEntity>(It.IsAny<FilmPerson>())).Returns(filmPersonEntity1).Returns(filmPersonEntity2);
 
-        //    _filmHandler.Verify(method => method.IsDuplicate(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
+            await _filmPagesManager.RemoveActorsFromFilm(filmPersonList);
 
-        //    if (isDuplicate)
-        //        _filmHandler.Verify(method => method.UpdateFilm(It.IsAny<FilmEntity>()), Times.Never);
-        //    else
-        //        _filmHandler.Verify(method => method.UpdateFilm(It.IsAny<FilmEntity>()), Times.Once);
+            _mapper.Verify(method => method.Map<FilmPersonEntity>(It.IsAny<FilmPerson>()),Times.Exactly(filmPersonList.Count));
+            _filmPersonHandler.Verify(method => method.RemoveFilmPerson(It.IsAny<FilmPersonEntity>()),
+                Times.Exactly(filmPersonList.Count));
+        }
 
-        //    output.Should().Be(!isDuplicate);
-        //}
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public async Task UpdateFilmCallsMethodsAsRequiredAndReturnsBool(bool isDuplicate)
+        {
+            var film = new Film { FilmId = 1, Name = "Test" };
+            var filmEntity = new FilmEntity { FilmId = 1, Name = "Test" };
 
-        //[Fact]
-        //public async Task GetFilmsAndGenresReturnsFilmPagesValues()
-        //{
-        //    var film1 = new FilmEntity { Name = "Film1" };
-        //    var film2 = new FilmEntity { Name = "Film2" };
-        //    var films = new List<FilmEntity>{film1, film2};
+            _filmHandler.Setup(method => method.IsDuplicate(It.IsAny<int>(), It.IsAny<string>())).ReturnsAsync(isDuplicate);
+            _mapper.Setup(method => method.Map<FilmEntity>(It.IsAny<Film>())).Returns(filmEntity);
+            _filmHandler.Setup(method => method.UpdateFilm(It.IsAny<FilmEntity>()));
 
-        //    var genre = new GenreEntity { Name = "A New Genre" };
-        //    var genres = new List<GenreEntity> { genre };
+            var output = await _filmPagesManager.UpdateFilm(film);
 
-        //    _filmHandler.Setup(method => method.GetFilms()).ReturnsAsync(films);
-        //    _genreHandler.Setup(method => method.GetGenres()).ReturnsAsync(genres);
+            _filmHandler.Verify(method => method.IsDuplicate(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
 
-        //    var output = await _filmPagesManager.GetFilmsAndGenres();
+            if (isDuplicate)
+            {
+                _mapper.Verify(method => method.Map<FilmEntity>(It.IsAny<Film>()), Times.Never);
+                _filmHandler.Verify(method => method.UpdateFilm(It.IsAny<FilmEntity>()), Times.Never);
+            }
+            else
+            {
+                _mapper.Verify(method => method.Map<FilmEntity>(It.IsAny<Film>()), Times.Once);
+                _filmHandler.Verify(method => method.UpdateFilm(It.IsAny<FilmEntity>()), Times.Once);
+            }
+            
+            output.Should().Be(!isDuplicate);
+        }
 
-        //    output.Films.Count.Should().Be(films.Count);
-        //    output.Genres.Count.Should().Be(genres.Count + 1);
+        [Fact]
+        public async Task GetFilmsAndGenresReturnsFilmPagesValues()
+        {
+            var filmEntity1 = new FilmEntity { Name = "Film1" };
+            var filmEntity2 = new FilmEntity { Name = "Film2" };
+            var filmEntities = new List<FilmEntity> { filmEntity1, filmEntity2 };
 
-        //    output.Films.Should().Contain(film1);
-        //    output.Films.Should().Contain(film2);
-        //    output.Genres.Should().Contain(genre);
-        //    output.Genres.Should().ContainEquivalentOf(new GenreEntity
-        //    {
-        //        GenreId = PageValues.Zero,
-        //        Name = PageValues.All
-        //    });
-        //}
+            var film1 = new Film { Name = "Film1" };
+            var film2 = new Film { Name = "Film2" };
+            var films = new List<Film> { film1, film2 };
+
+            var genreEntity = new GenreEntity { Name = "A New Genre" };
+            var genreEntities= new List<GenreEntity> { genreEntity };
+
+            var genre = new Genre{ Name = "A New Genre" };
+            var genres = new List<Genre> {genre};
+
+            _filmHandler.Setup(method => method.GetFilms()).ReturnsAsync(filmEntities);
+            _mapper.Setup(method => method.Map<List<Film>>(It.IsAny<List<FilmEntity>>())).Returns(films);
+
+            _genreHandler.Setup(method => method.GetGenres()).ReturnsAsync(genreEntities);
+            _mapper.Setup(method => method.Map<List<Genre>>(It.IsAny<List<GenreEntity>>())).Returns(genres);
+
+            var output = await _filmPagesManager.GetFilmsAndGenres();
+
+            output.Films.Count.Should().Be(films.Count);
+            output.Genres.Count.Should().Be(genres.Count + 1);
+
+            output.Films.Should().Contain(film1);
+            output.Films.Should().Contain(film2);
+            output.Genres.Should().Contain(genre);
+            output.Genres.Should().ContainEquivalentOf(new GenreEntity
+            {
+                GenreId = PageValues.Zero,
+                Name = PageValues.All
+            });
+        }
     }
 }

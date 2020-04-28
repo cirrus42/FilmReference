@@ -29,7 +29,7 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
 
         public async Task<IActionResult> OnGet()
         {
-            FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
+         //   FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
             return Page();
         }
 
@@ -56,7 +56,7 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
 
             if (!updated)
             {
-                FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
+       //         FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
                 return Page();
             }
 
@@ -70,7 +70,7 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
                     if (!_imageHelper.FileTypeOk(file, out var errorMessage))
                     {
                         ModelState.AddModelError(PageValues.FilmPicture, errorMessage);
-                        FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
+              //          FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
                         return Page();
                     }
 
@@ -88,11 +88,11 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
                         PersonId = Convert.ToInt32(actorId)
                     });
 
-            if (await _filmPagesManager.SaveFilm(newFilm))
+  //          if (await _filmPagesManager.SaveFilm(newFilm))
                 return RedirectToPage(PageValues.FilmIndexPage);
 
             ModelState.AddModelError(PageValues.FilmName, PageValues.DuplicateFilm);
-            FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
+        //    FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
             return Page();
         }
     }

@@ -53,7 +53,6 @@ namespace FilmReference.FrontEnd.Managers
             };
         }
 
-
         public async Task<FilmPagesValues> GetFilmPageDropDownValues()
         {
             var filmPages = new FilmPagesValues(new Genre
@@ -61,7 +60,6 @@ namespace FilmReference.FrontEnd.Managers
                 GenreId = PageValues.MinusOne,
                 Name = PageValues.PleaseSelect
             });
-
 
             filmPages.Directors.AddRange(_mapper.Map<List<Person>>((await _personHandler.GetDirectors()).ToList()));
             filmPages.Actors = _mapper.Map<List<Person>>((await _personHandler.GetActors()).ToList());
@@ -71,44 +69,55 @@ namespace FilmReference.FrontEnd.Managers
             return filmPages;
         }
 
-        public async Task<Results<FilmDetails>> GetFilmWithFilmPerson(int id) =>
-            await _filmHandler.GetFilmWithFilmPerson(id);
+        public async Task<Results<FilmDetails>> GetFilmWithFilmPerson(int id)
+        {
+            var film = await _filmHandler.GetFilmWithFilmPerson(id);
 
-        public async Task<bool> SaveFilm(FilmEntity film)
+            if (film == null) return new Results<FilmDetails> { HttpStatusCode = HttpStatusCode.NotFound };
+
+            return new Results<FilmDetails>
+            {
+                Entity = new FilmDetails
+                {
+                    Film = _mapper.Map<Film>(film)
+                },
+                HttpStatusCode = HttpStatusCode.OK
+            };
+        }
+
+        public async Task<bool> SaveFilm(Film film)
         {
             if (await _filmHandler.IsDuplicate(film.FilmId, film.Name))
                 return false;
 
-            await _filmHandler.SaveFilm(film);
+            await _filmHandler.SaveFilm(_mapper.Map<FilmEntity>(film));
             return true;
         }
 
-        public async Task RemoveActorsFromFilm(IEnumerable<FilmPersonEntity> filmPersonList)
+        public async Task RemoveActorsFromFilm(IEnumerable<FilmPerson> filmPersonList)
         {
             foreach (var filmPerson in filmPersonList)
-                await _filmPersonHandler.RemoveFilmPerson(filmPerson);
+                await _filmPersonHandler.RemoveFilmPerson(_mapper.Map<FilmPersonEntity>(filmPerson));
         }
 
-        public async Task<bool> UpdateFilm(FilmEntity film)
+        public async Task<bool> UpdateFilm(Film film)
         {
             if (await _filmHandler.IsDuplicate(film.FilmId, film.Name))
                 return false;
-            await _filmHandler.UpdateFilm(film);
+            await _filmHandler.UpdateFilm(_mapper.Map<FilmEntity>(film));
             return true;
         }
 
         public async Task<FilmPagesValues> GetFilmsAndGenres()
         {
-            throw new System.NotImplementedException();
-            //var filmPages =
-            //    new FilmPagesValues(new GenreEntity { GenreId = PageValues.Zero, Name = PageValues.All })
-            //    {
-            //        Films = (await _filmHandler.GetFilms()).ToList()
-            //    };
+            var filmPages =
+                new FilmPagesValues(new Genre { GenreId = PageValues.Zero, Name = PageValues.All })
+                {
+                    Films = _mapper.Map<List<Film>>((await _filmHandler.GetFilms()).ToList())
+                };
 
-            //filmPages.Genres.AddRange((await _genreHandler.GetGenres()).ToList());
-            //return filmPages;
-
+            filmPages.Genres.AddRange(_mapper.Map<List<Genre>>((await _genreHandler.GetGenres()).ToList()));
+            return filmPages;
         }
     }
 }       

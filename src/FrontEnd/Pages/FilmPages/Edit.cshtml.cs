@@ -67,7 +67,7 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
 
             if (!updated)
             {
-                FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
+              //  FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
                 return Page();
             }
 
@@ -81,7 +81,7 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
                     if (!ImageHelper.FileTypeOk(file, out var errorMessage))
                     {
                         ModelState.AddModelError(PageValues.FilmPicture, errorMessage);
-                        FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
+                    //    FilmPagesValues = await _filmPagesManager.GetFilmPageDropDownValues();
                         return Page();
                     }
 
