@@ -1,10 +1,10 @@
 ﻿using FilmReference.FrontEnd.Helpers;
 using FilmReference.FrontEnd.Managers.Interfaces;
-using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net;
 using System.Threading.Tasks;
+using Shared.Models;
 
 namespace FilmReference.FrontEnd.Pages.PersonPages
 {

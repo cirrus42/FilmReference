@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace FilmReference.FrontEnd.Models
+namespace Shared.Models
 {
     public class Results<T>
     {

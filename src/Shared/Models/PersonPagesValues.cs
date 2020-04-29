@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FilmReference.FrontEnd.Models
+namespace Shared.Models
 {
     public class PersonPagesValues
     {

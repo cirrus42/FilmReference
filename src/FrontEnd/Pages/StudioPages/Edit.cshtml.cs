@@ -1,14 +1,13 @@
-﻿using FilmReference.DataAccess;
+﻿using FilmReference.DataAccess.DbClasses;
 using FilmReference.FrontEnd.Helpers;
 using FilmReference.FrontEnd.Managers.Interfaces;
-using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Shared.Models;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using FilmReference.DataAccess.DbClasses;
 
 namespace FilmReference.FrontEnd.Pages.StudioPages
 {

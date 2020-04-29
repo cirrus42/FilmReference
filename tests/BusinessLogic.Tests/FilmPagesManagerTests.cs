@@ -2,9 +2,9 @@
 using FilmReference.DataAccess.DbClasses;
 using FilmReference.FrontEnd.Handlers.Interfaces;
 using FilmReference.FrontEnd.Managers;
-using FilmReference.FrontEnd.Models;
 using FluentAssertions;
 using Moq;
+using Shared.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net;

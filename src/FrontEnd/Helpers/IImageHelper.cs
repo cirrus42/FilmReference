@@ -1,7 +1,5 @@
-﻿using FilmReference.DataAccess;
-using FilmReference.DataAccess.DbClasses;
-using FilmReference.FrontEnd.Models;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using Shared.Models;
 
 namespace FilmReference.FrontEnd.Helpers
 {

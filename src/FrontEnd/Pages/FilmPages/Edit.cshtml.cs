@@ -1,14 +1,15 @@
 ﻿using FilmReference.FrontEnd.Extensions;
 using FilmReference.FrontEnd.Helpers;
 using FilmReference.FrontEnd.Managers.Interfaces;
-using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Shared.Models;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+
 namespace FilmReference.FrontEnd.Pages.FilmPages
 {
     public class EditModel : PageModel

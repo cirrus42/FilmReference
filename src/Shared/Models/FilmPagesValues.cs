@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FilmReference.FrontEnd.Models
+namespace Shared.Models
 {
     public class FilmPagesValues
     {

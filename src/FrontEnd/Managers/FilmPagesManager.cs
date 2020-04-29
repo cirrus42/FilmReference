@@ -2,7 +2,7 @@
 using FilmReference.DataAccess.DbClasses;
 using FilmReference.FrontEnd.Handlers.Interfaces;
 using FilmReference.FrontEnd.Managers.Interfaces;
-using FilmReference.FrontEnd.Models;
+using Shared.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;

@@ -1,23 +1,21 @@
-﻿using FilmReference.DataAccess;
+﻿using FilmReference.DataAccess.DbClasses;
 using FilmReference.FrontEnd.Helpers;
 using FilmReference.FrontEnd.Managers.Interfaces;
-using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Shared.Models;
 using System.Linq;
 using System.Threading.Tasks;
-using FilmReference.DataAccess.DbClasses;
 
 namespace FilmReference.FrontEnd.Pages.StudioPages
 {
-    public class CreateModel : FilmReferencePageModel
+    public class CreateModel : PageModel
     {
         private readonly IImageHelper _imageHelper;
         private readonly IStudioPagesManager _studioPagesManager;
         public StudioEntity Studio { get; set; }
 
-        public CreateModel(FilmReferenceContext context, IImageHelper imageHelper,
-            IStudioPagesManager studioPagesManager)
-            : base(context)
+        public CreateModel(IImageHelper imageHelper, IStudioPagesManager studioPagesManager)
         {
             _imageHelper = imageHelper;
             _studioPagesManager = studioPagesManager;
@@ -53,7 +51,7 @@ namespace FilmReference.FrontEnd.Pages.StudioPages
                         return Page();
                     }
 
-                    //_imageHelper.AddImageToEntity(newStudio, file);
+                   // _imageHelper.AddImageToEntity(newStudio, file);
                 }
             }
 

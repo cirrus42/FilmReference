@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FilmReference.DataAccess.DbClasses;
-using FilmReference.FrontEnd.Models;
+using Shared.Models;
 
 namespace FilmReference.FrontEnd.Mappers
 {

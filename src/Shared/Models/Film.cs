@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace FilmReference.FrontEnd.Models
+namespace Shared.Models
 {
     public  class Film : IPicture
     {

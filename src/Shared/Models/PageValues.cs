@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace FilmReference.FrontEnd.Models
+﻿namespace Shared.Models
 {
     public class PageValues
     {

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FilmReference.FrontEnd.Models
+namespace Shared.Models
 {
     public class Person : IPicture
     {

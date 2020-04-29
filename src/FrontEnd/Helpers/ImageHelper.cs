@@ -2,9 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using FilmReference.DataAccess;
-using FilmReference.DataAccess.DbClasses;
-using FilmReference.FrontEnd.Models;
+using Shared.Models;
 
 namespace FilmReference.FrontEnd.Helpers
 {

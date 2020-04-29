@@ -1,4 +1,4 @@
-﻿using FilmReference.FrontEnd.Models;
+﻿using Shared.Models;
 
 namespace FilmReference.FrontEnd.Extensions
 {

@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Handlers.Interfaces;
+﻿using FilmReference.FrontEnd.Handlers.Interfaces;
 using FilmReference.FrontEnd.Managers.Interfaces;
-using FilmReference.FrontEnd.Models;
-using System.Linq;
+using Shared.Models;
 using System.Net;
 using System.Threading.Tasks;
 using PersonEntity = FilmReference.DataAccess.DbClasses.PersonEntity;

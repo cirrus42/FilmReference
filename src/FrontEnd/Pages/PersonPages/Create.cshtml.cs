@@ -1,9 +1,8 @@
-﻿using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Helpers;
+﻿using FilmReference.FrontEnd.Helpers;
 using FilmReference.FrontEnd.Managers.Interfaces;
-using FilmReference.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Shared.Models;
 using System.Linq;
 using System.Threading.Tasks;
 using PersonEntity = FilmReference.DataAccess.DbClasses.PersonEntity;
