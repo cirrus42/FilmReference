@@ -1,7 +1,9 @@
-﻿using FilmReference.DataAccess.DbClasses;
+﻿using AutoMapper;
+using FilmReference.DataAccess.DbClasses;
 using FilmReference.FrontEnd.Handlers.Interfaces;
 using FilmReference.FrontEnd.Managers.Interfaces;
 using Shared.Models;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace FilmReference.FrontEnd.Managers
@@ -9,28 +11,42 @@ namespace FilmReference.FrontEnd.Managers
     public class GenrePagesManager : IGenrePagesManager
     {
         private readonly IGenreHandler _genreHandler;
+        private readonly IMapper _mapper;
 
-        public GenrePagesManager(IGenreHandler genreHandler) => 
+        public GenrePagesManager(IGenreHandler genreHandler, IMapper mapper)
+        {
             _genreHandler = genreHandler;
+            _mapper = mapper;
+        }
 
-        public async Task<bool> SaveGenre(GenreEntity genre)
+        public async Task<bool> SaveGenre(Genre genre)
         {
-            if (await _genreHandler.IsDuplicate(genre))
+            var genreEntity = _mapper.Map<GenreEntity>(genre);
+
+            if (await _genreHandler.IsDuplicate(genreEntity))
                 return false;
 
-            await _genreHandler.SaveGenre(genre);
+            await _genreHandler.SaveGenre(genreEntity);
             return true;
         }
 
-        public async Task<bool> UpdateGenre(GenreEntity genre)
+        public async Task<bool> UpdateGenre(Genre genre)
         {
-            if (await _genreHandler.IsDuplicate(genre))
+            var genreEntity = _mapper.Map<GenreEntity>(genre);
+
+            if (await _genreHandler.IsDuplicate(genreEntity))
                 return false;
-            await _genreHandler.UpdateGenre(genre);
+            await _genreHandler.UpdateGenre(genreEntity);
             return true;
         }
 
-        public Task<Results<GenreEntity>> GetGenreById(int id) =>
-            _genreHandler.GetGenreById(id);
+        public async Task<Results<Genre>> GetGenreById(int id)
+        {
+            var genreEntity = await _genreHandler.GetGenreById(id);
+
+            return genreEntity == null ?
+                new Results<Genre> { HttpStatusCode = HttpStatusCode.NotFound } :
+                new Results<Genre> { Entity = _mapper.Map<Genre>(genreEntity), HttpStatusCode = HttpStatusCode.OK };
+        }
     }
 }

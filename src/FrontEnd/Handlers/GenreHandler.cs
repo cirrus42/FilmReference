@@ -29,14 +29,8 @@ namespace FilmReference.FrontEnd.Handlers
             return genre.GenreId <= 0 || duplicates.Any(g => g.GenreId != genre.GenreId);
         }
 
-        public async Task<Results<GenreEntity>> GetGenreById(int id)
-        {
-            var genre = await _genreRepository.GetById(id);
-
-            return genre == null ?
-                new Results<GenreEntity> {HttpStatusCode = HttpStatusCode.NotFound} : 
-                new Results<GenreEntity> { Entity = genre, HttpStatusCode = HttpStatusCode.OK};
-        }
+        public async Task<GenreEntity> GetGenreById(int id) =>
+            await _genreRepository.GetById(id);
 
         public async Task UpdateGenre(GenreEntity genre) =>
             await _genreRepository.Update(genre);

@@ -1,7 +1,6 @@
 ﻿using FilmReference.DataAccess.DbClasses;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Shared.Models;
 
 namespace FilmReference.FrontEnd.Handlers.Interfaces
 {
@@ -10,7 +9,7 @@ namespace FilmReference.FrontEnd.Handlers.Interfaces
         Task<IEnumerable<GenreEntity>> GetGenres();
         Task<bool> IsDuplicate(GenreEntity genre);
         Task SaveGenre(GenreEntity genre);
-        Task<Results<GenreEntity>> GetGenreById(int id);
+        Task<GenreEntity> GetGenreById(int id);
         Task UpdateGenre(GenreEntity genre);
     }
 }
