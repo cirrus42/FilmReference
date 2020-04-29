@@ -13,7 +13,7 @@ namespace FilmReference.FrontEnd.Pages.GenrePages
         public CreateModel(IGenrePagesManager genrePagesManager) =>
             _genrePagesManager = genrePagesManager;
         
-        public GenreEntity Genre { get; set; }
+        public Genre Genre { get; set; }
 
         public IActionResult OnGet() => 
             Page();
@@ -23,12 +23,12 @@ namespace FilmReference.FrontEnd.Pages.GenrePages
             if (!ModelState.IsValid)
                 return Page();
 
-            var newGenre = new GenreEntity();
+            var newGenre = new Genre();
 
             var updated = await TryUpdateModelAsync(
                 newGenre,
                 nameof(Genre),
-                g => g.GenreId, g => g.Name, g => g.Description);
+                g => g.Id, g => g.Name, g => g.Description);
             
             if (!updated)
                 return Page();

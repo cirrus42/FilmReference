@@ -11,7 +11,7 @@ namespace FilmReference.FrontEnd.Pages.GenrePages
     public class EditModel : PageModel
     {
         private readonly IGenrePagesManager _genrePagesManager;
-        public GenreEntity Genre { get; set; }
+        public Genre Genre { get; set; }
         public EditModel(IGenrePagesManager genrePagesManager) => 
             _genrePagesManager = genrePagesManager;
         
@@ -46,7 +46,7 @@ namespace FilmReference.FrontEnd.Pages.GenrePages
             var updated = await TryUpdateModelAsync(
                 Genre,
                 nameof(Genre),
-                g => g.GenreId, g => g.Name, g => g.Description);
+                g => g.Id, g => g.Name, g => g.Description);
 
             if (!updated)
                 return Page();
