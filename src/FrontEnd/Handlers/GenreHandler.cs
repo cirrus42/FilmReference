@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FilmReference.FrontEnd.Handlers
 {
-    internal class GenreHandler : IGenreHandler
+    public class GenreHandler : IGenreHandler
     {
         private readonly IGenericRepository<GenreEntity> _genreRepository;
 

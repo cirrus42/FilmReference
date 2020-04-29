@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace FilmReference.FrontEnd.Handlers.Interfaces
 {
-    internal interface IFilmPersonHandler
+    public interface IFilmPersonHandler
     {
         Task RemoveFilmPerson(FilmPersonEntity filmPerson);
     }

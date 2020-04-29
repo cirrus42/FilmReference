@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace FilmReference.FrontEnd.Handlers.Interfaces
 {
-    internal interface IFilmHandler
+    public interface IFilmHandler
     {
         Task SaveFilm(FilmEntity film);
         Task UpdateFilm(FilmEntity film);

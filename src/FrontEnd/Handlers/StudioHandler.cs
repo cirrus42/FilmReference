@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FilmReference.FrontEnd.Handlers
 {
-    internal class StudioHandler : IStudioHandler
+    public class StudioHandler : IStudioHandler
     {
         private readonly IGenericRepository<StudioEntity> _studioRepository;
 

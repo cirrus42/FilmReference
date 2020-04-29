@@ -1,63 +1,68 @@
-﻿using FilmReference.FrontEnd.Handlers.Interfaces;
+﻿using AutoMapper;
+using FilmReference.DataAccess.Entities;
+using FilmReference.FrontEnd.Handlers.Interfaces;
 using FilmReference.FrontEnd.Managers.Interfaces;
 using Shared.Models;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using PersonEntity = FilmReference.DataAccess.Entities.PersonEntity;
 
 namespace FilmReference.FrontEnd.Managers
 {
     public class PersonPagesManager : IPersonPagesManager
     {
         private readonly IPersonHandler _personHandler;
+        private readonly IMapper _mapper;
 
-        public PersonPagesManager(IPersonHandler personHandler) =>
-            _personHandler = personHandler;
-        
-        public async Task<bool> SavePerson(PersonEntity person)
+        public PersonPagesManager(IPersonHandler personHandler, IMapper mapper)
         {
-            if (await _personHandler.IsDuplicate(person))
+            _personHandler = personHandler;
+            _mapper = mapper;
+        }
+
+        public async Task<bool> SavePerson(Person person)
+        {
+            if (await _personHandler.IsDuplicate(_mapper.Map<PersonEntity>(person)))
                 return false;
 
-            await _personHandler.SavePerson(person);
+            await _personHandler.SavePerson(_mapper.Map<PersonEntity>(person));
             return true;
         }
 
         public async Task<Results<PersonPagesValues>> GetPersonDetails(int id)
         {
-            throw new System.NotImplementedException();
-            //var person = await _personHandler.GetPersonWithDetails(id);
+            var personEntity = await _personHandler.GetPersonWithDetails(id);
 
-            //if (person == null) return new Results<PersonPagesValues> {HttpStatusCode = HttpStatusCode.NotFound};
+            if (personEntity == null) return new Results<PersonPagesValues> {HttpStatusCode = HttpStatusCode.NotFound};
 
-            //var filmPersonList = person.FilmPerson.OrderBy(fp => fp.Film.Name);
+            var filmPersonList = _mapper.Map<List<FilmPerson>>(personEntity.FilmPerson.OrderBy(fp => fp.Film.Name));
 
-            //return new Results<PersonPagesValues>
-            //{
-            //    HttpStatusCode = HttpStatusCode.OK,
-            //    Entity = new PersonPagesValues
-            //    {
-            //        Person = person, 
-            //        Films = filmPersonList.Select(filmPerson => filmPerson.Film).ToList()
-            //    }
-            //};
+            return new Results<PersonPagesValues>
+            {
+                HttpStatusCode = HttpStatusCode.OK,
+                Entity = new PersonPagesValues
+                {
+                    Person = _mapper.Map<Person>(personEntity),
+                    Films = filmPersonList.Select(filmPerson => filmPerson.Film).ToList()
+                }
+            };
         }
 
-        public async Task<Results<PersonEntity>> GetPersonById(int id)
+        public async Task<Results<Person>> GetPersonById(int id)
         {
-            var person = await _personHandler.GetPersonWithDetails(id);
+            var person = _mapper.Map<Person>(await _personHandler.GetPersonWithDetails(id));
             return person == null ? 
-                new Results<PersonEntity> {HttpStatusCode = HttpStatusCode.NotFound} : 
-                new Results<PersonEntity> {HttpStatusCode = HttpStatusCode.OK, Entity = person};
+                new Results<Person> {HttpStatusCode = HttpStatusCode.NotFound} : 
+                new Results<Person> {HttpStatusCode = HttpStatusCode.OK, Entity = person};
         }
 
-        public async Task<bool> UpdatePerson(PersonEntity person)
+        public async Task<bool> UpdatePerson(Person person)
         {
-            if (await _personHandler.IsDuplicate(person))
+            if (await _personHandler.IsDuplicate(_mapper.Map<PersonEntity>(person)))
                 return false;
-            await _personHandler.UpdatePerson(person);
+            await _personHandler.UpdatePerson(_mapper.Map<PersonEntity>(person));
             return true;
         }
-
     }
 }

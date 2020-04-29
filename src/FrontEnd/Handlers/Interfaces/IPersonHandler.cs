@@ -4,7 +4,7 @@ using PersonEntity = FilmReference.DataAccess.Entities.PersonEntity;
 
 namespace FilmReference.FrontEnd.Handlers.Interfaces
 {
-    internal interface IPersonHandler
+    public interface IPersonHandler
     {
         Task<IEnumerable<PersonEntity>> GetDirectors();
         Task<IEnumerable<PersonEntity>> GetActors();

@@ -8,7 +8,7 @@ using PersonEntity = FilmReference.DataAccess.Entities.PersonEntity;
 
 namespace FilmReference.FrontEnd.Handlers
 {
-    internal class PersonHandler : IPersonHandler
+    public class PersonHandler : IPersonHandler
     {
         private readonly IGenericRepository<PersonEntity> _personRepository;
 

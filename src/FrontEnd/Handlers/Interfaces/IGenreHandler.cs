@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace FilmReference.FrontEnd.Handlers.Interfaces
 {
-    internal interface IGenreHandler
+    public interface IGenreHandler
     {
         Task<IEnumerable<GenreEntity>> GetGenres();
         Task<bool> IsDuplicate(GenreEntity genre);

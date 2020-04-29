@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FilmReference.FrontEnd.Handlers.Interfaces
 {
-    internal interface IStudioHandler
+    public interface IStudioHandler
     {
         Task<IEnumerable<StudioEntity>> GetStudios();
         Task<bool> IsDuplicate(StudioEntity studio);

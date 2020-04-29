@@ -6,7 +6,6 @@ using Shared.Models;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using PersonEntity = FilmReference.DataAccess.Entities.PersonEntity;
 
 namespace FilmReference.FrontEnd.Pages.PersonPages
 {
@@ -14,7 +13,7 @@ namespace FilmReference.FrontEnd.Pages.PersonPages
     {
         public IImageHelper ImageHelper;
         private readonly IPersonPagesManager _personPagesManager;
-        public PersonEntity Person { get; set; }
+        public Person Person { get; set; }
 
         public EditModel(IImageHelper imageHelper, IPersonPagesManager personPagesManager)
         {

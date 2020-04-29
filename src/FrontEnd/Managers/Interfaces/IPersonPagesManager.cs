@@ -1,14 +1,13 @@
-﻿using System.Threading.Tasks;
-using Shared.Models;
-using PersonEntity = FilmReference.DataAccess.Entities.PersonEntity;
+﻿using Shared.Models;
+using System.Threading.Tasks;
 
 namespace FilmReference.FrontEnd.Managers.Interfaces
 {
     public interface IPersonPagesManager
     {
-        Task<bool> SavePerson(PersonEntity person);
+        Task<bool> SavePerson(Person person);
         Task<Results<PersonPagesValues>> GetPersonDetails(int id);
-        Task<Results<PersonEntity>> GetPersonById(int id);
-        Task<bool> UpdatePerson(PersonEntity person);
+        Task<Results<Person>> GetPersonById(int id);
+        Task<bool> UpdatePerson(Person person);
     }
 }
