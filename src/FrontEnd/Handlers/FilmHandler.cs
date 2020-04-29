@@ -21,16 +21,8 @@ namespace FilmReference.FrontEnd.Handlers
             await _filmRepository.Save();
         }
 
-        public async Task<bool> IsDuplicate(int filmId, string filmName)
-        {
-            var duplicates =
-                (await _filmRepository.GetWhere(f =>
-                    f.Name.ToLower().Replace(" ", "") == filmName.ToLower().Replace(" ", ""))).ToList();
-
-            if (!duplicates.Any()) return false;
-
-            return filmId <= 0 || duplicates.Any(film => film.FilmId != filmId);
-        }
+        public async Task UpdateFilm(FilmEntity film) =>
+            await _filmRepository.Update(film);
 
         public async Task<FilmEntity> GetFilmById(int id) 
             =>  await _filmRepository.GetAllQueryable()
@@ -46,10 +38,17 @@ namespace FilmReference.FrontEnd.Handlers
                 .Include(film => film.FilmPerson)
                 .FirstOrDefaultAsync(film => film.FilmId == id);
 
-        public async Task UpdateFilm(FilmEntity film) =>
-            await _filmRepository.Update(film);
-
         public async Task<IEnumerable<FilmEntity>> GetFilms() =>
             await _filmRepository.GetAll();
+        public async Task<bool> IsDuplicate(int filmId, string filmName)
+        {
+            var duplicates =
+                (await _filmRepository.GetWhere(f =>
+                    f.Name.ToLower().Replace(" ", "") == filmName.ToLower().Replace(" ", ""))).ToList();
+
+            if (!duplicates.Any()) return false;
+
+            return filmId <= 0 || duplicates.Any(film => film.FilmId != filmId);
+        }
     }
 }
