@@ -60,7 +60,7 @@
                 @foreach (var actor in Model.FilmDetails.Actors)
                 {
                     <td>
-                        <a asp-page="/PersonPages/Details" asp-route-id="@actor.PersonId">
+                        <a asp-page="/PersonPages/Details" asp-route-id="@actor.Id">
                             <img src="@Model.ImageHelper.ImageSource(actor.Picture)" class="PersonImageSmall" />
                             <br />
                             <label>@actor.FullName</label>

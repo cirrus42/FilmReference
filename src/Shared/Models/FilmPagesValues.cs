@@ -15,7 +15,7 @@ namespace Shared.Models
         {
             new Person
             {
-                PersonId = PageValues.MinusOne,
+                Id = PageValues.MinusOne,
                 FullName = PageValues.PleaseSelect
             }
         };
@@ -35,12 +35,12 @@ namespace Shared.Models
 
         public SelectList DirectorSelectList() =>
             new SelectList(Directors.ToList(), 
-                nameof(Person.PersonId),
+                nameof(Person.Id),
                 nameof(Person.FullName));
 
         public MultiSelectList ActorSelectList() =>
             new SelectList(Actors.ToList(),
-                nameof(Person.PersonId),
+                nameof(Person.Id),
                 nameof(Person.FullName));
 
         public SelectList GenreSelectList() =>

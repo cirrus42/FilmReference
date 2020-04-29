@@ -52,7 +52,7 @@ namespace FilmReference.FrontEnd.Pages.PersonPages
             var updated = await TryUpdateModelAsync(
                 Person,
                 nameof(Person),
-                p => p.PersonId,
+                p => p.Id,
                 p => p.FirstName,
                 p => p.LastName,
                 p => p.Description,

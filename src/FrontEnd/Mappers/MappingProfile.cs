@@ -61,7 +61,7 @@ namespace FilmReference.FrontEnd.Mappers
                 .ForMember(opt => opt.Film, opt => opt.MapFrom(o => o.Film));
 
             CreateMap<PersonEntity, Person>()
-                .ForMember(opt => opt.PersonId, opt => opt.MapFrom(o => o.PersonId))
+                .ForMember(opt => opt.Id, opt => opt.MapFrom(o => o.PersonId))
                 .ForMember(opt => opt.FirstName, opt => opt.MapFrom(o => o.FirstName))
                 .ForMember(opt => opt.LastName, opt => opt.MapFrom(o => o.LastName))
                 .ForMember(opt => opt.FullName, opt => opt.MapFrom(o => o.FullName))
@@ -73,7 +73,7 @@ namespace FilmReference.FrontEnd.Mappers
                 .ForMember(opt => opt.FilmPerson, opt => opt.MapFrom(o => o.FilmPerson));
 
             CreateMap<Person, PersonEntity>()
-                .ForMember(opt => opt.PersonId, opt => opt.MapFrom(o => o.PersonId))
+                .ForMember(opt => opt.PersonId, opt => opt.MapFrom(o => o.Id))
                 .ForMember(opt => opt.FirstName, opt => opt.MapFrom(o => o.FirstName))
                 .ForMember(opt => opt.LastName, opt => opt.MapFrom(o => o.LastName))
                 .ForMember(opt => opt.FullName, opt => opt.MapFrom(o => o.FullName))

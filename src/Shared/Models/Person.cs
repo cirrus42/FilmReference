@@ -6,7 +6,7 @@ namespace Shared.Models
 {
     public class Person : IPicture
     {
-        public int PersonId { get; set; }
+        public int Id { get; set; }
         [StringLength(50, ErrorMessage = "{0} cannot be more than {1} characters")]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
