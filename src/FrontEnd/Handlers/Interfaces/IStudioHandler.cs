@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using FilmReference.DataAccess.Entities;
+﻿using FilmReference.DataAccess.Entities;
 using Shared.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FilmReference.FrontEnd.Handlers.Interfaces
 {
-    public interface IStudioHandler
+    internal interface IStudioHandler
     {
         Task<IEnumerable<StudioEntity>> GetStudios();
         Task<bool> IsDuplicate(StudioEntity studio);

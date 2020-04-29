@@ -1,15 +1,14 @@
-﻿using FilmReference.DataAccess;
-using FilmReference.DataAccess.Repositories;
+﻿using FilmReference.DataAccess.Repositories;
 using FilmReference.FrontEnd.Handlers.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using PersonEntity = FilmReference.DataAccess.Entities.PersonEntity;
 
 namespace FilmReference.FrontEnd.Handlers
 {
-    public class PersonHandler : IPersonHandler
+    internal class PersonHandler : IPersonHandler
     {
         private readonly IGenericRepository<PersonEntity> _personRepository;
 

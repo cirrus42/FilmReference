@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using FilmReference.DataAccess.Entities;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using FilmReference.DataAccess.Entities;
 
 namespace FilmReference.FrontEnd.Handlers.Interfaces
 {
-    public interface IGenreHandler
+    internal interface IGenreHandler
     {
         Task<IEnumerable<GenreEntity>> GetGenres();
         Task<bool> IsDuplicate(GenreEntity genre);

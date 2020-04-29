@@ -1,15 +1,15 @@
-﻿using FilmReference.DataAccess.Repositories;
+﻿using FilmReference.DataAccess.Entities;
+using FilmReference.DataAccess.Repositories;
 using FilmReference.FrontEnd.Handlers.Interfaces;
 using Shared.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using FilmReference.DataAccess.Entities;
 
 namespace FilmReference.FrontEnd.Handlers
 {
-    public class StudioHandler : IStudioHandler
+    internal class StudioHandler : IStudioHandler
     {
         private readonly IGenericRepository<StudioEntity> _studioRepository;
 

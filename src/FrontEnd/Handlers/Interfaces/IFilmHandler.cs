@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using FilmReference.DataAccess.Entities;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using FilmReference.DataAccess.Entities;
 
 namespace FilmReference.FrontEnd.Handlers.Interfaces
 {
-    public interface IFilmHandler
+    internal interface IFilmHandler
     {
         Task SaveFilm(FilmEntity film);
         Task UpdateFilm(FilmEntity film);

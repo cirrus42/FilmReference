@@ -1,14 +1,14 @@
-﻿using FilmReference.DataAccess.Repositories;
+﻿using FilmReference.DataAccess.Entities;
+using FilmReference.DataAccess.Repositories;
 using FilmReference.FrontEnd.Handlers.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FilmReference.DataAccess.Entities;
 
 namespace FilmReference.FrontEnd.Handlers
 {
-    public class FilmHandler : IFilmHandler
+    internal class FilmHandler : IFilmHandler
     {
         private readonly IGenericRepository<FilmEntity> _filmRepository;
 

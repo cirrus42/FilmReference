@@ -1,11 +1,10 @@
-﻿using FilmReference.DataAccess;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using PersonEntity = FilmReference.DataAccess.Entities.PersonEntity;
 
 namespace FilmReference.FrontEnd.Handlers.Interfaces
 {
-    public interface IPersonHandler
+    internal interface IPersonHandler
     {
         Task<IEnumerable<PersonEntity>> GetDirectors();
         Task<IEnumerable<PersonEntity>> GetActors();

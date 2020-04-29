@@ -1,10 +1,9 @@
-﻿using FilmReference.DataAccess;
+﻿using FilmReference.DataAccess.Entities;
 using System.Threading.Tasks;
-using FilmReference.DataAccess.Entities;
 
 namespace FilmReference.FrontEnd.Handlers.Interfaces
 {
-    public interface IFilmPersonHandler
+    internal interface IFilmPersonHandler
     {
         Task RemoveFilmPerson(FilmPersonEntity filmPerson);
     }
