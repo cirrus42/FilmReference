@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Shared.Models;
-using PersonEntity = FilmReference.DataAccess.DbClasses.PersonEntity;
+using PersonEntity = FilmReference.DataAccess.Entities.PersonEntity;
 
 namespace FilmReference.FrontEnd.Managers.Interfaces
 {

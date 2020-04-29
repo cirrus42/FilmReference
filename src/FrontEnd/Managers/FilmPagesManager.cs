@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FilmReference.DataAccess.DbClasses;
 using FilmReference.FrontEnd.Handlers.Interfaces;
 using FilmReference.FrontEnd.Managers.Interfaces;
 using Shared.Models;
@@ -7,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using FilmReference.DataAccess.Entities;
 
 namespace FilmReference.FrontEnd.Managers
 {
@@ -72,7 +72,7 @@ namespace FilmReference.FrontEnd.Managers
         public async Task<FilmPagesValues> GetFilmsAndGenres()
         {
             var filmPages =
-                new FilmPagesValues(new Genre { GenreId = PageValues.Zero, Name = PageValues.All })
+                new FilmPagesValues(new Genre { Id = PageValues.Zero, Name = PageValues.All })
                 {
                     Films = _mapper.Map<List<Film>>((await _filmHandler.GetFilms()).ToList())
                 };
@@ -108,7 +108,7 @@ namespace FilmReference.FrontEnd.Managers
         {
             var filmPages = new FilmPagesValues(new Genre
             {
-                GenreId = PageValues.MinusOne,
+                Id = PageValues.MinusOne,
                 Name = PageValues.PleaseSelect
             });
 

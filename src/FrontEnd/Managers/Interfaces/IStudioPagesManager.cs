@@ -1,6 +1,6 @@
-﻿using FilmReference.DataAccess.DbClasses;
-using Shared.Models;
+﻿using Shared.Models;
 using System.Threading.Tasks;
+using FilmReference.DataAccess.Entities;
 
 namespace FilmReference.FrontEnd.Managers.Interfaces
 {

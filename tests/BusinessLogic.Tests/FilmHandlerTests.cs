@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using FilmReference.DataAccess.DbClasses;
 using FilmReference.DataAccess.Repositories;
 using FilmReference.FrontEnd.Handlers;
 using Moq;
@@ -10,6 +9,7 @@ using System.Threading.Tasks;
 using Xunit;
 using System.Linq.Expressions;
 using System.Xml.Serialization;
+using FilmReference.DataAccess.Entities;
 using FluentAssertions;
 using MockQueryable.Moq;
 

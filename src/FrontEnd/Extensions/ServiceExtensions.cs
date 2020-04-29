@@ -1,4 +1,4 @@
-﻿using FilmReference.DataAccess.DbClasses;
+﻿using FilmReference.DataAccess.Entities;
 using FilmReference.DataAccess.Repositories;
 using FilmReference.FrontEnd.Handlers;
 using FilmReference.FrontEnd.Handlers.Interfaces;

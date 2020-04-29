@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using PersonEntity = FilmReference.DataAccess.DbClasses.PersonEntity;
+using PersonEntity = FilmReference.DataAccess.Entities.PersonEntity;
 
 namespace FilmReference.FrontEnd.Handlers
 {

@@ -1,4 +1,4 @@
-﻿using FilmReference.DataAccess.DbClasses;
+﻿using FilmReference.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace FilmReference.DataAccess
@@ -10,17 +10,11 @@ namespace FilmReference.DataAccess
         {
         }
 
-        #region DbSets
-
         public DbSet<FilmEntity> Film { get; set;}
         public DbSet<FilmPersonEntity> FilmPerson { get; set; }
         public DbSet<GenreEntity> Genre { get; set; }
-        public DbSet<DbClasses.PersonEntity> Person { get; set; }
+        public DbSet<PersonEntity> Person { get; set; }
         public DbSet<StudioEntity> Studio { get; set; }
-
-        #endregion
-
-        #region OnModelCreating
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -30,7 +24,5 @@ namespace FilmReference.DataAccess
             builder.ApplyConfiguration(new PersonConfiguration());
             builder.ApplyConfiguration(new StudioConfiguration());
         }
-
-        #endregion
     }
 }

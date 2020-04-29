@@ -3,7 +3,7 @@ using FilmReference.FrontEnd.Managers.Interfaces;
 using Shared.Models;
 using System.Net;
 using System.Threading.Tasks;
-using PersonEntity = FilmReference.DataAccess.DbClasses.PersonEntity;
+using PersonEntity = FilmReference.DataAccess.Entities.PersonEntity;
 
 namespace FilmReference.FrontEnd.Managers
 {

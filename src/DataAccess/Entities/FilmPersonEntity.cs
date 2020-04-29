@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FilmReference.DataAccess.DbClasses
+namespace FilmReference.DataAccess.Entities
 {
     [Table("FilmPerson")]
     public partial class FilmPersonEntity

@@ -1,11 +1,11 @@
-﻿using FilmReference.DataAccess.DbClasses;
-using FilmReference.DataAccess.Repositories;
+﻿using FilmReference.DataAccess.Repositories;
 using FilmReference.FrontEnd.Handlers.Interfaces;
 using Shared.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using FilmReference.DataAccess.Entities;
 
 namespace FilmReference.FrontEnd.Handlers
 {

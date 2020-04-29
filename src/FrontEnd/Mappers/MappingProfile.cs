@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using FilmReference.DataAccess.DbClasses;
+using FilmReference.DataAccess.Entities;
 using Shared.Models;
 
 namespace FilmReference.FrontEnd.Mappers
@@ -49,13 +49,13 @@ namespace FilmReference.FrontEnd.Mappers
                 .ForMember(opt => opt.Person, opt => opt.MapFrom(o => o.Person));
 
             CreateMap<GenreEntity, Genre>()
-                .ForMember(opt => opt.GenreId, opt => opt.MapFrom(o => o.GenreId))
+                .ForMember(opt => opt.Id, opt => opt.MapFrom(o => o.GenreId))
                 .ForMember(opt => opt.Name, opt => opt.MapFrom(o => o.Name))
                 .ForMember(opt => opt.Description, opt => opt.MapFrom(o => o.Description))
                 .ForMember(opt => opt.Film, opt => opt.MapFrom(o => o.Film));
 
             CreateMap<Genre, GenreEntity>()
-                .ForMember(opt => opt.GenreId, opt => opt.MapFrom(o => o.GenreId))
+                .ForMember(opt => opt.GenreId, opt => opt.MapFrom(o => o.Id))
                 .ForMember(opt => opt.Name, opt => opt.MapFrom(o => o.Name))
                 .ForMember(opt => opt.Description, opt => opt.MapFrom(o => o.Description))
                 .ForMember(opt => opt.Film, opt => opt.MapFrom(o => o.Film));

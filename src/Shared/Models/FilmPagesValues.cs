@@ -45,7 +45,7 @@ namespace Shared.Models
 
         public SelectList GenreSelectList() =>
             new SelectList(Genres.ToList(),
-                nameof(Genre.GenreId),
+                nameof(Genre.Id),
                 nameof(Genre.Name));
 
         public SelectList StudioSelectList() =>

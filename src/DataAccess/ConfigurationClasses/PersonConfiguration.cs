@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FilmReference.DataAccess.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FilmReference.DataAccess
 {
-    public class PersonConfiguration : IEntityTypeConfiguration<DbClasses.PersonEntity>
+    public class PersonConfiguration : IEntityTypeConfiguration<PersonEntity>
     {
-        public void Configure(EntityTypeBuilder<DbClasses.PersonEntity> builder)
+        public void Configure(EntityTypeBuilder<PersonEntity> builder)
         {
             builder.Property(e => e.FirstName)
                 .IsUnicode(false);

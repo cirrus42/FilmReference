@@ -6,7 +6,7 @@ using Shared.Models;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using PersonEntity = FilmReference.DataAccess.DbClasses.PersonEntity;
+using PersonEntity = FilmReference.DataAccess.Entities.PersonEntity;
 
 namespace FilmReference.FrontEnd.Pages.PersonPages
 {

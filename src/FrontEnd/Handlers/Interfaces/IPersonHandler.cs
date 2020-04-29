@@ -1,7 +1,7 @@
 ﻿using FilmReference.DataAccess;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PersonEntity = FilmReference.DataAccess.DbClasses.PersonEntity;
+using PersonEntity = FilmReference.DataAccess.Entities.PersonEntity;
 
 namespace FilmReference.FrontEnd.Handlers.Interfaces
 {

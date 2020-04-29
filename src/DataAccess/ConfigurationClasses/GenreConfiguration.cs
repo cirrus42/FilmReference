@@ -1,4 +1,4 @@
-﻿using FilmReference.DataAccess.DbClasses;
+﻿using FilmReference.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

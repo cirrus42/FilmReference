@@ -1,7 +1,7 @@
 ﻿@page
 @model FilmReference.FrontEnd.Pages.FilmPages.IndexModel
 @using FilmReference.DataAccess
-@using FilmReference.DataAccess.DbClasses
+@using FilmReference.DataAccess.Entities
 @using FilmReference.FrontEnd.Extensions
 
 @{
@@ -18,8 +18,8 @@
     @foreach (var genre in Model.FilmPagesValues.Genres)
     {
         @Html.RadioButton(nameof(GenreEntity.GenreId),
-            genre.GenreId,
-            isChecked: genre.GenreId == Model.GenreId,
+            genre.Id,
+            isChecked: genre.Id == Model.GenreId,
             new { Id = genre.Name.ReplaceForRadioButton(), @onclick = $"submitForm('{formName}')"})
         @Html.Label(genre.Name, genre.Name, new {  @class = "RadioButtonLabel", @onclick = $"submitForm('{formName}')"})
     }

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FilmReference.DataAccess.DbClasses;
 using FilmReference.FrontEnd.Handlers.Interfaces;
 using FilmReference.FrontEnd.Managers;
 using FluentAssertions;
@@ -9,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net;
 using System.Threading.Tasks;
+using FilmReference.DataAccess.Entities;
 using Xunit;
 
 namespace BusinessLogic.Tests

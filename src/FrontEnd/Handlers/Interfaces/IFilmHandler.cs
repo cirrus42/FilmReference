@@ -1,6 +1,6 @@
-﻿using FilmReference.DataAccess.DbClasses;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using FilmReference.DataAccess.Entities;
 
 namespace FilmReference.FrontEnd.Handlers.Interfaces
 {

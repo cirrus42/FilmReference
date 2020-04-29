@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net;
 using System.Threading.Tasks;
-using FilmReference.DataAccess.DbClasses;
+using FilmReference.DataAccess.Entities;
 
 namespace FilmReference.FrontEnd.Pages.StudioPages
 {
