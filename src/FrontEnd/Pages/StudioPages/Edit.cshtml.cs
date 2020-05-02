@@ -3,19 +3,17 @@ using FilmReference.FrontEnd.Managers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Shared.Models;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using FilmReference.DataAccess.Entities;
 
 namespace FilmReference.FrontEnd.Pages.StudioPages
 {
     public class EditModel : PageModel
     {
         public readonly IImageHelper ImageHelper;
-        private IStudioPagesManager _studioPagesManager;
-        public StudioEntity Studio { get; set; }
+        private readonly IStudioPagesManager _studioPagesManager;
+        public Studio Studio { get; set; }
 
         public EditModel( IImageHelper imageHelper, IStudioPagesManager studioPagesManager)
         {
@@ -52,7 +50,7 @@ namespace FilmReference.FrontEnd.Pages.StudioPages
             var updated = await TryUpdateModelAsync(
                 Studio,
                 nameof(Studio),
-                s => s.StudioId, s => s.Name, s => s.Description, s => s.Picture);
+                s => s.Id, s => s.Name, s => s.Description, s => s.Picture);
 
             if(!updated)  return Page();
 
@@ -69,9 +67,7 @@ namespace FilmReference.FrontEnd.Pages.StudioPages
                         return Page();
                     }
 
-                    await using var memoryStream = new MemoryStream();
-                    file.CopyTo(memoryStream);
-                    result.Entity.Picture = memoryStream.ToArray();
+                    ImageHelper.AddImageToEntity(result.Entity, file);
                 }
             }
 

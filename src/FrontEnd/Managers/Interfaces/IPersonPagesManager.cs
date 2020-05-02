@@ -1,4 +1,6 @@
-﻿using Shared.Models;
+﻿using System.Collections;
+using System.Collections.Generic;
+using Shared.Models;
 using System.Threading.Tasks;
 
 namespace FilmReference.FrontEnd.Managers.Interfaces
@@ -9,5 +11,7 @@ namespace FilmReference.FrontEnd.Managers.Interfaces
         Task<Results<PersonPagesValues>> GetPersonDetails(int id);
         Task<Results<Person>> GetPersonById(int id);
         Task<bool> UpdatePerson(Person person);
+        Task<IEnumerable<Person>> GetDirectors();
+        Task <IEnumerable<Person>>GetActors(string id);
     }
 }

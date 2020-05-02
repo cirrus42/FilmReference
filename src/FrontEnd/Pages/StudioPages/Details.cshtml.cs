@@ -1,11 +1,10 @@
-﻿using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Helpers;
+﻿using FilmReference.FrontEnd.Helpers;
 using FilmReference.FrontEnd.Managers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Shared.Models;
 using System.Net;
 using System.Threading.Tasks;
-using FilmReference.DataAccess.Entities;
 
 namespace FilmReference.FrontEnd.Pages.StudioPages
 {
@@ -14,7 +13,7 @@ namespace FilmReference.FrontEnd.Pages.StudioPages
 
         public IImageHelper ImageHelper;
         private readonly IStudioPagesManager _studioPagesManager;
-        public StudioEntity Studio { get; set; }
+        public Studio Studio { get; set; }
 
         public DetailsModel(IImageHelper imageHelper, IStudioPagesManager studioPagesManager)
         {

@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Shared.Models;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -82,9 +81,7 @@ namespace FilmReference.FrontEnd.Pages.FilmPages
                         return Page();
                     }
 
-                    await using var memoryStream = new MemoryStream();
-                    file.CopyTo(memoryStream);
-                    result.Entity.Film.Picture = memoryStream.ToArray();
+                    ImageHelper.AddImageToEntity(result.Entity.Film, file);
                 }
             }
 

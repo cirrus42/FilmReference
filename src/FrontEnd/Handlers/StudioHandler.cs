@@ -33,14 +33,8 @@ namespace FilmReference.FrontEnd.Handlers
             await _studioRepository.Save();
         }
 
-        public async Task<Results<StudioEntity>> GetStudioById(int id)
-        {
-            var studio = await _studioRepository.GetById(id);
-
-            return studio == null ?
-                new Results<StudioEntity> { HttpStatusCode = HttpStatusCode.NotFound } :
-                new Results<StudioEntity> { Entity = studio, HttpStatusCode = HttpStatusCode.OK };
-        }
+        public async Task<StudioEntity> GetStudioById(int id) => 
+            await _studioRepository.GetById(id);
 
         public async Task UpdateStudio(StudioEntity studio) =>
                 await _studioRepository.Update(studio);

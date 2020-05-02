@@ -64,5 +64,11 @@ namespace FilmReference.FrontEnd.Managers
             await _personHandler.UpdatePerson(_mapper.Map<PersonEntity>(person));
             return true;
         }
+
+        public async Task<IEnumerable<Person>> GetDirectors() => 
+            _mapper.Map<IEnumerable<Person>>(await _personHandler.GetDirectors());
+
+        public async Task<IEnumerable<Person>> GetActors(string id) => 
+            _mapper.Map<IEnumerable<Person>>(await _personHandler.GetActors(id));
     }
 }

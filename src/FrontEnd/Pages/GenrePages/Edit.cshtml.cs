@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Shared.Models;
 using System.Net;
 using System.Threading.Tasks;
-using FilmReference.DataAccess.Entities;
 
 namespace FilmReference.FrontEnd.Pages.GenrePages
 {

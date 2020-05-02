@@ -1,23 +1,22 @@
-﻿using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Handlers.Interfaces;
+﻿using FilmReference.FrontEnd.Managers.Interfaces;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Shared.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PersonEntity = FilmReference.DataAccess.Entities.PersonEntity;
 
 namespace FilmReference.FrontEnd.Pages.DirectorPages
 {
     public class IndexModel : PageModel
     {
-        private readonly IPersonHandler _personHandler;
-        public IList<PersonEntity> PersonList { get; set; }
+        private readonly IPersonPagesManager _personPagesManager;
+        public IList<Person> PersonList { get; set; }
 
-        public IndexModel( IPersonHandler personHandler) =>
-            _personHandler = personHandler;
+        public IndexModel( IPersonPagesManager personPagesManager) =>
+            _personPagesManager = personPagesManager;
         
         public async Task OnGetAsync() =>
-            PersonList = (await _personHandler.GetDirectors()).ToList();
-
+            PersonList = (await _personPagesManager.GetDirectors()).ToList();
     }
 }
+

@@ -40,8 +40,8 @@
                     <img src="@Model.ImageHelper.ImageSource(item.Picture)" class="PersonImageSmall" />
                     <br />
                     <br />
-                    <a asp-page="./Details" asp-route-id="@item.PersonId">Details</a> |
-                    <a asp-page="./Edit" asp-route-id="@item.PersonId">Edit</a>
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
                </td>
                 if (counter % 4 == 0)
                 {

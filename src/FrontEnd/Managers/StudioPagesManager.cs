@@ -1,7 +1,9 @@
-﻿using FilmReference.FrontEnd.Handlers.Interfaces;
+﻿using System.Net;
+using FilmReference.FrontEnd.Handlers.Interfaces;
 using FilmReference.FrontEnd.Managers.Interfaces;
 using Shared.Models;
 using System.Threading.Tasks;
+using AutoMapper;
 using FilmReference.DataAccess.Entities;
 
 namespace FilmReference.FrontEnd.Managers
@@ -9,27 +11,37 @@ namespace FilmReference.FrontEnd.Managers
     public class StudioPagesManager : IStudioPagesManager
     {
         private readonly IStudioHandler _studioHandler;
+        private readonly IMapper _mapper;
 
-        public StudioPagesManager(IStudioHandler studioHandler) =>
-            _studioHandler = studioHandler;
-
-        public async Task<bool> SaveStudio(StudioEntity studio)
+        public StudioPagesManager(IStudioHandler studioHandler, IMapper mapper)
         {
-            if (await _studioHandler.IsDuplicate(studio))
+            _studioHandler = studioHandler;
+            _mapper = mapper;
+        }
+
+        public async Task<bool> SaveStudio(Studio studio)
+        {
+            if (await _studioHandler.IsDuplicate(_mapper.Map<StudioEntity>(studio)))
                 return false;
 
-            await _studioHandler.SaveStudio(studio);
+            await _studioHandler.SaveStudio(_mapper.Map<StudioEntity>(studio));
             return true;
         }
 
-        public async Task<Results<StudioEntity>> GetStudioById(int id) =>
-           await _studioHandler.GetStudioById(id);
-
-        public async Task<bool> UpdateStudio(StudioEntity studio)
+        public async Task<Results<Studio>> GetStudioById(int id)
         {
-            if (await _studioHandler.IsDuplicate(studio))
+            var studio = _mapper.Map<Studio>(await _studioHandler.GetStudioById(id));
+
+            return studio == null ?
+                new Results<Studio> { HttpStatusCode = HttpStatusCode.NotFound } :
+                new Results<Studio> { Entity = studio, HttpStatusCode = HttpStatusCode.OK };
+        }
+        
+        public async Task<bool> UpdateStudio(Studio studio)
+        {
+            if (await _studioHandler.IsDuplicate(_mapper.Map<StudioEntity>(studio)))
                 return false;
-            await _studioHandler.UpdateStudio(studio);
+            await _studioHandler.UpdateStudio(_mapper.Map<StudioEntity>(studio));
             return true;
         }
     }

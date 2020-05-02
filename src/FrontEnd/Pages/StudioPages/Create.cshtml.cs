@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Shared.Models;
 using System.Linq;
 using System.Threading.Tasks;
-using FilmReference.DataAccess.Entities;
 
 namespace FilmReference.FrontEnd.Pages.StudioPages
 {
@@ -13,7 +12,7 @@ namespace FilmReference.FrontEnd.Pages.StudioPages
     {
         private readonly IImageHelper _imageHelper;
         private readonly IStudioPagesManager _studioPagesManager;
-        public StudioEntity Studio { get; set; }
+        public Studio Studio { get; set; }
 
         public CreateModel(IImageHelper imageHelper, IStudioPagesManager studioPagesManager)
         {
@@ -29,12 +28,12 @@ namespace FilmReference.FrontEnd.Pages.StudioPages
             if (!ModelState.IsValid)
                 return Page();
 
-            var newStudio = new StudioEntity();
+            var newStudio = new Studio();
 
             var updated = await TryUpdateModelAsync(
                 newStudio,
                 nameof(Studio),
-                s => s.StudioId, s => s.Name, s => s.Description, s => s.Picture);
+                s => s.Id, s => s.Name, s => s.Description, s => s.Picture);
 
             if (!updated) return Page();
 
@@ -51,7 +50,7 @@ namespace FilmReference.FrontEnd.Pages.StudioPages
                         return Page();
                     }
 
-                   // _imageHelper.AddImageToEntity(newStudio, file);
+                    _imageHelper.AddImageToEntity(newStudio, file);
                 }
             }
 

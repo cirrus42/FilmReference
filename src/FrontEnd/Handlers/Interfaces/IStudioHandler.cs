@@ -9,8 +9,8 @@ namespace FilmReference.FrontEnd.Handlers.Interfaces
     {
         Task<IEnumerable<StudioEntity>> GetStudios();
         Task<bool> IsDuplicate(StudioEntity studio);
-        Task SaveStudio(StudioEntity studio);
-        Task<Results<StudioEntity>> GetStudioById(int id);
+        Task SaveStudio(StudioEntity studio); 
+        Task<StudioEntity> GetStudioById(int id);
         Task UpdateStudio(StudioEntity studio);
     }
 }

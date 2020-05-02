@@ -5,7 +5,7 @@ namespace Shared.Models
 {
     public class Studio : IPicture
     {
-        public int StudioId { get; set; }
+        public int Id { get; set; }
         [Required(ErrorMessage = "{0} is required")]
         [StringLength(50, ErrorMessage = "{0} cannot be more than {1} characters")]
         public string Name { get; set; }

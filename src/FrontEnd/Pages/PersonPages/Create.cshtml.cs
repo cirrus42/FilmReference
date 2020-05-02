@@ -53,8 +53,8 @@ namespace FilmReference.FrontEnd.Pages.PersonPages
                         ModelState.AddModelError(PageValues.PersonPicture, errorMessage);
                         return Page();
                     }
-
-                   // _imageHelper.AddImageToEntity(newPerson, file);
+                    
+                    _imageHelper.AddImageToEntity(newPerson, file);
                 }
             }
 

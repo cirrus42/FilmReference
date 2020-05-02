@@ -85,14 +85,14 @@ namespace FilmReference.FrontEnd.Mappers
                 .ForMember(opt => opt.FilmPerson, opt => opt.MapFrom(o => o.FilmPerson));
 
             CreateMap<StudioEntity, Studio>()
-                .ForMember(opt => opt.StudioId, opt => opt.MapFrom(o => o.StudioId))
+                .ForMember(opt => opt.Id, opt => opt.MapFrom(o => o.StudioId))
                 .ForMember(opt => opt.Name, opt => opt.MapFrom(o => o.Name))
                 .ForMember(opt => opt.Description, opt => opt.MapFrom(o => o.Description))
                 .ForMember(opt => opt.Picture, opt => opt.MapFrom(o => o.Picture))
                 .ForMember(opt => opt.Film, opt => opt.MapFrom(o => o.Film));
 
             CreateMap<Studio, StudioEntity>()
-                .ForMember(opt => opt.StudioId, opt => opt.MapFrom(o => o.StudioId))
+                .ForMember(opt => opt.StudioId, opt => opt.MapFrom(o => o.Id))
                 .ForMember(opt => opt.Name, opt => opt.MapFrom(o => o.Name))
                 .ForMember(opt => opt.Description, opt => opt.MapFrom(o => o.Description))
                 .ForMember(opt => opt.Picture, opt => opt.MapFrom(o => o.Picture))

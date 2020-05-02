@@ -28,7 +28,7 @@ namespace Shared.Models
         {
             new Studio
             {
-                StudioId = PageValues.MinusOne,
+                Id = PageValues.MinusOne,
                 Name = PageValues.PleaseSelect
             }
         };
@@ -50,7 +50,7 @@ namespace Shared.Models
 
         public SelectList StudioSelectList() =>
             new SelectList(Studios.ToList(),
-                nameof(Studio.StudioId),
+                nameof(Studio.Id),
                 nameof(Studio.Name));
     }
 }

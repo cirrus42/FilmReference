@@ -1,9 +1,8 @@
 ﻿using FilmReference.FrontEnd.Managers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
-using FilmReference.DataAccess.Entities;
 using Shared.Models;
+using System.Threading.Tasks;
 
 namespace FilmReference.FrontEnd.Pages.GenrePages
 {
