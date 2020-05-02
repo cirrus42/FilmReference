@@ -1,6 +1,7 @@
 using AutoMapper;
+using BusinessLogic.Extensions;
+using BusinessLogic.Models;
 using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Extensions;
 using FilmReference.FrontEnd.Mappers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Shared.Models;
 
 namespace FilmReference.FrontEnd
 {

@@ -1,5 +1,5 @@
-﻿using FilmReference.DataAccess.Entities;
-using FilmReference.FrontEnd.Handlers.Interfaces;
+﻿using BusinessLogic.Handlers.Interfaces;
+using FilmReference.DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Linq;

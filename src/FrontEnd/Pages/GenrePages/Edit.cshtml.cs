@@ -1,9 +1,9 @@
-﻿using FilmReference.FrontEnd.Managers.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Shared.Models;
 using System.Net;
 using System.Threading.Tasks;
+using BusinessLogic.Managers.Interfaces;
+using BusinessLogic.Models;
 
 namespace FilmReference.FrontEnd.Pages.GenrePages
 {
