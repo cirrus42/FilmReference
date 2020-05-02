@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FilmReference.DataAccess.Entities;
+using FilmReference.FrontEnd.Extensions;
 using Shared.Models;
 
 namespace FilmReference.FrontEnd.Mappers
@@ -76,7 +77,7 @@ namespace FilmReference.FrontEnd.Mappers
                 .ForMember(opt => opt.PersonId, opt => opt.MapFrom(o => o.Id))
                 .ForMember(opt => opt.FirstName, opt => opt.MapFrom(o => o.FirstName))
                 .ForMember(opt => opt.LastName, opt => opt.MapFrom(o => o.LastName))
-                .ForMember(opt => opt.FullName, opt => opt.MapFrom(o => o.FullName))
+                .ForMember(opt => opt.FullName, opt => opt.MapFrom(o => o.FirstName.BuildFullName(o.LastName)))
                 .ForMember(opt => opt.Description, opt => opt.MapFrom(o => o.Description))
                 .ForMember(opt => opt.IsActor, opt => opt.MapFrom(o => o.IsActor))
                 .ForMember(opt => opt.IsDirector, opt => opt.MapFrom(o => o.IsDirector))

@@ -21,5 +21,19 @@ namespace FilmReference.FrontEnd.Extensions
 
         public static string ReplaceForRadioButton(this string name) =>
             name.Replace(" ", "_").Replace(".", "z");
+
+        public static string BuildFullName(this string firstName, string lastname)
+        {
+            if (!string.IsNullOrWhiteSpace(firstName) && !string.IsNullOrWhiteSpace(lastname))
+                return $"{firstName} {lastname}";
+
+            if (!string.IsNullOrWhiteSpace(firstName) && string.IsNullOrWhiteSpace(lastname))
+                return firstName;
+
+            if (string.IsNullOrWhiteSpace(firstName) && !string.IsNullOrWhiteSpace(lastname))
+                return lastname;
+
+            return "No Name";
+        }
     }
 }
