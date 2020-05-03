@@ -5,10 +5,7 @@ namespace FilmReference.DataAccess
 {
     public class FilmReferenceContext : DbContext
     {
-        public FilmReferenceContext(DbContextOptions<FilmReferenceContext> options)
-            : base(options)
-        {
-        }
+        public FilmReferenceContext(DbContextOptions<FilmReferenceContext> options) : base(options) {}
 
         public DbSet<FilmEntity> Film { get; set;}
         public DbSet<FilmPersonEntity> FilmPerson { get; set; }
