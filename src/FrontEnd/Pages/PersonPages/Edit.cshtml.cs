@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using BusinessLogic.Extensions;
 using BusinessLogic.Helpers;
 using BusinessLogic.Managers.Interfaces;
 using BusinessLogic.Models;
@@ -56,8 +57,8 @@ namespace FilmReference.FrontEnd.Pages.PersonPages
                 p => p.FirstName,
                 p => p.LastName,
                 p => p.Description,
-                p => p.IsActor,
-                p => p.IsDirector,
+                p => p.Actor,
+                p => p.Director,
                 p => p.Picture);
 
             if (!updated) return Page();
@@ -78,16 +79,18 @@ namespace FilmReference.FrontEnd.Pages.PersonPages
                 }
             }
 
-            if (await _personPagesManager.UpdatePerson(Person))
+            var validationList = (await _personPagesManager.SavePerson(Person)).ToList();
+
+            if (validationList.Count == 0)
             {
-                var nextPage = !Person.IsActor && Person.IsDirector
+                var nextPage = !Person.Actor && Person.Director
                     ? PageValues.DirectorIndexPage
                     : PageValues.PersonIndexPage;
                 return RedirectToPage(nextPage);
             }
 
-            ModelState.AddModelError(PageValues.PersonFirstName, PageValues.DuplicatePerson);
-            ModelState.AddModelError(PageValues.PersonLastName, PageValues.DuplicatePerson);
+            ModelState.AddModelStateValidation(validationList);
+
             return Page();
         }
     }

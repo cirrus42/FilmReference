@@ -3,6 +3,7 @@ using BusinessLogic.Handlers.Interfaces;
 using BusinessLogic.Helpers;
 using BusinessLogic.Managers;
 using BusinessLogic.Managers.Interfaces;
+using BusinessLogic.Validations;
 using FilmReference.DataAccess.Entities;
 using FilmReference.DataAccess.Repositories;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +23,7 @@ namespace BusinessLogic.Extensions
             services.AddTransient<IFilmPagesManager, FilmPagesManager>();
             services.AddTransient<IGenrePagesManager, GenrePagesManager>();
             services.AddTransient<IPersonPagesManager, PersonPagesManager>();
+            services.AddTransient<IPersonValidator, PersonValidator>();
         }
 
         public static void AddRepositories(this IServiceCollection services)

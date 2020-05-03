@@ -1,4 +1,4 @@
-using FilmReference.FrontEnd.Extensions;
+using BusinessLogic.Extensions;
 using FluentAssertions;
 using Xunit;
 

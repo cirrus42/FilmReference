@@ -1,13 +1,13 @@
-using FilmReference.FrontEnd.Extensions;
+using BusinessLogic.Extensions;
 using FluentAssertions;
 using Xunit;
 
-namespace FilmReference.Tests
+namespace BusinessLogic.Tests
 {
     public class IntExtensionTests
     {
         [Theory]
-        [InlineData( 1, "")]
+        [InlineData(1, "")]
         [InlineData(2, "s")]
         [InlineData(10, "s")]
         public void ConvertToDisplayValueReturnsStringValuesCorrectly(int recordCount, string outputString)

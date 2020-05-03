@@ -17,10 +17,8 @@ namespace BusinessLogic.Models
         public string FullName { get; set; }
         [StringLength(200, ErrorMessage = "{0} cannot be more than {1} characters")]
         public string Description { get; set; }
-        [Display(Name = "Actor")]
-        public bool IsActor { get; set; }
-        [Display(Name = "Director")]
-        public bool IsDirector { get; set; }
+        public bool Actor { get; set; }
+        public bool Director { get; set; }
         public byte[] Picture { get; set; }
         public ICollection<Film> Film { get; set; }
         public ICollection<FilmPerson> FilmPerson { get; set; }

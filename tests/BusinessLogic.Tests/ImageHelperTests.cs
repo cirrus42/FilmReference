@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using FilmReference.FrontEnd.Helpers;
+﻿using BusinessLogic.Helpers;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Moq;
+using System;
+using System.Text;
 using Xunit;
 
 namespace FilmReference.Tests
@@ -24,7 +22,7 @@ namespace FilmReference.Tests
             var imageContent = Encoding.ASCII.GetBytes(fakeImage);
             var base64 = Convert.ToBase64String(imageContent);
             const string outputString = "data:image/jpg;base64,";
-            
+
             var output = _imageHelper.ImageSource(imageContent, false);
 
             output.Should().Be($"{outputString}{base64}");

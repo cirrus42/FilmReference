@@ -30,14 +30,16 @@
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Person.IsActor" /> @Html.DisplayNameFor(model => model.Person.IsActor)
+                    <input class="form-check-input" asp-for="Person.Actor" /> @Html.DisplayNameFor(model => model.Person.Actor)
+                   
                 </label>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Person.IsDirector" /> @Html.DisplayNameFor(model => model.Person.IsDirector)
+                    <input class="form-check-input" asp-for="Person.Director" /> @Html.DisplayNameFor(model => model.Person.Director)
                 </label>
             </div>
+            <span asp-validation-for="Person.Actor" class="text-danger"></span>
             <div class="form-group">
                 <label asp-for="Person.Picture" class="control-label"></label>
                 <input type="file" asp-for="Person.Picture" class="form-control" />

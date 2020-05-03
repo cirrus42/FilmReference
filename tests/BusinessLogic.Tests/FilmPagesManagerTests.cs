@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
-using FilmReference.FrontEnd.Handlers.Interfaces;
-using FilmReference.FrontEnd.Managers;
+using BusinessLogic.Handlers.Interfaces;
+using BusinessLogic.Managers;
+using BusinessLogic.Models;
+using FilmReference.DataAccess.Entities;
 using FluentAssertions;
 using Moq;
-using Shared.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net;
 using System.Threading.Tasks;
-using FilmReference.DataAccess.Entities;
 using Xunit;
 
 namespace BusinessLogic.Tests
@@ -32,22 +32,22 @@ namespace BusinessLogic.Tests
             _filmHandler = new Mock<IFilmHandler>();
             _filmPersonHandler = new Mock<IFilmPersonHandler>();
 
-            _filmPagesManager = new FilmPagesManager(_personHandler.Object,_genreHandler.Object,_studioHandler.Object,_filmHandler.Object,_filmPersonHandler.Object, _mapper.Object);
+            _filmPagesManager = new FilmPagesManager(_personHandler.Object, _genreHandler.Object, _studioHandler.Object, _filmHandler.Object, _filmPersonHandler.Object, _mapper.Object);
         }
 
         [Fact]
         public async Task GetFilmByIdReturnsFilm()
         {
             var personEntity = new PersonEntity { FirstName = "Test", LastName = "Surname" };
-            var filmPersonEntity = new FilmPersonEntity {Person = personEntity};
-            var personEntityList = new Collection<FilmPersonEntity> {filmPersonEntity};
+            var filmPersonEntity = new FilmPersonEntity { Person = personEntity };
+            var personEntityList = new Collection<FilmPersonEntity> { filmPersonEntity };
 
-            var filmEntity = new FilmEntity { Name = "Film" , FilmPerson = personEntityList};
-            var film = new Film {Name = "Film"};
+            var filmEntity = new FilmEntity { Name = "Film", FilmPerson = personEntityList };
+            var film = new Film { Name = "Film" };
 
             var person = new Person { FirstName = "Test", LastName = "Surname" };
             var actors = new List<Person> { person };
-            
+
             _filmHandler.Setup(method => method.GetFilmById(It.IsAny<int>())).ReturnsAsync(filmEntity);
 
             _mapper.Setup(method => method.Map<Film>(It.IsAny<FilmEntity>())).Returns(film);
@@ -175,7 +175,7 @@ namespace BusinessLogic.Tests
         [Fact]
         public async Task GetFilmWithFilmPersonReturnsNotFound()
         {
-            _filmHandler.Setup(method => method.GetFilmWithFilmPerson(It.IsAny<int>())).ReturnsAsync((FilmEntity) null);
+            _filmHandler.Setup(method => method.GetFilmWithFilmPerson(It.IsAny<int>())).ReturnsAsync((FilmEntity)null);
 
             var output = await _filmPagesManager.GetFilmWithFilmPerson(2);
 
@@ -203,7 +203,7 @@ namespace BusinessLogic.Tests
 
             if (isDuplicate)
             {
-                _mapper.Verify(method => method.Map<FilmEntity>(It.IsAny<Film>()),Times.Never);
+                _mapper.Verify(method => method.Map<FilmEntity>(It.IsAny<Film>()), Times.Never);
                 _filmHandler.Verify(method => method.SaveFilm(It.IsAny<FilmEntity>()), Times.Never);
             }
             else
@@ -230,7 +230,7 @@ namespace BusinessLogic.Tests
 
             await _filmPagesManager.RemoveActorsFromFilm(filmPersonList);
 
-            _mapper.Verify(method => method.Map<FilmPersonEntity>(It.IsAny<FilmPerson>()),Times.Exactly(filmPersonList.Count));
+            _mapper.Verify(method => method.Map<FilmPersonEntity>(It.IsAny<FilmPerson>()), Times.Exactly(filmPersonList.Count));
             _filmPersonHandler.Verify(method => method.RemoveFilmPerson(It.IsAny<FilmPersonEntity>()),
                 Times.Exactly(filmPersonList.Count));
         }
@@ -261,7 +261,7 @@ namespace BusinessLogic.Tests
                 _mapper.Verify(method => method.Map<FilmEntity>(It.IsAny<Film>()), Times.Once);
                 _filmHandler.Verify(method => method.UpdateFilm(It.IsAny<FilmEntity>()), Times.Once);
             }
-            
+
             output.Should().Be(!isDuplicate);
         }
 
@@ -277,10 +277,10 @@ namespace BusinessLogic.Tests
             var films = new List<Film> { film1, film2 };
 
             var genreEntity = new GenreEntity { Name = "A New Genre" };
-            var genreEntities= new List<GenreEntity> { genreEntity };
+            var genreEntities = new List<GenreEntity> { genreEntity };
 
-            var genre = new Genre{ Name = "A New Genre" };
-            var genres = new List<Genre> {genre};
+            var genre = new Genre { Name = "A New Genre" };
+            var genres = new List<Genre> { genre };
 
             _filmHandler.Setup(method => method.GetFilms()).ReturnsAsync(filmEntities);
             _mapper.Setup(method => method.Map<List<Film>>(It.IsAny<List<FilmEntity>>())).Returns(films);

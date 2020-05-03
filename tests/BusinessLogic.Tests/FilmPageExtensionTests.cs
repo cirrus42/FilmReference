@@ -1,6 +1,6 @@
-﻿using FilmReference.FrontEnd.Extensions;
+﻿using BusinessLogic.Extensions;
+using BusinessLogic.Models;
 using FluentAssertions;
-using Shared.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -19,11 +19,11 @@ namespace BusinessLogic.Tests
             var filmPerson4 = new FilmPerson { PersonId = 4 };
 
             var filmPersonCollection = new Collection<FilmPerson> { filmPerson1, filmPerson2, filmPerson3, filmPerson4 };
-            var updateList = new List<int>{ filmPerson2.PersonId, filmPerson4.PersonId};
+            var updateList = new List<int> { filmPerson2.PersonId, filmPerson4.PersonId };
 
             var itemsToRemove = filmPersonCollection.RemoveItems(updateList);
 
-            var filmPersonsList= itemsToRemove.ToList();
+            var filmPersonsList = itemsToRemove.ToList();
             filmPersonsList.Count().Should().Be(2);
 
             filmPersonsList.Should().Contain(filmPerson1);

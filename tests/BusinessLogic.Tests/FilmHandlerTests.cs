@@ -1,6 +1,6 @@
-﻿using FilmReference.DataAccess.Entities;
+﻿using BusinessLogic.Handlers;
+using FilmReference.DataAccess.Entities;
 using FilmReference.DataAccess.Repositories;
-using FilmReference.FrontEnd.Handlers;
 using FluentAssertions;
 using MockQueryable.Moq;
 using Moq;
@@ -47,15 +47,18 @@ namespace BusinessLogic.Tests
         [Fact]
         public async Task GetFilmByIdCallsRepositoryMethod()
         {
-            var director = new PersonEntity {PersonId = 1, IsDirector = true, FirstName = "Test", LastName = "Test"};
-            var genre = new GenreEntity {GenreId = 1, Name = "Genre"};
-            var studio = new StudioEntity {StudioId = 1, Name = "Studio"};
-            var person = new PersonEntity {PersonId = 2, IsActor = true, FirstName = "Actor", LastName = "Lastname"};
-            var filmPerson = new FilmPersonEntity {Person = person, FilmPersonId = 1, PersonId = person.PersonId};
+            var director = new PersonEntity { PersonId = 1, IsDirector = true, FirstName = "Test", LastName = "Test" };
+            var genre = new GenreEntity { GenreId = 1, Name = "Genre" };
+            var studio = new StudioEntity { StudioId = 1, Name = "Studio" };
+            var person = new PersonEntity { PersonId = 2, IsActor = true, FirstName = "Actor", LastName = "Lastname" };
+            var filmPerson = new FilmPersonEntity { Person = person, FilmPersonId = 1, PersonId = person.PersonId };
             var film = new FilmEntity
             {
-                FilmId = 1, Genre = genre, Studio = studio, Director = director,
-                FilmPerson = new Collection<FilmPersonEntity> {filmPerson}
+                FilmId = 1,
+                Genre = genre,
+                Studio = studio,
+                Director = director,
+                FilmPerson = new Collection<FilmPersonEntity> { filmPerson }
             };
 
             var director2 = new PersonEntity { PersonId = 3, IsDirector = true, FirstName = "Test", LastName = "Test" };
@@ -72,24 +75,24 @@ namespace BusinessLogic.Tests
                 FilmPerson = new Collection<FilmPersonEntity> { filmPerson2 }
             };
 
-            var filmsList = new List<FilmEntity> {film, film2};
+            var filmsList = new List<FilmEntity> { film, film2 };
 
             var films = filmsList.AsQueryable().BuildMock();
 
             _filmRepository.Setup(method => method.GetAllQueryable()).Returns(films.Object);
 
-             var output = await _filmHandler.GetFilmById(film.FilmId);
+            var output = await _filmHandler.GetFilmById(film.FilmId);
 
-             _filmRepository.Verify(method => method.GetAllQueryable(), Times.Once);
+            _filmRepository.Verify(method => method.GetAllQueryable(), Times.Once);
 
-             output.FilmId.Should().Be(film.FilmId);
-             output.Director.PersonId.Should().Be(director.PersonId);
-             output.Genre.GenreId.Should().Be(genre.GenreId);
-             output.Studio.StudioId.Should().Be(studio.StudioId);
-             output.FilmPerson.Count.Should().Be(1);
+            output.FilmId.Should().Be(film.FilmId);
+            output.Director.PersonId.Should().Be(director.PersonId);
+            output.Genre.GenreId.Should().Be(genre.GenreId);
+            output.Studio.StudioId.Should().Be(studio.StudioId);
+            output.FilmPerson.Count.Should().Be(1);
 
-             var outputFilmPerson = output.FilmPerson.ElementAt(0);
-             outputFilmPerson.Person.PersonId.Should().Be(person.PersonId);
+            var outputFilmPerson = output.FilmPerson.ElementAt(0);
+            outputFilmPerson.Person.PersonId.Should().Be(person.PersonId);
         }
 
         [Fact]
@@ -143,11 +146,11 @@ namespace BusinessLogic.Tests
         [Fact]
         public async Task GetFilmsCallsRepositoryMethod()
         {
-            var film = new FilmEntity{FilmId = 1};
-            var film2 = new FilmEntity {FilmId = 2};
-            var film3 = new FilmEntity {FilmId = 3};
+            var film = new FilmEntity { FilmId = 1 };
+            var film2 = new FilmEntity { FilmId = 2 };
+            var film3 = new FilmEntity { FilmId = 3 };
 
-            var filmList = new List<FilmEntity>{film, film2, film3};
+            var filmList = new List<FilmEntity> { film, film2, film3 };
 
             _filmRepository.Setup(method => method.GetAll()).ReturnsAsync(filmList);
 
