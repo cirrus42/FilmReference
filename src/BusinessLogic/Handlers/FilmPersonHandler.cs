@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
-using BusinessLogic.Handlers.Interfaces;
+﻿using BusinessLogic.Handlers.Interfaces;
 using FilmReference.DataAccess.Entities;
 using FilmReference.DataAccess.Repositories;
+using System.Threading.Tasks;
 
 namespace BusinessLogic.Handlers
 {
@@ -17,7 +17,5 @@ namespace BusinessLogic.Handlers
             await _filmPersonRepository.Delete(filmPerson);
             await _filmPersonRepository.Save();
         }
-           
-
     }
 }

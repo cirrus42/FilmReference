@@ -11,7 +11,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace BusinessLogic.Tests
+namespace BusinessLogic.Tests.Managers
 {
     public class FilmPagesManagerTests
     {
@@ -123,6 +123,10 @@ namespace BusinessLogic.Tests
             _genreHandler.Verify(method => method.GetGenres(), Times.Once);
             _studioHandler.Verify(method => method.GetStudios(), Times.Once);
 
+            _mapper.Verify(method => method.Map<List<Person>>(It.IsAny<List<PersonEntity>>()), Times.Exactly(2));
+            _mapper.Verify(method => method.Map<List<Genre>>(It.IsAny<List<GenreEntity>>()), Times.Once);
+            _mapper.Verify(method => method.Map<List<Studio>>(It.IsAny<List<StudioEntity>>()), Times.Once);
+
             output.Directors.Count.Should().Be(2);
             output.Actors.Count.Should().Be(1);
             output.Genres.Count.Should().Be(2);
@@ -133,21 +137,21 @@ namespace BusinessLogic.Tests
             output.Genres.Should().Contain(genre);
             output.Studios.Should().Contain(studio);
 
-            output.Directors.Should().ContainEquivalentOf(new PersonEntity
+            output.Directors.Should().ContainEquivalentOf(new Person
             {
-                PersonId = PageValues.MinusOne,
+                Id = PageValues.MinusOne,
                 FullName = PageValues.PleaseSelect
             });
 
-            output.Genres.Should().ContainEquivalentOf(new GenreEntity
+            output.Genres.Should().ContainEquivalentOf(new Genre
             {
-                GenreId = PageValues.MinusOne,
+                Id = PageValues.MinusOne,
                 Name = PageValues.PleaseSelect
             });
 
-            output.Studios.Should().ContainEquivalentOf(new StudioEntity
+            output.Studios.Should().ContainEquivalentOf(new Studio
             {
-                StudioId = PageValues.MinusOne,
+                Id = PageValues.MinusOne,
                 Name = PageValues.PleaseSelect
             });
         }
@@ -290,15 +294,21 @@ namespace BusinessLogic.Tests
 
             var output = await _filmPagesManager.GetFilmsAndGenres();
 
+            _filmHandler.Verify(method => method.GetFilms(),Times.Once);
+            _mapper.Verify(method => method.Map<List<Film>>(It.IsAny<List<FilmEntity>>()), Times.Once);
+
+            _genreHandler.Verify(method => method.GetGenres(), Times.Once);
+            _mapper.Verify(method => method.Map<List<Genre>>(It.IsAny<List<GenreEntity>>()),Times.Once);
+
             output.Films.Count.Should().Be(films.Count);
             output.Genres.Count.Should().Be(genres.Count + 1);
 
             output.Films.Should().Contain(film1);
             output.Films.Should().Contain(film2);
             output.Genres.Should().Contain(genre);
-            output.Genres.Should().ContainEquivalentOf(new GenreEntity
+            output.Genres.Should().ContainEquivalentOf(new Genre
             {
-                GenreId = PageValues.Zero,
+                Id = PageValues.Zero,
                 Name = PageValues.All
             });
         }

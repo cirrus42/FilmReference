@@ -6,7 +6,7 @@ using System;
 using System.Text;
 using Xunit;
 
-namespace FilmReference.Tests
+namespace BusinessLogic.Tests.Helpers
 {
     public class ImageHelperTests
     {

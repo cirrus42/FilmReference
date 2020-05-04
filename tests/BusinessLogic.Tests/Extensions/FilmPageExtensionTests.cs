@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Xunit;
 
-namespace BusinessLogic.Tests
+namespace BusinessLogic.Tests.Extensions
 {
     public class FilmPageExtensionTests
     {

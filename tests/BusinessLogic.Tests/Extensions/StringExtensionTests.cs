@@ -2,7 +2,7 @@ using BusinessLogic.Extensions;
 using FluentAssertions;
 using Xunit;
 
-namespace FilmReference.Tests
+namespace BusinessLogic.Tests.Extensions
 {
     public class StringExtensionTests
     {

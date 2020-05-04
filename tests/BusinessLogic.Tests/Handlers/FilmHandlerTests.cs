@@ -12,7 +12,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace BusinessLogic.Tests
+namespace BusinessLogic.Tests.Handlers
 {
     public class FilmHandlerTests
     {
@@ -217,7 +217,7 @@ namespace BusinessLogic.Tests
 
 
         [Fact]
-        public async Task IsDuplicateEiatingRecordReturnsTrue()
+        public async Task IsDuplicateExistingRecordReturnsTrue()
         {
             const int filmId = 1;
             const string filmName = "film";

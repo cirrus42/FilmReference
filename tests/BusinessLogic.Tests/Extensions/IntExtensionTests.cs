@@ -2,7 +2,7 @@ using BusinessLogic.Extensions;
 using FluentAssertions;
 using Xunit;
 
-namespace BusinessLogic.Tests
+namespace BusinessLogic.Tests.Extensions
 {
     public class IntExtensionTests
     {
