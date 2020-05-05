@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogic.Handlers.Interfaces;
+using FilmReference.DataAccess.Entities;
 using FilmReference.DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
-using PersonEntity = FilmReference.DataAccess.Entities.PersonEntity;
 
 namespace BusinessLogic.Handlers
 {
@@ -17,6 +17,7 @@ namespace BusinessLogic.Handlers
 
         public async Task<IEnumerable<PersonEntity>> GetDirectors() =>
             (await _personRepository.GetWhere(person => person.IsDirector)).OrderBy(person => person.FullName);
+      
         public async Task<IEnumerable<PersonEntity>> GetActors() =>
             (await _personRepository.GetWhere(person => person.IsActor)).OrderBy(person => person.FullName);
 
