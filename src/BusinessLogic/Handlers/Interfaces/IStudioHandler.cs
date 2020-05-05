@@ -8,8 +8,8 @@ namespace BusinessLogic.Handlers.Interfaces
     {
         Task<IEnumerable<StudioEntity>> GetStudios();
         Task<bool> IsDuplicate(StudioEntity studio);
-        Task SaveStudio(StudioEntity studio); 
-        Task<StudioEntity> GetStudioById(int id);
+        Task SaveStudio(StudioEntity studio);
         Task UpdateStudio(StudioEntity studio);
+        Task<StudioEntity> GetStudioById(int id);
     }
 }

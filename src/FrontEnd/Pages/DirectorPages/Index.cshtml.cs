@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using BusinessLogic.Managers.Interfaces;
+using BusinessLogic.Models;
+using FilmReference.FrontEnd.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BusinessLogic.Managers.Interfaces;
-using BusinessLogic.Models;
 
 namespace FilmReference.FrontEnd.Pages.DirectorPages
 {
-    public class IndexModel : PageModel
+    public class IndexModel : FilmReferencePageModel
     {
         private readonly IPersonPagesManager _personPagesManager;
         public IList<Person> PersonList { get; set; }
@@ -16,7 +16,10 @@ namespace FilmReference.FrontEnd.Pages.DirectorPages
             _personPagesManager = personPagesManager;
         
         public async Task OnGetAsync() =>
-            PersonList = (await _personPagesManager.GetDirectors()).ToList();
+            PersonList = (await _personPagesManager.GetDirectors())
+                .Skip((CurrentPage - 1) * PageSize)
+                .Take(PageSize)
+                .ToList();
     }
 }
 

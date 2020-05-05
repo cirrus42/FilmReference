@@ -15,7 +15,7 @@ namespace BusinessLogic.Handlers
             _studioRepository = personRepository;
 
         public async Task<IEnumerable<StudioEntity>> GetStudios() =>
-            (await _studioRepository.GetAll()).OrderBy(genre => genre.Name);
+            (await _studioRepository.GetAll()).OrderBy(studio => studio.Name).ToList();
 
         public async Task<bool> IsDuplicate(StudioEntity studio)
         {
@@ -31,10 +31,12 @@ namespace BusinessLogic.Handlers
             await _studioRepository.Save();
         }
 
+        public async Task UpdateStudio(StudioEntity studio) =>
+            await _studioRepository.Update(studio);
+
         public async Task<StudioEntity> GetStudioById(int id) => 
             await _studioRepository.GetById(id);
 
-        public async Task UpdateStudio(StudioEntity studio) =>
-                await _studioRepository.Update(studio);
+       
     }
 }

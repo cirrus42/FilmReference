@@ -1,14 +1,14 @@
 ﻿using BusinessLogic.Handlers.Interfaces;
 using BusinessLogic.Helpers;
 using FilmReference.DataAccess.Entities;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using FilmReference.FrontEnd.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace FilmReference.FrontEnd.Pages.StudioPages
 {
-    public class IndexModel : PageModel
+    public class IndexModel : FilmReferencePageModel
     {
         public IImageHelper ImageHelper;
         private readonly IStudioHandler _studioHandler;
@@ -20,6 +20,9 @@ namespace FilmReference.FrontEnd.Pages.StudioPages
         }
 
         public async Task OnGetAsync()
-            => StudioList = (await _studioHandler.GetStudios()).ToList();
+            => StudioList = (await _studioHandler.GetStudios())
+                .Skip((CurrentPage - 1) * PageSize)
+                .Take(PageSize)
+                .ToList();
     }
 }
