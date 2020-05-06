@@ -1,10 +1,10 @@
-﻿using System.Net;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using BusinessLogic.Handlers.Interfaces;
 using BusinessLogic.Managers.Interfaces;
 using BusinessLogic.Models;
 using FilmReference.DataAccess.Entities;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace BusinessLogic.Managers
 {

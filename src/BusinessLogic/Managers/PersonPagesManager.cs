@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using BusinessLogic.Handlers.Interfaces;
 using BusinessLogic.Managers.Interfaces;
 using BusinessLogic.Models;
 using BusinessLogic.Validations;
 using FilmReference.DataAccess.Entities;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace BusinessLogic.Managers
 {
@@ -27,15 +27,16 @@ namespace BusinessLogic.Managers
         public async Task<IEnumerable<string>> SavePerson(Person person)
         {
             var validationList =  _personValidator.ValidatePerson(person).ToList();
+            var personEntity = _mapper.Map<PersonEntity>(person);
 
             if (!validationList.Contains(PageValues.PersonNameValidation))
             {
-                if (await _personHandler.IsDuplicate(_mapper.Map<PersonEntity>(person)))
+                if (await _personHandler.IsDuplicate(personEntity))
                     validationList.Add(PageValues.PersonDuplicateValidation);
             }
 
             if (validationList.Count == 0)
-                await _personHandler.SavePerson(_mapper.Map<PersonEntity>(person));
+                await _personHandler.SavePerson(personEntity);
 
             return validationList;
         }
@@ -43,12 +44,13 @@ namespace BusinessLogic.Managers
         public async Task<IEnumerable<string>> UpdatePerson(Person person)
         {
             var validationList =  _personValidator.ValidatePerson(person).ToList();
+            var personEntity = _mapper.Map<PersonEntity>(person);
 
-            if (await _personHandler.IsDuplicate(_mapper.Map<PersonEntity>(person)))
+            if (await _personHandler.IsDuplicate(personEntity))
                 validationList.Add(PageValues.PersonDuplicateValidation);
 
             if (validationList.Count == 0)
-                await _personHandler.UpdatePerson(_mapper.Map<PersonEntity>(person));
+                await _personHandler.UpdatePerson(personEntity);
 
             return validationList;
         }
