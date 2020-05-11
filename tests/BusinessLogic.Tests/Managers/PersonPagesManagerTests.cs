@@ -144,7 +144,7 @@ namespace BusinessLogic.Tests.Managers
         public async void GetPersonDetailsReturnsPersonPagesValues()
         {
             const int id = 1;
-            var filmEntity = new FilmEntity() {FilmId = 1, Name = "Test"};
+            var filmEntity = new FilmEntity() { Id = 1, Name = "Test"};
             var filmPersonEntity = new FilmPersonEntity {Film = filmEntity};
             var filmPersonEntityList = new List<FilmPersonEntity> {filmPersonEntity};
             var personEntity = new PersonEntity {FilmPerson = filmPersonEntityList};

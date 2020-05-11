@@ -26,9 +26,9 @@ namespace BusinessLogic.Tests.Handlers
         [Fact]
         public async void GetStudiosCallsRepository()
         {
-            var studio = new StudioEntity {StudioId = 1, Name = "Test",};
-            var studio2 = new StudioEntity { StudioId = 2, Name = "Ax Test" };
-            var studio3 = new StudioEntity { StudioId = 3, Name = "AnotherTest" };
+            var studio = new StudioEntity { Id = 1, Name = "Test",};
+            var studio2 = new StudioEntity { Id = 2, Name = "Ax Test" };
+            var studio3 = new StudioEntity { Id = 3, Name = "AnotherTest" };
 
             var studioList = new List<StudioEntity>{studio, studio2, studio3};
 
@@ -50,7 +50,7 @@ namespace BusinessLogic.Tests.Handlers
         public async void IsDuplicateReturnsFalse()
         {
             const int id = 1;
-            var studioEntity = new StudioEntity {StudioId = id};
+            var studioEntity = new StudioEntity { Id = id};
 
             _studioRepository.Setup(method => method.GetWhere(It.IsAny<Expression<Func<StudioEntity, bool>>>()))
                 .ReturnsAsync(new List<StudioEntity>());
@@ -66,10 +66,10 @@ namespace BusinessLogic.Tests.Handlers
         public async void IsDuplicateSameRecordReturnsFalse()
         {
             const int id = 1;
-            var studioEntity = new StudioEntity { StudioId = id };
+            var studioEntity = new StudioEntity { Id = id };
 
             _studioRepository.Setup(method => method.GetWhere(It.IsAny<Expression<Func<StudioEntity, bool>>>()))
-                .ReturnsAsync(new List<StudioEntity>{new StudioEntity{StudioId = id}});
+                .ReturnsAsync(new List<StudioEntity>{new StudioEntity{ Id = id}});
 
             var output = await _studioHandler.IsDuplicate(studioEntity);
 
@@ -82,10 +82,10 @@ namespace BusinessLogic.Tests.Handlers
         public async void IsDuplicateNewRecordReturnsTrue()
         {
             const int id = 1;
-            var studioEntity = new StudioEntity { StudioId = 0 };
+            var studioEntity = new StudioEntity { Id = 0 };
 
             _studioRepository.Setup(method => method.GetWhere(It.IsAny<Expression<Func<StudioEntity, bool>>>()))
-                .ReturnsAsync(new List<StudioEntity> { new StudioEntity { StudioId = id } });
+                .ReturnsAsync(new List<StudioEntity> { new StudioEntity { Id = id } });
 
             var output = await _studioHandler.IsDuplicate(studioEntity);
 
@@ -98,10 +98,10 @@ namespace BusinessLogic.Tests.Handlers
         public async void IsDuplicateExistingRecordReturnsTrue()
         {
             const int id = 1;
-            var studioEntity = new StudioEntity { StudioId = 2 };
+            var studioEntity = new StudioEntity { Id = 2 };
 
             _studioRepository.Setup(method => method.GetWhere(It.IsAny<Expression<Func<StudioEntity, bool>>>()))
-                .ReturnsAsync(new List<StudioEntity> { new StudioEntity { StudioId = id } });
+                .ReturnsAsync(new List<StudioEntity> { new StudioEntity { Id = id } });
 
             var output = await _studioHandler.IsDuplicate(studioEntity);
 
@@ -113,7 +113,7 @@ namespace BusinessLogic.Tests.Handlers
         [Fact]
         public async void SaveStudioCallsRepository()
         {
-            var studioEntity = new StudioEntity { StudioId = 2 };
+            var studioEntity = new StudioEntity { Id = 2 };
 
             await _studioHandler.SaveStudio(studioEntity);
 
@@ -124,7 +124,7 @@ namespace BusinessLogic.Tests.Handlers
         [Fact]
         public async void UpdateStudioCallsRepository()
         {
-            var studioEntity = new StudioEntity { StudioId = 2 };
+            var studioEntity = new StudioEntity { Id = 2 };
 
             await _studioHandler.UpdateStudio(studioEntity);
 
@@ -135,7 +135,7 @@ namespace BusinessLogic.Tests.Handlers
         public async void GetStudioByIdCallsRepository()
         {
             const int id = 1;
-            var studioEntity = new StudioEntity { StudioId = 2 };
+            var studioEntity = new StudioEntity { Id = 2 };
 
             _studioRepository.Setup(method => method.GetById(It.IsAny<int>())).ReturnsAsync(studioEntity);
 

@@ -26,8 +26,8 @@ namespace BusinessLogic.Tests.Handlers
         [Fact]
         public async void GetDirectorsCallsRepository()
         {
-            var personEntity1 = new PersonEntity {PersonId = 1, FullName = "Test1", IsDirector = true};
-            var personEntity2 = new PersonEntity { PersonId = 1, FullName = "ATest", IsDirector = true };
+            var personEntity1 = new PersonEntity { Id = 1, FullName = "Test1", IsDirector = true};
+            var personEntity2 = new PersonEntity { Id = 1, FullName = "ATest", IsDirector = true };
 
             var personList = new List<PersonEntity>{personEntity1, personEntity2};
 
@@ -51,8 +51,8 @@ namespace BusinessLogic.Tests.Handlers
         [Fact]
         public async void GetActorsCallsRepository()
         {
-            var personEntity1 = new PersonEntity { PersonId = 1, FullName = "Test1", IsActor = true };
-            var personEntity2 = new PersonEntity { PersonId = 1, FullName = "ATest", IsActor = true };
+            var personEntity1 = new PersonEntity { Id = 1, FullName = "Test1", IsActor = true };
+            var personEntity2 = new PersonEntity { Id = 1, FullName = "ATest", IsActor = true };
 
             var personList = new List<PersonEntity> { personEntity1, personEntity2 };
 
@@ -77,7 +77,7 @@ namespace BusinessLogic.Tests.Handlers
         [Fact]
         public async void SavePersonCallsRepository()
         {
-            var personEntity1 = new PersonEntity { PersonId = 1, FullName = "Test1", IsActor = true };
+            var personEntity1 = new PersonEntity { Id = 1, FullName = "Test1", IsActor = true };
 
             await _personHandler.SavePerson(personEntity1);
 
@@ -88,7 +88,7 @@ namespace BusinessLogic.Tests.Handlers
         public async void IsDuplicateReturnsFalse()
         {
             const int id = 1;
-            var personEntity = new PersonEntity { PersonId = id, FirstName = "Test", LastName = "Person" };
+            var personEntity = new PersonEntity { Id = id, FirstName = "Test", LastName = "Person" };
 
             _personRepository.Setup(method => method.GetWhere(It.IsAny<Expression<Func<PersonEntity, bool>>>()))
                 .ReturnsAsync(new List<PersonEntity>());
@@ -104,10 +104,10 @@ namespace BusinessLogic.Tests.Handlers
         public async void IsDuplicateSameRecordReturnsFalse()
         {
             const int id = 1;
-            var personEntity = new PersonEntity { PersonId = id, FirstName = "Test", LastName = "Person" };
+            var personEntity = new PersonEntity { Id = id, FirstName = "Test", LastName = "Person" };
 
             _personRepository.Setup(method => method.GetWhere(It.IsAny<Expression<Func<PersonEntity, bool>>>()))
-                .ReturnsAsync(new List<PersonEntity>{ new PersonEntity{PersonId = id}});
+                .ReturnsAsync(new List<PersonEntity>{ new PersonEntity{ Id = id}});
 
             var output = await _personHandler.IsDuplicate(personEntity);
 
@@ -120,10 +120,10 @@ namespace BusinessLogic.Tests.Handlers
         public async void IsDuplicateNewRecordReturnsTrue()
         {
             const int id = 1;
-            var personEntity = new PersonEntity { PersonId = 0, FirstName = "Test", LastName = "Person" };
+            var personEntity = new PersonEntity { Id = 0, FirstName = "Test", LastName = "Person" };
 
             _personRepository.Setup(method => method.GetWhere(It.IsAny<Expression<Func<PersonEntity, bool>>>()))
-                .ReturnsAsync(new List<PersonEntity> { new PersonEntity { PersonId = id } });
+                .ReturnsAsync(new List<PersonEntity> { new PersonEntity { Id = id } });
 
             var output = await _personHandler.IsDuplicate(personEntity);
 
@@ -136,10 +136,10 @@ namespace BusinessLogic.Tests.Handlers
         public async void IsDuplicateExistingRecordReturnsTrue()
         {
             const int id = 1;
-            var personEntity = new PersonEntity { PersonId = 2, FirstName = "Test", LastName = "Person" };
+            var personEntity = new PersonEntity { Id = 2, FirstName = "Test", LastName = "Person" };
 
             _personRepository.Setup(method => method.GetWhere(It.IsAny<Expression<Func<PersonEntity, bool>>>()))
-                .ReturnsAsync(new List<PersonEntity> { new PersonEntity { PersonId = id } });
+                .ReturnsAsync(new List<PersonEntity> { new PersonEntity { Id = id } });
 
             var output = await _personHandler.IsDuplicate(personEntity);
 
@@ -153,15 +153,15 @@ namespace BusinessLogic.Tests.Handlers
         {
             const int id = 4;
 
-            var person = new PersonEntity {PersonId = 1, FirstName = "Test"};
-            var film = new FilmEntity {FilmId = 2, Name = "film1"};
-            var filmPerson = new FilmPersonEntity {FilmPersonId = 3, Person = person, Film = film, FilmId = film.FilmId, PersonId = person.PersonId};
+            var person = new PersonEntity { Id = 1, FirstName = "Test"};
+            var film = new FilmEntity { Id = 2, Name = "film1"};
+            var filmPerson = new FilmPersonEntity { Id = 3, Person = person, Film = film, FilmId = film.Id, PersonId = person.Id };
 
             person.FilmPerson = new List<FilmPersonEntity>{filmPerson};
 
-            var person2 = new PersonEntity { PersonId = 4, FirstName = "Test2" };
-            var film2 = new FilmEntity { FilmId = 5, Name = "film2" };
-            var filmPerson2 = new FilmPersonEntity { FilmPersonId = 6, Person = person2, Film = film2, FilmId = film2.FilmId, PersonId = person2.PersonId };
+            var person2 = new PersonEntity { Id = 4, FirstName = "Test2" };
+            var film2 = new FilmEntity { Id = 5, Name = "film2" };
+            var filmPerson2 = new FilmPersonEntity { Id = 6, Person = person2, Film = film2, FilmId = film2.Id, PersonId = person2.Id };
 
             person2.FilmPerson = new List<FilmPersonEntity> { filmPerson2 };
 
@@ -183,7 +183,7 @@ namespace BusinessLogic.Tests.Handlers
         {
             const int id = 4;
 
-            var person = new PersonEntity { PersonId = 1, FirstName = "Test" };
+            var person = new PersonEntity { Id = 1, FirstName = "Test" };
 
             _personRepository.Setup(method => method.GetById(It.IsAny<int>())).ReturnsAsync(person);
 
@@ -197,7 +197,7 @@ namespace BusinessLogic.Tests.Handlers
         [Fact]
         public async void UpdatePersonCallsRepository()
         {
-            var person = new PersonEntity { PersonId = 1, FirstName = "Test" };
+            var person = new PersonEntity { Id = 1, FirstName = "Test" };
 
             await _personHandler.UpdatePerson(person);
 
@@ -208,25 +208,25 @@ namespace BusinessLogic.Tests.Handlers
         public async void GetActorsByCharacterCallsRepository()
         {
             const string startCharacter = "A";
-            var person = new PersonEntity { PersonId = 1, FirstName = "Test", IsActor = true , FullName = "Test Test"};
-            var film = new FilmEntity { FilmId = 2, Name = "film1" };
-            var filmPerson = new FilmPersonEntity { FilmPersonId = 3, Person = person, Film = film, FilmId = film.FilmId, PersonId = person.PersonId };
+            var person = new PersonEntity { Id = 1, FirstName = "Test", IsActor = true , FullName = "Test Test"};
+            var film = new FilmEntity { Id = 2, Name = "film1" };
+            var filmPerson = new FilmPersonEntity { Id = 3, Person = person, Film = film, FilmId = film.Id, PersonId = person.Id };
 
             person.FilmPerson = new List<FilmPersonEntity> { filmPerson };
 
-            var person2 = new PersonEntity { PersonId = 4, FirstName = $"{startCharacter}xx" , IsActor = true, FullName = $"{startCharacter}xx test"};
-            var film2 = new FilmEntity { FilmId = 5, Name = "film2" };
-            var filmPerson2 = new FilmPersonEntity { FilmPersonId = 6, Person = person2, Film = film2, FilmId = film2.FilmId, PersonId = person2.PersonId };
+            var person2 = new PersonEntity { Id = 4, FirstName = $"{startCharacter}xx" , IsActor = true, FullName = $"{startCharacter}xx test"};
+            var film2 = new FilmEntity { Id = 5, Name = "film2" };
+            var filmPerson2 = new FilmPersonEntity { Id = 6, Person = person2, Film = film2, FilmId = film2.Id, PersonId = person2.Id };
 
             person2.FilmPerson = new List<FilmPersonEntity> { filmPerson2 };
 
-            var person3= new PersonEntity { PersonId = 7, FirstName = $"{startCharacter}Test2", IsActor = false, FullName = "A Nother"};
-            var filmPerson3 = new FilmPersonEntity { FilmPersonId = 8, Person = person3, Film = film2, FilmId = film2.FilmId, PersonId = person3.PersonId };
+            var person3= new PersonEntity { Id = 7, FirstName = $"{startCharacter}Test2", IsActor = false, FullName = "A Nother"};
+            var filmPerson3 = new FilmPersonEntity { Id = 8, Person = person3, Film = film2, FilmId = film2.Id, PersonId = person3.Id };
 
             person3.FilmPerson = new List<FilmPersonEntity> { filmPerson3 };
 
-            var person4 = new PersonEntity { PersonId = 9, FirstName = $"{startCharacter}Test2", IsActor = true, FullName = $"{startCharacter}n Actor"};
-            var filmPerson4 = new FilmPersonEntity { FilmPersonId = 10, Person = person4, Film = film2, FilmId = film2.FilmId, PersonId = person4.PersonId };
+            var person4 = new PersonEntity { Id = 9, FirstName = $"{startCharacter}Test2", IsActor = true, FullName = $"{startCharacter}n Actor"};
+            var filmPerson4 = new FilmPersonEntity { Id = 10, Person = person4, Film = film2, FilmId = film2.Id, PersonId = person4.Id };
 
             person4.FilmPerson = new List<FilmPersonEntity> { filmPerson4};
 

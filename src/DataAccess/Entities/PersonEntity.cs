@@ -1,14 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FilmReference.DataAccess.Entities
 {
     [Table("Person")]
-    public partial class PersonEntity
+    public class PersonEntity : BaseEntity
     {
-        [Key]
-        public int PersonId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]

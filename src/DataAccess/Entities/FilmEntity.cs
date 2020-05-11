@@ -5,10 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace FilmReference.DataAccess.Entities
 {
     [Table("Film")]
-    public partial class FilmEntity 
+    public  class FilmEntity : BaseEntity
     {
-        [Key]
-        public int FilmId { get; set; }
         [Required(ErrorMessage = "{0} is required")]
         [StringLength(50, ErrorMessage = "{0} cannot be more than {1} characters")]
         public string Name { get; set; }

@@ -35,7 +35,7 @@
                     @Html.DisplayFor(modelItem => item.Name)
                     @{ if (item.Picture != null)
                         {
-                            <label class="PicLabel" onmouseover="showPicture(event, @item.StudioId)" onmouseout="hidePicture()">(Hover for pic)</label>
+                            <label class="PicLabel" onmouseover="showPicture(event, @item.Id)" onmouseout="hidePicture()">(Hover for pic)</label>
                             <label class="PicLabel" onmouseover="showPicture2(event, '@Model.ImageHelper.ImageSource(item.Picture)')" onmouseout="hidePicture()">(Hover for pic)</label>
                         }
                     }
@@ -47,8 +47,8 @@
                     @Html.DisplayFor(modelItem => stringValues.DisplayValue)
                 </td>
                 <td>
-                    <a asp-page="./Details" asp-route-id="@item.StudioId">Details</a> |
-                    <a asp-page="./Edit" asp-route-id="@item.StudioId">Edit</a>
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
                 </td>
             </tr>
         }

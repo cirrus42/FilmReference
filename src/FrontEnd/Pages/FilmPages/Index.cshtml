@@ -1,8 +1,7 @@
 ﻿@page
 @model FilmReference.FrontEnd.Pages.FilmPages.IndexModel
-@using FilmReference.DataAccess
-@using FilmReference.DataAccess.Entities
 @using BusinessLogic.Extensions
+@using BusinessLogic.Models
 
 @{
     ViewData["Title"] = "Index";
@@ -17,7 +16,7 @@
 <form asp-page="Index" id="@formName" method="post">
     @foreach (var genre in Model.FilmPagesValues.Genres)
     {
-        @Html.RadioButton(nameof(GenreEntity.GenreId),
+        @Html.RadioButton(nameof(Genre.Id),
             genre.Id,
             isChecked: genre.Id == Model.GenreId,
             new { Id = genre.Name.ReplaceForRadioButton(), @onclick = $"submitForm('{formName}')"})

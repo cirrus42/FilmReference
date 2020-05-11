@@ -1,14 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FilmReference.DataAccess.Entities
 {
     [Table("FilmPerson")]
-    public partial class FilmPersonEntity
+    public class FilmPersonEntity : BaseEntity
     {
-        [Key]
-        public int FilmPersonId { get; set; }
-
         public int FilmId { get; set; }
 
         public int PersonId { get; set; }

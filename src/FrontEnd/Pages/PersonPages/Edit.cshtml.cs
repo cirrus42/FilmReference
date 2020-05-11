@@ -54,7 +54,6 @@ namespace FilmReference.FrontEnd.Pages.PersonPages
                 Person,
                 nameof(Person),
                 p => p.Id,
-                p => p.FirstName,
                 p => p.LastName,
                 p => p.Description,
                 p => p.Actor,
@@ -79,7 +78,7 @@ namespace FilmReference.FrontEnd.Pages.PersonPages
                 }
             }
 
-            var validationList = (await _personPagesManager.SavePerson(Person)).ToList();
+            var validationList = (await _personPagesManager.UpdatePerson(Person)).ToList();
 
             if (validationList.Count == 0)
             {

@@ -24,7 +24,7 @@ namespace BusinessLogic.Handlers
 
             if (!duplicates.Any()) return false;
 
-            return genre.GenreId <= 0 || duplicates.Any(g => g.GenreId != genre.GenreId);
+            return genre.Id <= 0 || duplicates.Any(g => g.Id != genre.Id);
         }
 
         public async Task<GenreEntity> GetGenreById(int id) =>

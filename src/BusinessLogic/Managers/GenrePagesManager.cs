@@ -22,7 +22,7 @@ namespace BusinessLogic.Managers
         public async Task<bool> SaveGenre(Genre genre)
         {
             var genreEntity = _mapper.Map<GenreEntity>(genre);
-
+       
             if (await _genreHandler.IsDuplicate(genreEntity))
                 return false;
 

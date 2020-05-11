@@ -22,7 +22,7 @@ namespace BusinessLogic.Handlers
             var duplicates = (await _studioRepository.GetWhere(s =>
                 s.Name.ToLower().Replace(" ", "") == studio.Name.ToLower().Replace(" ", ""))).ToList();
 
-            return duplicates.Any() && duplicates.Any(s => s.StudioId != studio.StudioId);
+            return duplicates.Any() && duplicates.Any(s => s.Id != studio.Id);
         }
 
         public async Task SaveStudio(StudioEntity studio)

@@ -37,14 +37,14 @@ namespace BusinessLogic.Handlers
 
             if (!duplicates.Any()) return false;
 
-            return person.PersonId <= 0 || duplicates.Any(p => p.PersonId != person.PersonId);
+            return person.Id <= 0 || duplicates.Any(p => p.Id != person.Id);
         }
 
         public async Task<PersonEntity> GetPersonWithDetails(int id) => 
             await _personRepository.GetAllQueryable()
                 .Include(p => p.FilmPerson)
                 .ThenInclude(fp => fp.Film)
-                .FirstOrDefaultAsync(m => m.PersonId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
 
         public async Task<PersonEntity> GetPersonById(int id) =>
             await _personRepository.GetById(id);

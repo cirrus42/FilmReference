@@ -14,7 +14,6 @@ namespace FilmReference.FrontEnd.Pages.PersonPages
     {
         private readonly IImageHelper _imageHelper;
         private readonly IPersonPagesManager _personPagesManager;
-        //private readonly IPersonValidator _personValidator;
         public Person Person { get; set; }
 
         public CreateModel(IImageHelper imageHelper, IPersonPagesManager personPagesManager)

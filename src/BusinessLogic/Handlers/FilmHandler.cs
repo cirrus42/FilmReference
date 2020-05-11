@@ -31,12 +31,12 @@ namespace BusinessLogic.Handlers
                 .Include(film => film.Studio)
                 .Include(film => film.FilmPerson)
                 .ThenInclude(filmPerson => filmPerson.Person)
-                .FirstOrDefaultAsync(film => film.FilmId == id);
+                .FirstOrDefaultAsync(film => film.Id == id);
 
         public async Task<FilmEntity> GetFilmWithFilmPerson(int id) => 
             await _filmRepository.GetAllQueryable()
                 .Include(film => film.FilmPerson)
-                .FirstOrDefaultAsync(film => film.FilmId == id);
+                .FirstOrDefaultAsync(film => film.Id == id);
 
         public async Task<IEnumerable<FilmEntity>> GetFilms() =>
             await _filmRepository.GetAll();
@@ -48,7 +48,7 @@ namespace BusinessLogic.Handlers
 
             if (!duplicates.Any()) return false;
 
-            return filmId <= 0 || duplicates.Any(film => film.FilmId != filmId);
+            return filmId <= 0 || duplicates.Any(film => film.Id != filmId);
         }
     }
 }

@@ -195,7 +195,7 @@ namespace BusinessLogic.Tests.Managers
         public async Task SaveFilmCallsMethodsAsRequiredAndReturnsBool(bool isDuplicate)
         {
             var film = new Film { Id = 1, Name = "Test" };
-            var filmEntity = new FilmEntity { FilmId = 1, Name = "Test" };
+            var filmEntity = new FilmEntity { Id = 1, Name = "Test" };
 
             _filmHandler.Setup(method => method.IsDuplicate(It.IsAny<int>(), It.IsAny<string>())).ReturnsAsync(isDuplicate);
             _mapper.Setup(method => method.Map<FilmEntity>(It.IsAny<Film>())).Returns(filmEntity);
@@ -245,7 +245,7 @@ namespace BusinessLogic.Tests.Managers
         public async Task UpdateFilmCallsMethodsAsRequiredAndReturnsBool(bool isDuplicate)
         {
             var film = new Film { Id = 1, Name = "Test" };
-            var filmEntity = new FilmEntity { FilmId = 1, Name = "Test" };
+            var filmEntity = new FilmEntity { Id = 1, Name = "Test" };
 
             _filmHandler.Setup(method => method.IsDuplicate(It.IsAny<int>(), It.IsAny<string>())).ReturnsAsync(isDuplicate);
             _mapper.Setup(method => method.Map<FilmEntity>(It.IsAny<Film>())).Returns(filmEntity);

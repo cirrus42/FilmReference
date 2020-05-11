@@ -31,7 +31,7 @@ namespace DataAccessTests
         {
             var person1 = new PersonEntity()
             {
-                PersonId = 1,
+                Id = 1,
                 FirstName = "Person1",
                 LastName = "Lastname1",
                 Description = "Person 1",
@@ -43,7 +43,7 @@ namespace DataAccessTests
 
             var person2 = new PersonEntity()
             {
-                PersonId = 2,
+                Id = 2,
                 FirstName = "Person2",
                 LastName = "Lastname2",
                 Description = "Person 2",
@@ -70,7 +70,7 @@ namespace DataAccessTests
         {
             var person1 = new PersonEntity()
             {
-                PersonId = 1,
+                Id = 1,
                 FirstName = "Person1",
                 LastName = "Lastname1",
                 Description = "Person 1",
@@ -82,7 +82,7 @@ namespace DataAccessTests
 
             var person2 = new PersonEntity()
             {
-                PersonId = 2,
+                Id = 2,
                 FirstName = "Person2",
                 LastName = "Lastname2",
                 Description = "Person 2",
@@ -107,7 +107,7 @@ namespace DataAccessTests
         {
             var person1 = new PersonEntity()
             {
-                PersonId = 1,
+                Id = 1,
                 FirstName = "Person1",
                 LastName = "Lastname1",
                 Description = "Person 1",
@@ -119,7 +119,7 @@ namespace DataAccessTests
 
             var person2 = new PersonEntity()
             {
-                PersonId = 2,
+                Id = 2,
                 FirstName = "Person2",
                 LastName = "Lastname2",
                 Description = "Person 2",
@@ -144,7 +144,7 @@ namespace DataAccessTests
         {
             var person1 = new PersonEntity()
             {
-                PersonId = 1,
+                Id = 1,
                 FirstName = "Person1",
                 LastName = "Lastname1",
                 Description = "Person 1",
@@ -156,7 +156,7 @@ namespace DataAccessTests
 
             var person2 = new PersonEntity()
             {
-                PersonId = 2,
+                Id = 2,
                 FirstName = "Person2",
                 LastName = "Lastname2",
                 Description = "Person 2",
@@ -170,7 +170,7 @@ namespace DataAccessTests
             await _filmReferenceContext.Person.AddAsync(person2);
             await _filmReferenceContext.SaveChangesAsync();
 
-            var person = await _genericRepository.GetById(person2.PersonId);
+            var person = await _genericRepository.GetById(person2.Id);
 
             person.Should().Be(person2);
         }
@@ -178,7 +178,7 @@ namespace DataAccessTests
         [Fact]
         public void Update()
         {
-            var film = new FilmEntity{ FilmId = 1, Name = "Film1" };
+            var film = new FilmEntity{ Id = 1, Name = "Film1" };
 
             _filmReferenceContext.Film.Add(film);
             _filmReferenceContext.SaveChanges();
@@ -197,7 +197,7 @@ namespace DataAccessTests
         {
             var person1 = new PersonEntity()
             {
-                PersonId = 1,
+                Id = 1,
                 FirstName = "Person1",
                 LastName = "Lastname1",
                 Description = "Person 1",
@@ -209,7 +209,7 @@ namespace DataAccessTests
 
             var person2 = new PersonEntity()
             {
-                PersonId = 2,
+                Id = 2,
                 FirstName = "Person2",
                 LastName = "Lastname2",
                 Description = "Person 2",
@@ -225,7 +225,7 @@ namespace DataAccessTests
 
             var person3 = new PersonEntity()
             {
-                PersonId = 3,
+                Id = 3,
                 FirstName = "Person3",
                 LastName = "Lastname3",
                 Description = "Person 3",
@@ -249,8 +249,8 @@ namespace DataAccessTests
         [Fact]
         public void DeleteRemovesRecord()
         {
-            var film1 = new FilmEntity() { FilmId = 1, Name = "Film1" };
-            var film2 = new FilmEntity() { FilmId = 2, Name = "Film2" };
+            var film1 = new FilmEntity() { Id = 1, Name = "Film1" };
+            var film2 = new FilmEntity() { Id = 2, Name = "Film2" };
 
             _filmReferenceContext.Film.Add(film1);
             _filmReferenceContext.Film.Add(film2);

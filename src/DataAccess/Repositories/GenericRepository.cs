@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using FilmReference.DataAccess.Entities;
 
 namespace FilmReference.DataAccess.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
         private readonly FilmReferenceContext _dbContext;
 
@@ -31,7 +32,14 @@ namespace FilmReference.DataAccess.Repositories
 
         public Task Update(T model)
         {
-            _dbContext.Entry(model).State = EntityState.Modified;
+            var oldEntity = _dbContext.Set<T>().First(x => x.Id == model.Id);
+            var oldEntry = _dbContext.Entry(oldEntity);
+
+            oldEntry.CurrentValues.SetValues(model);
+            //_dbContext.Entry(model).State = EntityState.Modified;
+            //return _dbContext.SaveChangesAsync();
+            //_dbContext.Set<T>().Attach(model);
+            //_dbContext.Entry(model).State = EntityState.Modified;
             return _dbContext.SaveChangesAsync();
         }
 

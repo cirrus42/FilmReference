@@ -47,28 +47,28 @@ namespace BusinessLogic.Tests.Handlers
         [Fact]
         public async Task GetFilmByIdCallsRepositoryMethod()
         {
-            var director = new PersonEntity { PersonId = 1, IsDirector = true, FirstName = "Test", LastName = "Test" };
-            var genre = new GenreEntity { GenreId = 1, Name = "Genre" };
-            var studio = new StudioEntity { StudioId = 1, Name = "Studio" };
-            var person = new PersonEntity { PersonId = 2, IsActor = true, FirstName = "Actor", LastName = "Lastname" };
-            var filmPerson = new FilmPersonEntity { Person = person, FilmPersonId = 1, PersonId = person.PersonId };
+            var director = new PersonEntity { Id = 1, IsDirector = true, FirstName = "Test", LastName = "Test" };
+            var genre = new GenreEntity { Id = 1, Name = "Genre" };
+            var studio = new StudioEntity { Id = 1, Name = "Studio" };
+            var person = new PersonEntity { Id = 2, IsActor = true, FirstName = "Actor", LastName = "Lastname" };
+            var filmPerson = new FilmPersonEntity { Person = person, Id = 1, PersonId = person.Id };
             var film = new FilmEntity
             {
-                FilmId = 1,
+                Id = 1,
                 Genre = genre,
                 Studio = studio,
                 Director = director,
                 FilmPerson = new Collection<FilmPersonEntity> { filmPerson }
             };
 
-            var director2 = new PersonEntity { PersonId = 3, IsDirector = true, FirstName = "Test", LastName = "Test" };
-            var genre2 = new GenreEntity { GenreId = 2, Name = "Genre" };
-            var studio2 = new StudioEntity { StudioId = 2, Name = "Studio" };
-            var person2 = new PersonEntity { PersonId = 4, IsActor = true, FirstName = "Actor", LastName = "Lastname" };
-            var filmPerson2 = new FilmPersonEntity { Person = person2, FilmPersonId = 2, PersonId = person2.PersonId };
+            var director2 = new PersonEntity { Id = 3, IsDirector = true, FirstName = "Test", LastName = "Test" };
+            var genre2 = new GenreEntity { Id = 2, Name = "Genre" };
+            var studio2 = new StudioEntity { Id = 2, Name = "Studio" };
+            var person2 = new PersonEntity { Id = 4, IsActor = true, FirstName = "Actor", LastName = "Lastname" };
+            var filmPerson2 = new FilmPersonEntity { Person = person2, Id = 2, PersonId = person2.Id };
             var film2 = new FilmEntity
             {
-                FilmId = 2,
+                Id = 2,
                 Genre = genre2,
                 Studio = studio2,
                 Director = director2,
@@ -81,45 +81,45 @@ namespace BusinessLogic.Tests.Handlers
 
             _filmRepository.Setup(method => method.GetAllQueryable()).Returns(films.Object);
 
-            var output = await _filmHandler.GetFilmById(film.FilmId);
+            var output = await _filmHandler.GetFilmById(film.Id);
 
             _filmRepository.Verify(method => method.GetAllQueryable(), Times.Once);
 
-            output.FilmId.Should().Be(film.FilmId);
-            output.Director.PersonId.Should().Be(director.PersonId);
-            output.Genre.GenreId.Should().Be(genre.GenreId);
-            output.Studio.StudioId.Should().Be(studio.StudioId);
+            output.Id.Should().Be(film.Id);
+            output.Director.Id.Should().Be(director.Id);
+            output.Genre.Id.Should().Be(genre.Id);
+            output.Studio.Id.Should().Be(studio.Id);
             output.FilmPerson.Count.Should().Be(1);
 
             var outputFilmPerson = output.FilmPerson.ElementAt(0);
-            outputFilmPerson.Person.PersonId.Should().Be(person.PersonId);
+            outputFilmPerson.Person.Id.Should().Be(person.Id);
         }
 
         [Fact]
         public async Task GetFilmWithFilmPersonCallsRepositoryMethod()
         {
-            var director = new PersonEntity { PersonId = 1, IsDirector = true, FirstName = "Test", LastName = "Test" };
-            var genre = new GenreEntity { GenreId = 1, Name = "Genre" };
-            var studio = new StudioEntity { StudioId = 1, Name = "Studio" };
-            var person = new PersonEntity { PersonId = 2, IsActor = true, FirstName = "Actor", LastName = "Lastname" };
-            var filmPerson = new FilmPersonEntity { Person = person, FilmPersonId = 1, PersonId = person.PersonId };
+            var director = new PersonEntity { Id = 1, IsDirector = true, FirstName = "Test", LastName = "Test" };
+            var genre = new GenreEntity { Id = 1, Name = "Genre" };
+            var studio = new StudioEntity { Id = 1, Name = "Studio" };
+            var person = new PersonEntity { Id = 2, IsActor = true, FirstName = "Actor", LastName = "Lastname" };
+            var filmPerson = new FilmPersonEntity { Person = person, Id = 1, PersonId = person.Id };
             var film = new FilmEntity
             {
-                FilmId = 1,
+                Id = 1,
                 Genre = genre,
                 Studio = studio,
                 Director = director,
                 FilmPerson = new Collection<FilmPersonEntity> { filmPerson }
             };
 
-            var director2 = new PersonEntity { PersonId = 3, IsDirector = true, FirstName = "Test", LastName = "Test" };
-            var genre2 = new GenreEntity { GenreId = 2, Name = "Genre" };
-            var studio2 = new StudioEntity { StudioId = 2, Name = "Studio" };
-            var person2 = new PersonEntity { PersonId = 4, IsActor = true, FirstName = "Actor", LastName = "Lastname" };
-            var filmPerson2 = new FilmPersonEntity { Person = person2, FilmPersonId = 2, PersonId = person2.PersonId };
+            var director2 = new PersonEntity { Id = 3, IsDirector = true, FirstName = "Test", LastName = "Test" };
+            var genre2 = new GenreEntity { Id = 2, Name = "Genre" };
+            var studio2 = new StudioEntity { Id = 2, Name = "Studio" };
+            var person2 = new PersonEntity { Id = 4, IsActor = true, FirstName = "Actor", LastName = "Lastname" };
+            var filmPerson2 = new FilmPersonEntity { Person = person2, Id = 2, PersonId = person2.Id };
             var film2 = new FilmEntity
             {
-                FilmId = 2,
+                Id = 2,
                 Genre = genre2,
                 Studio = studio2,
                 Director = director2,
@@ -132,23 +132,23 @@ namespace BusinessLogic.Tests.Handlers
 
             _filmRepository.Setup(method => method.GetAllQueryable()).Returns(films.Object);
 
-            var output = await _filmHandler.GetFilmWithFilmPerson(film.FilmId);
+            var output = await _filmHandler.GetFilmWithFilmPerson(film.Id);
 
             _filmRepository.Verify(method => method.GetAllQueryable(), Times.Once);
 
-            output.FilmId.Should().Be(film.FilmId);
+            output.Id.Should().Be(film.Id);
             output.FilmPerson.Count.Should().Be(1);
 
             var outputFilmPerson = output.FilmPerson.ElementAt(0);
-            outputFilmPerson.Person.PersonId.Should().Be(person.PersonId);
+            outputFilmPerson.Person.Id.Should().Be(person.Id);
         }
 
         [Fact]
         public async Task GetFilmsCallsRepositoryMethod()
         {
-            var film = new FilmEntity { FilmId = 1 };
-            var film2 = new FilmEntity { FilmId = 2 };
-            var film3 = new FilmEntity { FilmId = 3 };
+            var film = new FilmEntity { Id = 1 };
+            var film2 = new FilmEntity { Id = 2 };
+            var film3 = new FilmEntity { Id = 3 };
 
             var filmList = new List<FilmEntity> { film, film2, film3 };
 
@@ -190,7 +190,7 @@ namespace BusinessLogic.Tests.Handlers
             const string filmName = "film";
 
             _filmRepository.Setup(method => method.GetWhere(It.IsAny<Expression<Func<FilmEntity, bool>>>()))
-                .ReturnsAsync(new List<FilmEntity> { new FilmEntity { FilmId = 1, Name = "film" } });
+                .ReturnsAsync(new List<FilmEntity> { new FilmEntity { Id = 1, Name = "film" } });
 
             var output = await _filmHandler.IsDuplicate(filmId, filmName);
 
@@ -206,7 +206,7 @@ namespace BusinessLogic.Tests.Handlers
             const string filmName = "film";
 
             _filmRepository.Setup(method => method.GetWhere(It.IsAny<Expression<Func<FilmEntity, bool>>>()))
-                .ReturnsAsync(new List<FilmEntity> { new FilmEntity { FilmId = 1, Name = "film" } });
+                .ReturnsAsync(new List<FilmEntity> { new FilmEntity { Id = 1, Name = "film" } });
 
             var output = await _filmHandler.IsDuplicate(filmId, filmName);
 
@@ -223,7 +223,7 @@ namespace BusinessLogic.Tests.Handlers
             const string filmName = "film";
 
             _filmRepository.Setup(method => method.GetWhere(It.IsAny<Expression<Func<FilmEntity, bool>>>()))
-                .ReturnsAsync(new List<FilmEntity> { new FilmEntity { FilmId = 2, Name = "film" } });
+                .ReturnsAsync(new List<FilmEntity> { new FilmEntity { Id = 2, Name = "film" } });
 
             var output = await _filmHandler.IsDuplicate(filmId, filmName);
 

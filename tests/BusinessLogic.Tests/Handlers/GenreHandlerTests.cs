@@ -41,10 +41,10 @@ namespace BusinessLogic.Tests.Handlers
         public async void IsDuplicateSameRecordReturnsFalse()
         {
             const int id = 1;
-            var genreEntity = new GenreEntity {GenreId = id};
+            var genreEntity = new GenreEntity { Id = id};
 
             _genreRepository.Setup(method => method.GetWhere(It.IsAny<Expression<Func<GenreEntity, bool>>>()))
-                .ReturnsAsync(new List<GenreEntity>{ new GenreEntity{GenreId = id}});
+                .ReturnsAsync(new List<GenreEntity>{ new GenreEntity{ Id = id}});
 
             var output = await _genreHandler.IsDuplicate(genreEntity);
 
@@ -57,10 +57,10 @@ namespace BusinessLogic.Tests.Handlers
         public async void IsDuplicateNewRecordReturnsTrue()
         {
             const int id = 1;
-            var genreEntity = new GenreEntity { GenreId = 0 };
+            var genreEntity = new GenreEntity { Id = 0 };
 
             _genreRepository.Setup(method => method.GetWhere(It.IsAny<Expression<Func<GenreEntity, bool>>>()))
-                .ReturnsAsync(new List<GenreEntity> { new GenreEntity { GenreId = id } });
+                .ReturnsAsync(new List<GenreEntity> { new GenreEntity { Id = id } });
 
             var output = await _genreHandler.IsDuplicate(genreEntity);
 
@@ -73,10 +73,10 @@ namespace BusinessLogic.Tests.Handlers
         public async void IsDuplicateExistingRecordReturnsTrue()
         {
             const int id = 1;
-            var genreEntity = new GenreEntity { GenreId = 2 };
+            var genreEntity = new GenreEntity { Id = 2 };
 
             _genreRepository.Setup(method => method.GetWhere(It.IsAny<Expression<Func<GenreEntity, bool>>>()))
-                .ReturnsAsync(new List<GenreEntity> { new GenreEntity { GenreId = id } });
+                .ReturnsAsync(new List<GenreEntity> { new GenreEntity { Id = id } });
 
             var output = await _genreHandler.IsDuplicate(genreEntity);
 
@@ -89,7 +89,7 @@ namespace BusinessLogic.Tests.Handlers
         public async void GetGenreByIdCallsRepository()
         {
             const int id = 1;
-            var genreEntity = new GenreEntity {GenreId = 10, Name = "Test"};
+            var genreEntity = new GenreEntity { Id = 10, Name = "Test"};
 
             _genreRepository.Setup(method => method.GetById(It.IsAny<int>())).ReturnsAsync(genreEntity);
 
@@ -103,7 +103,7 @@ namespace BusinessLogic.Tests.Handlers
         [Fact]
         public async void UpdateGenreCallsRepository()
         {
-            var genreEntity = new GenreEntity { GenreId = 10, Name = "Test" };
+            var genreEntity = new GenreEntity { Id = 10, Name = "Test" };
 
             await _genreHandler.UpdateGenre(genreEntity);
 
@@ -113,7 +113,7 @@ namespace BusinessLogic.Tests.Handlers
         [Fact]
         public async void SaveGenreCallsRepository()
         {
-            var genreEntity = new GenreEntity { GenreId = 10, Name = "Test" };
+            var genreEntity = new GenreEntity { Id = 10, Name = "Test" };
 
             await _genreHandler.SaveGenre(genreEntity);
 
