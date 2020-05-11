@@ -61,7 +61,7 @@ namespace BusinessLogic.Managers
 
             if (personEntity == null) return new Results<PersonPagesValues> {HttpStatusCode = HttpStatusCode.NotFound};
 
-            var filmPersonList = _mapper.Map<List<FilmPerson>>(personEntity.FilmPerson.OrderBy(fp => fp.Film.Name));
+            var filmPersonList = _mapper.Map<List<FilmPerson>>(personEntity.FilmPerson.ToList());
 
             return new Results<PersonPagesValues>
             {
@@ -69,7 +69,7 @@ namespace BusinessLogic.Managers
                 Entity = new PersonPagesValues
                 {
                     Person = _mapper.Map<Person>(personEntity),
-                    Films = filmPersonList.Select(filmPerson => filmPerson.Film).ToList()
+                    Films = filmPersonList.Select(filmPerson => filmPerson.Film).ToList().OrderBy(filmPerson => filmPerson.Name)
                 }
             };
         }

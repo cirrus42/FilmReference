@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using BusinessLogic.Handlers.Interfaces;
 using BusinessLogic.Managers;
 using BusinessLogic.Models;
 using FilmReference.DataAccess.Entities;
 using FluentAssertions;
 using Moq;
+using System.Net;
 using Xunit;
 
 namespace BusinessLogic.Tests.Managers
