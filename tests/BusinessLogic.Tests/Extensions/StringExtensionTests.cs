@@ -32,5 +32,21 @@ namespace BusinessLogic.Tests.Extensions
             var output = name.ReplaceForRadioButton();
             output.Should().Be(updatedName);
         }
+
+        [Theory]
+        [InlineData("First", "Last", "First Last")]
+        [InlineData("First", "", "First")]
+        [InlineData("First", null, "First")]
+        [InlineData("", "Last", "Last")]
+        [InlineData(null, "Last", "Last")]
+        [InlineData("", "", "No Name")]
+        [InlineData(null, null, "No Name")]
+        public void BuildFullNameBuildsFullname(string firstname, string lastname, string fullname)
+        {
+            var output = firstname.BuildFullName(lastname);
+
+            output.Should().Be(fullname);
+        }
+
     }
 }

@@ -93,8 +93,6 @@ namespace BusinessLogic.Tests.Managers
         public async void GetStudioByIdReturnsNotFound()
         {
             const int id = 1;
-            var studio = new Studio();
-            var studioEntity = new StudioEntity();
 
             _studioHandler.Setup(method => method.GetStudioById(It.IsAny<int>())).ReturnsAsync((StudioEntity)null);
             _mapper.Setup(method => method.Map<Studio>(It.IsAny<StudioEntity>())).Returns((Studio)null);
