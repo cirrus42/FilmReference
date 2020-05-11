@@ -1,10 +1,10 @@
-﻿using System.Net;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using BusinessLogic.Handlers.Interfaces;
 using BusinessLogic.Managers.Interfaces;
 using BusinessLogic.Models;
 using FilmReference.DataAccess.Entities;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace BusinessLogic.Managers
 {
@@ -21,10 +21,20 @@ namespace BusinessLogic.Managers
 
         public async Task<bool> SaveStudio(Studio studio)
         {
-            if (await _studioHandler.IsDuplicate(_mapper.Map<StudioEntity>(studio)))
+            var studioEntity = _mapper.Map<StudioEntity>(studio);
+            if (await _studioHandler.IsDuplicate(studioEntity))
                 return false;
 
-            await _studioHandler.SaveStudio(_mapper.Map<StudioEntity>(studio));
+            await _studioHandler.SaveStudio(studioEntity);
+            return true;
+        }
+
+        public async Task<bool> UpdateStudio(Studio studio)
+        {
+            var studioEntity = _mapper.Map<StudioEntity>(studio);
+            if (await _studioHandler.IsDuplicate(studioEntity))
+                return false;
+            await _studioHandler.UpdateStudio(studioEntity);
             return true;
         }
 
@@ -35,14 +45,6 @@ namespace BusinessLogic.Managers
             return studio == null ?
                 new Results<Studio> { HttpStatusCode = HttpStatusCode.NotFound } :
                 new Results<Studio> { Entity = studio, HttpStatusCode = HttpStatusCode.OK };
-        }
-        
-        public async Task<bool> UpdateStudio(Studio studio)
-        {
-            if (await _studioHandler.IsDuplicate(_mapper.Map<StudioEntity>(studio)))
-                return false;
-            await _studioHandler.UpdateStudio(_mapper.Map<StudioEntity>(studio));
-            return true;
         }
     }
 }
