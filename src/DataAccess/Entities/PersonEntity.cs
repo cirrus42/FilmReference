@@ -8,7 +8,6 @@ namespace FilmReference.DataAccess.Entities
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public string FullName { get; set; }
         public string Description { get; set; }
         public bool IsActor { get; set; }

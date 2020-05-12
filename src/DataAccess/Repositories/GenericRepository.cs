@@ -32,14 +32,9 @@ namespace FilmReference.DataAccess.Repositories
 
         public Task Update(T model)
         {
-            var oldEntity = _dbContext.Set<T>().First(x => x.Id == model.Id);
-            var oldEntry = _dbContext.Entry(oldEntity);
-
-            oldEntry.CurrentValues.SetValues(model);
-            //_dbContext.Entry(model).State = EntityState.Modified;
-            //return _dbContext.SaveChangesAsync();
-            //_dbContext.Set<T>().Attach(model);
-            //_dbContext.Entry(model).State = EntityState.Modified;
+            var currentEntity = _dbContext.Set<T>().First(entity => entity.Id == model.Id);
+            _dbContext.Entry(currentEntity).CurrentValues.SetValues(model);
+            
             return _dbContext.SaveChangesAsync();
         }
 

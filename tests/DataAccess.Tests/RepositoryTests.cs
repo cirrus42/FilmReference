@@ -29,9 +29,11 @@ namespace DataAccessTests
         [Fact]
         public async void GetAllReturnsAllInstancesOfEntity()
         {
+            var initialCount = _filmReferenceContext.Person.Count();
+
             var person1 = new PersonEntity()
             {
-                Id = 1,
+                Id = 200,
                 FirstName = "Person1",
                 LastName = "Lastname1",
                 Description = "Person 1",
@@ -43,7 +45,7 @@ namespace DataAccessTests
 
             var person2 = new PersonEntity()
             {
-                Id = 2,
+                Id = 201,
                 FirstName = "Person2",
                 LastName = "Lastname2",
                 Description = "Person 2",
@@ -59,7 +61,7 @@ namespace DataAccessTests
 
             var personList = (await _genericRepository.GetAll()).ToList();
 
-            personList.Count.Should().Be(2);
+            personList.Count.Should().Be(initialCount + 2);
             personList.Should().Contain(person1);
             personList.Should().Contain(person2);
         }
@@ -70,9 +72,9 @@ namespace DataAccessTests
         {
             var person1 = new PersonEntity()
             {
-                Id = 1,
+                Id = 111,
                 FirstName = "Person1",
-                LastName = "Lastname1",
+                LastName = "Person1Lastname",
                 Description = "Person 1",
                 IsActor = true,
                 IsDirector = false,
@@ -82,7 +84,7 @@ namespace DataAccessTests
 
             var person2 = new PersonEntity()
             {
-                Id = 2,
+                Id = 112,
                 FirstName = "Person2",
                 LastName = "Lastname2",
                 Description = "Person 2",
@@ -96,7 +98,7 @@ namespace DataAccessTests
             await _filmReferenceContext.Person.AddAsync(person2);
             await _filmReferenceContext.SaveChangesAsync();
 
-            var personList = (await _genericRepository.GetWhere(x => x.IsActor)).ToList();
+            var personList = (await _genericRepository.GetWhere(x => x.LastName == person1.LastName)).ToList();
 
             personList.Count.Should().Be(1);
             personList.Should().Contain(person1);
@@ -107,7 +109,7 @@ namespace DataAccessTests
         {
             var person1 = new PersonEntity()
             {
-                Id = 1,
+                Id = 100,
                 FirstName = "Person1",
                 LastName = "Lastname1",
                 Description = "Person 1",
@@ -119,9 +121,9 @@ namespace DataAccessTests
 
             var person2 = new PersonEntity()
             {
-                Id = 2,
+                Id = 101,
                 FirstName = "Person2",
-                LastName = "Lastname2",
+                LastName = "This Lastname",
                 Description = "Person 2",
                 IsActor = false,
                 IsDirector = true,
@@ -133,7 +135,7 @@ namespace DataAccessTests
             await _filmReferenceContext.Person.AddAsync(person2);
             await _filmReferenceContext.SaveChangesAsync();
 
-            var personList =  _genericRepository.GetAllQueryable().Where(x => x.IsDirector).ToList();
+            var personList =  _genericRepository.GetAllQueryable().Where(x => x.LastName == person2.LastName).ToList();
 
             personList.Count.Should().Be(1);
             personList.Should().Contain(person2);
@@ -195,9 +197,11 @@ namespace DataAccessTests
         [Fact]
         public void AddAndSaveAddsThenSaves()
         {
+            var initialCount = _filmReferenceContext.Person.Count();
+
             var person1 = new PersonEntity()
             {
-                Id = 1,
+                Id = 10,
                 FirstName = "Person1",
                 LastName = "Lastname1",
                 Description = "Person 1",
@@ -209,7 +213,7 @@ namespace DataAccessTests
 
             var person2 = new PersonEntity()
             {
-                Id = 2,
+                Id = 11,
                 FirstName = "Person2",
                 LastName = "Lastname2",
                 Description = "Person 2",
@@ -225,7 +229,7 @@ namespace DataAccessTests
 
             var person3 = new PersonEntity()
             {
-                Id = 3,
+                Id = 12,
                 FirstName = "Person3",
                 LastName = "Lastname3",
                 Description = "Person 3",
@@ -238,9 +242,9 @@ namespace DataAccessTests
             _genericRepository.Add(person3);
             _genericRepository.Save();
 
-            _filmReferenceContext.Person.Count().Should().Be(3);
+            _filmReferenceContext.Person.Count().Should().Be(initialCount + 3);
 
-            var dbPerson = _filmReferenceContext.Find<PersonEntity>(3);
+            var dbPerson = _filmReferenceContext.Find<PersonEntity>(person3.Id);
 
             dbPerson.FirstName.Should().Be(person3.FirstName);
             dbPerson.LastName.Should().Be(person3.LastName);

@@ -14,7 +14,7 @@ namespace BusinessLogic.Extensions
     {
         public static void AddDependencies(this IServiceCollection services)
         {
-            services.AddTransient<IImageHelper, ImageHelper>();
+            services.AddSingleton<IImageHelper, ImageHelper>();
             services.AddTransient<IPersonHandler, PersonHandler>();
             services.AddTransient<IGenreHandler, GenreHandler>();
             services.AddTransient<IStudioHandler, StudioHandler>();
@@ -23,6 +23,7 @@ namespace BusinessLogic.Extensions
             services.AddTransient<IFilmPagesManager, FilmPagesManager>();
             services.AddTransient<IGenrePagesManager, GenrePagesManager>();
             services.AddTransient<IPersonPagesManager, PersonPagesManager>();
+            services.AddScoped<IStudioPagesManager, StudioPagesManager>();
             services.AddTransient<IPersonValidator, PersonValidator>();
         }
 
