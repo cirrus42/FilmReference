@@ -96,6 +96,31 @@ namespace BusinessLogic.Tests.Managers
         }
 
         [Fact]
+        public async void UpdatePersonValidationPassesAndReturnsEmptyList()
+        {
+            var person = new Person();
+            var personEntity = new PersonEntity();
+
+            _personValidator.Setup(method => method.ValidatePerson(It.IsAny<Person>()))
+                .Returns(new List<string>());
+            _mapper.Setup(method => method.Map<PersonEntity>(It.IsAny<Person>())).Returns(personEntity);
+            _personHandler.Setup(method => method.IsDuplicate(It.IsAny<PersonEntity>())).ReturnsAsync(false);
+
+            var output = await _personPagesManager.UpdatePerson(person);
+
+            _personValidator.Verify(method => method.ValidatePerson(It.IsAny<Person>()), Times.Once());
+            _mapper.Verify(method => method.Map<PersonEntity>(It.IsAny<Person>()), Times.Once);
+            _personHandler.Verify(method => method.IsDuplicate(It.IsAny<PersonEntity>()), Times.Once);
+            _personHandler.Verify(method => method.GetPersonById(It.IsAny<int>()), Times.Once);
+            _mapper.Verify(method => method.Map(It.IsAny<Person>(), It.IsAny<PersonEntity>()), Times.Once);
+            _personHandler.Verify(method => method.UpdatePerson(It.IsAny<PersonEntity>()), Times.Once);
+
+            var outputValidationList = output.ToList();
+
+            outputValidationList.Should().BeEmpty();
+        }
+
+        [Fact]
         public async void UpdatePersonValidationPersonValidationFailsAndReturnsPopulatedList()
         {
             var person = new Person();
@@ -111,6 +136,8 @@ namespace BusinessLogic.Tests.Managers
             _personValidator.Verify(method => method.ValidatePerson(It.IsAny<Person>()), Times.Once());
             _mapper.Verify(method => method.Map<PersonEntity>(It.IsAny<Person>()), Times.Once);
             _personHandler.Verify(method => method.IsDuplicate(It.IsAny<PersonEntity>()), Times.Once);
+            _personHandler.Verify(method => method.GetPersonById(It.IsAny<int>()), Times.Never);
+            _mapper.Verify(method => method.Map(It.IsAny<Person>(), It.IsAny<PersonEntity>()), Times.Never);
             _personHandler.Verify(method => method.UpdatePerson(It.IsAny<PersonEntity>()), Times.Never);
 
             var outputValidationList = output.ToList();
@@ -133,6 +160,8 @@ namespace BusinessLogic.Tests.Managers
             _personValidator.Verify(method => method.ValidatePerson(It.IsAny<Person>()), Times.Once());
             _mapper.Verify(method => method.Map<PersonEntity>(It.IsAny<Person>()), Times.Once);
             _personHandler.Verify(method => method.IsDuplicate(It.IsAny<PersonEntity>()), Times.Once);
+            _personHandler.Verify(method => method.GetPersonById(It.IsAny<int>()), Times.Never);
+            _mapper.Verify(method => method.Map(It.IsAny<Person>(), It.IsAny<PersonEntity>()), Times.Never);
             _personHandler.Verify(method => method.UpdatePerson(It.IsAny<PersonEntity>()), Times.Never);
 
             var outputValidationList = output.ToList();
@@ -158,7 +187,8 @@ namespace BusinessLogic.Tests.Managers
             _mapper.Setup(method => method.Map<List<FilmPerson>>(It.IsAny<List<FilmPersonEntity>>()))
                 .Returns(filmPersonList);
             _mapper.Setup(method => method.Map<Person>(It.IsAny<PersonEntity>())).Returns(person);
-
+             _personHandler.Setup(method => method.GetPersonWithDetails(It.IsAny<int>())).ReturnsAsync(personEntity);
+        
             var output = await _personPagesManager.GetPersonDetails(id);
 
             _personHandler.Verify(method => method.GetPersonWithDetails(It.IsAny<int>()), Times.Once);
@@ -223,14 +253,14 @@ namespace BusinessLogic.Tests.Managers
             _personHandler.Setup(method => method.GetDirectors()).ReturnsAsync(personEntityList);
             _mapper.Setup(method => method.Map<IEnumerable<Person>>(It.IsAny<IEnumerable<PersonEntity>>()));
 
-            var output = await _personPagesManager.GetDirectors();
+            await _personPagesManager.GetDirectors();
 
             _personHandler.Verify(method => method.GetDirectors(), Times.Once);
             _mapper.Verify(method => method.Map<IEnumerable<Person>>(It.IsAny<IEnumerable<PersonEntity>>()), Times.Once);
         }
 
         [Fact]
-        public async void GetActorssCallsRepository()
+        public async void GetActorsCallsRepository()
         {
             var personEntity = new PersonEntity();
             var personEntityList = new List<PersonEntity> { personEntity };
@@ -238,7 +268,7 @@ namespace BusinessLogic.Tests.Managers
             _personHandler.Setup(method => method.GetActors(It.IsAny<string>())).ReturnsAsync(personEntityList);
             _mapper.Setup(method => method.Map<IEnumerable<Person>>(It.IsAny<IEnumerable<PersonEntity>>()));
 
-            var output = await _personPagesManager.GetActors(id);
+            await _personPagesManager.GetActors(id);
 
             _personHandler.Verify(method => method.GetActors(It.IsAny<string>()), Times.Once);
             _mapper.Verify(method => method.Map<IEnumerable<Person>>(It.IsAny<IEnumerable<PersonEntity>>()), Times.Once);

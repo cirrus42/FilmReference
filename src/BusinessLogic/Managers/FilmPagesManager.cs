@@ -94,7 +94,12 @@ namespace BusinessLogic.Managers
         {
             if (await _filmHandler.IsDuplicate(film.Id, film.Name))
                 return false;
-            await _filmHandler.UpdateFilm(_mapper.Map<FilmEntity>(film));
+
+            var filmEntity = await _filmHandler.GetFilmById(film.Id);
+
+            _mapper.Map(film, filmEntity);
+
+            await _filmHandler.UpdateFilm(filmEntity);
             return true;
         }
 

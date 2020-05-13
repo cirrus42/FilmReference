@@ -248,8 +248,8 @@ namespace BusinessLogic.Tests.Managers
             var filmEntity = new FilmEntity { Id = 1, Name = "Test" };
 
             _filmHandler.Setup(method => method.IsDuplicate(It.IsAny<int>(), It.IsAny<string>())).ReturnsAsync(isDuplicate);
-            _mapper.Setup(method => method.Map<FilmEntity>(It.IsAny<Film>())).Returns(filmEntity);
             _filmHandler.Setup(method => method.UpdateFilm(It.IsAny<FilmEntity>()));
+            _filmHandler.Setup(method => method.GetFilmById(It.IsAny<int>())).ReturnsAsync(filmEntity);
 
             var output = await _filmPagesManager.UpdateFilm(film);
 
@@ -257,13 +257,15 @@ namespace BusinessLogic.Tests.Managers
 
             if (isDuplicate)
             {
-                _mapper.Verify(method => method.Map<FilmEntity>(It.IsAny<Film>()), Times.Never);
+                _mapper.Verify(method => method.Map(It.IsAny<Film>(),It.IsAny<FilmEntity>()), Times.Never);
                 _filmHandler.Verify(method => method.UpdateFilm(It.IsAny<FilmEntity>()), Times.Never);
+                _filmHandler.Verify(method => method.GetFilmById(It.IsAny<int>()), Times.Never);
             }
             else
             {
-                _mapper.Verify(method => method.Map<FilmEntity>(It.IsAny<Film>()), Times.Once);
+                _mapper.Verify(method => method.Map(It.IsAny<Film>(), It.IsAny<FilmEntity>()), Times.Once);
                 _filmHandler.Verify(method => method.UpdateFilm(It.IsAny<FilmEntity>()), Times.Once);
+                _filmHandler.Verify(method => method.GetFilmById(It.IsAny<int>()), Times.Once);
             }
 
             output.Should().Be(!isDuplicate);

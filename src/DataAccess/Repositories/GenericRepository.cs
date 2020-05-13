@@ -30,11 +30,17 @@ namespace FilmReference.DataAccess.Repositories
         public async Task Add(T model) =>
             await _dbContext.AddAsync(model);
 
+        //public Task Update(T model)
+        //{
+        //    var currentEntity = _dbContext.Set<T>().First(entity => entity.Id == model.Id);
+        //    _dbContext.Entry(currentEntity).CurrentValues.SetValues(model);
+            
+        //    return _dbContext.SaveChangesAsync();
+        //}
+
         public Task Update(T model)
         {
-            var currentEntity = _dbContext.Set<T>().First(entity => entity.Id == model.Id);
-            _dbContext.Entry(currentEntity).CurrentValues.SetValues(model);
-            
+            _dbContext.Entry(model).State = EntityState.Modified;
             return _dbContext.SaveChangesAsync();
         }
 

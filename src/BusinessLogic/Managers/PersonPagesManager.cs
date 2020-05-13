@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic.Managers
 {
@@ -45,13 +44,17 @@ namespace BusinessLogic.Managers
         public async Task<IEnumerable<string>> UpdatePerson(Person person)
         {
             var validationList =  _personValidator.ValidatePerson(person).ToList();
-            var personEntity = _mapper.Map<PersonEntity>(person);
-
-            if (await _personHandler.IsDuplicate(personEntity))
+            
+            if (await _personHandler.IsDuplicate(_mapper.Map<PersonEntity>(person)))
                 validationList.Add(PageValues.PersonDuplicateValidation);
 
-            if (validationList.Count == 0)
-                await _personHandler.UpdatePerson(personEntity);
+            if (validationList.Count != 0) return validationList;
+
+            var personEntity = await _personHandler.GetPersonById(person.Id);
+
+            personEntity = _mapper.Map(person, personEntity);
+
+            await _personHandler.UpdatePerson(personEntity);
 
             return validationList;
         }

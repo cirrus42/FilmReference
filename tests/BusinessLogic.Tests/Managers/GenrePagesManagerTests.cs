@@ -55,8 +55,8 @@ namespace BusinessLogic.Tests.Managers
             var genre = new Genre();
             var genreEntity = new GenreEntity();
 
-            _mapper.Setup(method => method.Map<GenreEntity>(It.IsAny<Genre>())).Returns(genreEntity);
             _genreHandler.Setup(method => method.IsDuplicate(It.IsAny<GenreEntity>())).ReturnsAsync(isDuplicate);
+            _genreHandler.Setup(method => method.GetGenreById(It.IsAny<int>())).ReturnsAsync(genreEntity);
 
             var output = await _genrePagesManager.UpdateGenre(genre);
 
@@ -64,10 +64,17 @@ namespace BusinessLogic.Tests.Managers
             _genreHandler.Verify(method => method.IsDuplicate(It.IsAny<GenreEntity>()));
 
             if (isDuplicate)
+            {
+                _genreHandler.Verify(method => method.GetGenreById(It.IsAny<int>()), Times.Never);
                 _genreHandler.Verify(method => method.UpdateGenre(genreEntity), Times.Never);
+            }
             else
-                _genreHandler.Verify(method => method.UpdateGenre(genreEntity), Times.Once);
-
+            {
+                _genreHandler.Verify(method => method.GetGenreById(It.IsAny<int>()), Times.Once);
+                _mapper.Verify(method => method.Map(It.IsAny<Genre>(), It.IsAny<GenreEntity>()), Times.Once());
+                _genreHandler.Verify(method => method.UpdateGenre(It.IsAny<GenreEntity>()), Times.Once);
+            }
+            
             output.Should().Be(!isDuplicate);
         }
 
@@ -81,7 +88,7 @@ namespace BusinessLogic.Tests.Managers
             var genre = new Genre();
 
             _genreHandler.Setup(method => method.GetGenreById(It.IsAny<int>()))
-                .ReturnsAsync(isNull ? (GenreEntity)null : genreEntity );
+                .ReturnsAsync(isNull ? null : genreEntity );
 
             _mapper.Setup(method => method.Map<Genre>(It.IsAny<GenreEntity>())).Returns(genre);
 

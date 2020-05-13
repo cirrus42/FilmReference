@@ -15,6 +15,7 @@ namespace FilmReference.DataAccess.Repositories
         Task<T> GetById(int id);
         Task Add(T model);
         Task Update(T model);
+        //Task UpdateTracked(T model);
         Task Delete(T model);
         Task Save();
     }

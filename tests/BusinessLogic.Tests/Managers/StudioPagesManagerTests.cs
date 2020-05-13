@@ -57,6 +57,7 @@ namespace BusinessLogic.Tests.Managers
 
             _mapper.Setup(method => method.Map<StudioEntity>(It.IsAny<Studio>())).Returns(studioEntity);
             _studioHandler.Setup(method => method.IsDuplicate(It.IsAny<StudioEntity>())).ReturnsAsync(isDuplicate);
+            _studioHandler.Setup(method => method.GetStudioById(It.IsAny<int>())).ReturnsAsync(studioEntity);
 
             var output = await _studioPagesManager.UpdateStudio(studio);
 
@@ -64,10 +65,18 @@ namespace BusinessLogic.Tests.Managers
             _studioHandler.Verify(method => method.IsDuplicate(It.IsAny<StudioEntity>()), Times.Once);
 
             if (isDuplicate)
+            {
+                _studioHandler.Verify(method => method.GetStudioById(It.IsAny<int>()),Times.Never);
+                _mapper.Verify(method => method.Map(It.IsAny<Studio>(), It.IsAny<StudioEntity>()), Times.Never);
                 _studioHandler.Verify(method => method.UpdateStudio(studioEntity), Times.Never);
+            }
             else
-                _studioHandler.Verify(method => method.UpdateStudio(studioEntity), Times.Once);
-
+            {
+                _studioHandler.Verify(method => method.GetStudioById(It.IsAny<int>()), Times.Once);
+                _mapper.Verify(method => method.Map(It.IsAny<Studio>(), It.IsAny<StudioEntity>()), Times.Once);
+                _studioHandler.Verify(method => method.UpdateStudio(It.IsAny<StudioEntity>()), Times.Once);
+            }
+            
             output.Should().Be(!isDuplicate);
         }
 

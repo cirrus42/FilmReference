@@ -32,10 +32,13 @@ namespace BusinessLogic.Managers
 
         public async Task<bool> UpdateGenre(Genre genre)
         {
-            var genreEntity = _mapper.Map<GenreEntity>(genre);
-
-            if (await _genreHandler.IsDuplicate(genreEntity))
+            if (await _genreHandler.IsDuplicate(_mapper.Map<GenreEntity>(genre)))
                 return false;
+
+            var genreEntity = await _genreHandler.GetGenreById(genre.Id);
+            
+            genreEntity = _mapper.Map(genre, genreEntity);
+
             await _genreHandler.UpdateGenre(genreEntity);
             return true;
         }

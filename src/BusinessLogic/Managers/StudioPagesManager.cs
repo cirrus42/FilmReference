@@ -31,9 +31,13 @@ namespace BusinessLogic.Managers
 
         public async Task<bool> UpdateStudio(Studio studio)
         {
-            var studioEntity = _mapper.Map<StudioEntity>(studio);
-            if (await _studioHandler.IsDuplicate(studioEntity))
+            if (await _studioHandler.IsDuplicate(_mapper.Map<StudioEntity>(studio)))
                 return false;
+
+            var studioEntity = await _studioHandler.GetStudioById(studio.Id);
+
+            studioEntity = _mapper.Map(studio, studioEntity);
+
             await _studioHandler.UpdateStudio(studioEntity);
             return true;
         }
