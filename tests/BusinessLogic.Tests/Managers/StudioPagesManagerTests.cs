@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using AutoMapper;
 using BusinessLogic.Handlers.Interfaces;
 using BusinessLogic.Managers;
@@ -112,6 +113,21 @@ namespace BusinessLogic.Tests.Managers
             _mapper.Verify(method => method.Map<Studio>(It.IsAny<StudioEntity>()), Times.Once);
 
             output.HttpStatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
+        [Fact]
+        public async void GetGenresCallsRepository()
+        {
+            var studioEntity = new StudioEntity();
+            var studioEntityList = new List<StudioEntity> { studioEntity };
+
+            _studioHandler.Setup(method => method.GetStudios()).ReturnsAsync(studioEntityList);
+            _mapper.Setup(method => method.Map<IEnumerable<Studio>>(It.IsAny<IEnumerable<StudioEntity>>()));
+
+            await _studioPagesManager.GetStudios();
+
+            _studioHandler.Verify(method => method.GetStudios(), Times.Once);
+            _mapper.Verify(method => method.Map<IEnumerable<Studio>>(It.IsAny<IEnumerable<StudioEntity>>()), Times.Once);
         }
     }
 }

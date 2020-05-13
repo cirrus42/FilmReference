@@ -3,6 +3,7 @@ using BusinessLogic.Handlers.Interfaces;
 using BusinessLogic.Managers.Interfaces;
 using BusinessLogic.Models;
 using FilmReference.DataAccess.Entities;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -51,5 +52,8 @@ namespace BusinessLogic.Managers
                 new Results<Genre> { HttpStatusCode = HttpStatusCode.NotFound } :
                 new Results<Genre> { Entity = _mapper.Map<Genre>(genreEntity), HttpStatusCode = HttpStatusCode.OK };
         }
+
+        public async Task<IEnumerable<Genre>> GetGenres() =>
+            _mapper.Map<IEnumerable<Genre>>(await _genreHandler.GetGenres());
     }
 }

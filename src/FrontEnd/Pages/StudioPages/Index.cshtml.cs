@@ -1,6 +1,6 @@
-﻿using BusinessLogic.Handlers.Interfaces;
-using BusinessLogic.Helpers;
-using FilmReference.DataAccess.Entities;
+﻿using BusinessLogic.Helpers;
+using BusinessLogic.Managers.Interfaces;
+using BusinessLogic.Models;
 using FilmReference.FrontEnd.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,16 +11,16 @@ namespace FilmReference.FrontEnd.Pages.StudioPages
     public class IndexModel : FilmReferencePageModel
     {
         public IImageHelper ImageHelper;
-        private readonly IStudioHandler _studioHandler;
-        public IList<StudioEntity> StudioList { get; set; }
-        public IndexModel(IImageHelper imageHelper, IStudioHandler studioHandler)
+        private readonly IStudioPagesManager _studioPagesManager;
+        public IList<Studio> StudioList { get; set; }
+        public IndexModel(IImageHelper imageHelper, IStudioPagesManager studioPagesManager)
         {
             ImageHelper = imageHelper;
-            _studioHandler = studioHandler;
+            _studioPagesManager = studioPagesManager;
         }
 
-        public async Task OnGetAsync()
-            => StudioList = (await _studioHandler.GetStudios())
+        public async Task OnGetAsync() =>
+            StudioList = (await _studioPagesManager.GetStudios())
                 .Skip((CurrentPage - 1) * PageSize)
                 .Take(PageSize)
                 .ToList();

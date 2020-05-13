@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using BusinessLogic.Handlers.Interfaces;
 using BusinessLogic.Managers.Interfaces;
 using BusinessLogic.Models;
@@ -50,5 +51,8 @@ namespace BusinessLogic.Managers
                 new Results<Studio> { HttpStatusCode = HttpStatusCode.NotFound } :
                 new Results<Studio> { Entity = studio, HttpStatusCode = HttpStatusCode.OK };
         }
+
+        public async Task<IEnumerable<Studio>> GetStudios() =>
+            _mapper.Map<IEnumerable<Studio>>(await _studioHandler.GetStudios());
     }
 }

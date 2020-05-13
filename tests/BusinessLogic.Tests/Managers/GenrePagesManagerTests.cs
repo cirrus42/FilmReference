@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using BusinessLogic.Handlers.Interfaces;
 using BusinessLogic.Managers;
 using BusinessLogic.Models;
@@ -108,6 +109,21 @@ namespace BusinessLogic.Tests.Managers
                 _mapper.Verify(method => method.Map<Genre>(It.IsAny<GenreEntity>()), Times.Once);
                 result.HttpStatusCode.Should().Be(HttpStatusCode.OK);
             }
+        }
+
+        [Fact]
+        public async void GetGenresCallsRepository()
+        {
+            var genreEntity = new GenreEntity();
+            var genreEntityList = new List<GenreEntity> { genreEntity };
+     
+            _genreHandler.Setup(method => method.GetGenres()).ReturnsAsync(genreEntityList);
+            _mapper.Setup(method => method.Map<IEnumerable<Genre>>(It.IsAny<IEnumerable<GenreEntity>>()));
+
+            await _genrePagesManager.GetGenres();
+
+            _genreHandler.Verify(method => method.GetGenres(), Times.Once);
+            _mapper.Verify(method => method.Map<IEnumerable<Genre>>(It.IsAny<IEnumerable<GenreEntity>>()), Times.Once);
         }
     }
 }

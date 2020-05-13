@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using BusinessLogic.Models;
 
 namespace BusinessLogic.Managers.Interfaces
@@ -8,5 +9,6 @@ namespace BusinessLogic.Managers.Interfaces
         Task<bool> SaveStudio(Studio studio);
         Task<bool> UpdateStudio(Studio studio);
         Task<Results<Studio>> GetStudioById(int id);
+        Task<IEnumerable<Studio>> GetStudios();
     }
 }
