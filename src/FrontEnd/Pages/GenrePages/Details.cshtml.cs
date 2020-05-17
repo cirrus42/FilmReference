@@ -1,16 +1,16 @@
-﻿using FilmReference.DataAccess.Entities;
+﻿using BusinessLogic.Managers.Interfaces;
+using BusinessLogic.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net;
 using System.Threading.Tasks;
-using BusinessLogic.Managers.Interfaces;
 
 namespace FilmReference.FrontEnd.Pages.GenrePages
 {
     public class DetailsModel : PageModel
     {
         private readonly IGenrePagesManager _genrePagesManager;
-        public GenreEntity Genre { get; set; }
+        public Genre Genre { get; set; }
 
         public DetailsModel(IGenrePagesManager genrePagesManager) =>
             _genrePagesManager = genrePagesManager;
@@ -23,7 +23,9 @@ namespace FilmReference.FrontEnd.Pages.GenrePages
             var result = await _genrePagesManager.GetGenreById(id.Value);
 
             if (result.HttpStatusCode == HttpStatusCode.NotFound) return NotFound();
-           
+
+            Genre = result.Entity;
+
             return Page();
         }
     }

@@ -48,8 +48,8 @@ namespace BusinessLogic.Managers
         {
             var genreEntity = await _genreHandler.GetGenreById(id);
 
-            return genreEntity == null ?
-                new Results<Genre> { HttpStatusCode = HttpStatusCode.NotFound } :
+            return genreEntity == null ? 
+                new Results<Genre> {HttpStatusCode = HttpStatusCode.NotFound} : 
                 new Results<Genre> { Entity = _mapper.Map<Genre>(genreEntity), HttpStatusCode = HttpStatusCode.OK };
         }
 

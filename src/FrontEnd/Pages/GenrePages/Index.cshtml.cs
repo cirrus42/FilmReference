@@ -10,12 +10,12 @@ namespace FilmReference.FrontEnd.Pages.GenrePages
     public class IndexModel : PageModel
     {
         private readonly IGenrePagesManager _genrePagesManager;
-        public IList<Genre> Genre { get; set; }
+        public IList<Genre> GenreList { get; set; }
 
         public IndexModel(IGenrePagesManager genrePagesManager) =>
             _genrePagesManager = genrePagesManager;
 
         public async Task OnGetAsync() =>
-            Genre = (await _genrePagesManager.GetGenres()).ToList();
+            GenreList = (await _genrePagesManager.GetGenres()).ToList();
     }
 }
