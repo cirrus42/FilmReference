@@ -1,4 +1,5 @@
-﻿using FilmReference.DataAccess.Entities;
+﻿using FilmReference.DataAccess.ConfigurationClasses;
+using FilmReference.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace FilmReference.DataAccess

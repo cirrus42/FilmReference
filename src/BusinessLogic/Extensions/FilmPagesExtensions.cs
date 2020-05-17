@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using BusinessLogic.Models;
+using System.Collections.Generic;
 using System.Linq;
-using BusinessLogic.Models;
 using StringValues = Microsoft.Extensions.Primitives.StringValues;
 
 namespace BusinessLogic.Extensions

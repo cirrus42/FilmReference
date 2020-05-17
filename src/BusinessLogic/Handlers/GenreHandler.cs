@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BusinessLogic.Handlers.Interfaces;
+﻿using BusinessLogic.Handlers.Interfaces;
 using FilmReference.DataAccess.Entities;
 using FilmReference.DataAccess.Repositories;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BusinessLogic.Handlers
 {

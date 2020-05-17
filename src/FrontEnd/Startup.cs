@@ -1,8 +1,8 @@
 using AutoMapper;
 using BusinessLogic.Extensions;
+using BusinessLogic.Mappers;
 using BusinessLogic.Models;
 using FilmReference.DataAccess;
-using FilmReference.FrontEnd.Mappers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;

@@ -3,7 +3,7 @@ using BusinessLogic.Extensions;
 using BusinessLogic.Models;
 using FilmReference.DataAccess.Entities;
 
-namespace FilmReference.FrontEnd.Mappers
+namespace BusinessLogic.Mappers
 {
     public class MappingProfile : Profile
     {

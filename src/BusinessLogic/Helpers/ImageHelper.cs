@@ -1,8 +1,8 @@
-﻿using System;
+﻿using BusinessLogic.Models;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using BusinessLogic.Models;
-using Microsoft.AspNetCore.Http;
 
 namespace BusinessLogic.Helpers
 {

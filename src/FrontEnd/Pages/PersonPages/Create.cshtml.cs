@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Linq;
-using System.Threading.Tasks;
-using BusinessLogic.Extensions;
+﻿using BusinessLogic.Extensions;
 using BusinessLogic.Helpers;
 using BusinessLogic.Managers.Interfaces;
 using BusinessLogic.Models;
-using BusinessLogic.Validations;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FilmReference.FrontEnd.Pages.PersonPages
 {

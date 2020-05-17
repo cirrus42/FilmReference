@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace FilmReference.DataAccess
+namespace FilmReference.DataAccess.ConfigurationClasses
 {
     public class PersonConfiguration : IEntityTypeConfiguration<PersonEntity>
     {

@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BusinessLogic.Helpers;
+using BusinessLogic.Managers.Interfaces;
+using BusinessLogic.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BusinessLogic.Helpers;
-using BusinessLogic.Managers.Interfaces;
-using BusinessLogic.Models;
 
 namespace FilmReference.FrontEnd.Pages.FilmPages
 {
