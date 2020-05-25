@@ -1,0 +1,221 @@
+CREATE DATABASE [FilmReferenceRefactor]
+
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [FilmReferenceRefactor].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET ANSI_NULL_DEFAULT OFF 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET ANSI_NULLS OFF 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET ANSI_PADDING OFF 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET ANSI_WARNINGS OFF 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET ARITHABORT OFF 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET AUTO_CLOSE OFF 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET AUTO_SHRINK OFF 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET AUTO_UPDATE_STATISTICS ON 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET CURSOR_DEFAULT  GLOBAL 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET NUMERIC_ROUNDABORT OFF 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET QUOTED_IDENTIFIER OFF 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET RECURSIVE_TRIGGERS OFF 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET  ENABLE_BROKER 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET TRUSTWORTHY OFF 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET PARAMETERIZATION SIMPLE 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET HONOR_BROKER_PRIORITY OFF 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET RECOVERY FULL 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET  MULTI_USER 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET PAGE_VERIFY CHECKSUM  
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET DB_CHAINING OFF 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET DELAYED_DURABILITY = DISABLED 
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET QUERY_STORE = OFF
+GO
+
+ALTER DATABASE [FilmReferenceRefactor] SET  READ_WRITE 
+GO
+
+
+
+
+
+
+
+
+
+USE [FilmReferenceRefactor]
+GO
+/****** Object:  Table [dbo].[Film]    Script Date: 25/05/2020 16:42:57 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Film](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](50) NOT NULL,
+	[Description] [nvarchar](500) NOT NULL,
+	[Picture] [varbinary](max) NULL,
+	[GenreId] [int] NOT NULL,
+	[DirectorId] [int] NOT NULL,
+	[StudioId] [int] NOT NULL,
+ CONSTRAINT [PK_Film] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[FilmPerson]    Script Date: 25/05/2020 16:42:57 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[FilmPerson](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[FilmId] [int] NOT NULL,
+	[PersonId] [int] NOT NULL,
+ CONSTRAINT [PK_FilmPerson] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Genre]    Script Date: 25/05/2020 16:42:57 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Genre](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](50) NOT NULL,
+	[Description] [nvarchar](500) NULL,
+ CONSTRAINT [PK_Genre] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Person]    Script Date: 25/05/2020 16:42:57 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Person](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[FirstName] [nvarchar](50) NULL,
+	[LastName] [nvarchar](50) NULL,
+	[Description] [nvarchar](200) NULL,
+	[IsActor] [bit] NOT NULL,
+	[IsDirector] [bit] NOT NULL,
+	[Picture] [varbinary](max) NULL,
+	[FullName] [nvarchar](50) NULL,
+ CONSTRAINT [PK_Person] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Studio]    Script Date: 25/05/2020 16:42:57 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Studio](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](50) NOT NULL,
+	[Description] [nvarchar](500) NULL,
+	[Picture] [varbinary](max) NULL,
+ CONSTRAINT [PK_Studio] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Film]  WITH CHECK ADD  CONSTRAINT [FK_Film_Genre] FOREIGN KEY([GenreId])
+REFERENCES [dbo].[Genre] ([Id])
+GO
+ALTER TABLE [dbo].[Film] CHECK CONSTRAINT [FK_Film_Genre]
+GO
+ALTER TABLE [dbo].[Film]  WITH CHECK ADD  CONSTRAINT [FK_Film_Person] FOREIGN KEY([DirectorId])
+REFERENCES [dbo].[Person] ([Id])
+GO
+ALTER TABLE [dbo].[Film] CHECK CONSTRAINT [FK_Film_Person]
+GO
+ALTER TABLE [dbo].[Film]  WITH CHECK ADD  CONSTRAINT [FK_Film_Studio] FOREIGN KEY([StudioId])
+REFERENCES [dbo].[Studio] ([Id])
+GO
+ALTER TABLE [dbo].[Film] CHECK CONSTRAINT [FK_Film_Studio]
+GO
+ALTER TABLE [dbo].[FilmPerson]  WITH CHECK ADD  CONSTRAINT [FK_FilmPerson_Film] FOREIGN KEY([FilmId])
+REFERENCES [dbo].[Film] ([Id])
+GO
+ALTER TABLE [dbo].[FilmPerson] CHECK CONSTRAINT [FK_FilmPerson_Film]
+GO
+ALTER TABLE [dbo].[FilmPerson]  WITH CHECK ADD  CONSTRAINT [FK_FilmPerson_Person] FOREIGN KEY([PersonId])
+REFERENCES [dbo].[Person] ([Id])
+GO
+ALTER TABLE [dbo].[FilmPerson] CHECK CONSTRAINT [FK_FilmPerson_Person]
+GO

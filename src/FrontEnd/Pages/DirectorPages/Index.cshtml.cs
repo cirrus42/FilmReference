@@ -14,12 +14,13 @@ namespace FilmReference.FrontEnd.Pages.DirectorPages
 
         public IndexModel( IPersonPagesManager personPagesManager) =>
             _personPagesManager = personPagesManager;
-        
+
         public async Task OnGetAsync() =>
-            PersonList = (await _personPagesManager.GetDirectors())
-                .Skip((CurrentPage - 1) * PageSize)
-                .Take(PageSize)
-                .ToList();
+            PersonList = (await _personPagesManager.GetDirectors()).ToList();
+
+        //.Skip((CurrentPage - 1) * PageSize)
+        //.Take(PageSize)
+        //.ToList();
     }
 }
 

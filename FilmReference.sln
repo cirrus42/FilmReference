@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2EE4E9AB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{F1846C5B-35BD-4F3A-895C-462043354050}"
 	ProjectSection(SolutionItems) = preProject
-		src\Database\FilmReferenceFullScript.sql = src\Database\FilmReferenceFullScript.sql
+		src\Database\FilmReferenceRefactorFullScript.sql = src\Database\FilmReferenceRefactorFullScript.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReadMe", "ReadMe", "{BE84E67A-60CD-446F-8960-D5CB4C385BED}"
@@ -23,9 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "src\DataAcces
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessTests", "tests\DataAccess.Tests\DataAccessTests.csproj", "{73A3AD98-F99B-4C88-A330-51E65D7C96C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "src\BusinessLogic\BusinessLogic.csproj", "{C374C14B-67AA-4A3D-B9E8-57BBBC91E648}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "src\BusinessLogic\BusinessLogic.csproj", "{C374C14B-67AA-4A3D-B9E8-57BBBC91E648}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic.Tests", "tests\BusinessLogic.Tests\BusinessLogic.Tests.csproj", "{460B4848-BC4E-4497-9942-F5318010883C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic.Tests", "tests\BusinessLogic.Tests\BusinessLogic.Tests.csproj", "{460B4848-BC4E-4497-9942-F5318010883C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
